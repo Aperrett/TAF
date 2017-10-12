@@ -8,3 +8,16 @@ More details to be added later.
 
 
 Thank you :): 
+
+Author
+
+Andy Perrett
+
+https://github.com/Aperrett
+
+
+Copyright and License
+
+Copyright 2017 Aperrett
+
+Code released under the MIT License.
