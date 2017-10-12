@@ -1,6 +1,7 @@
 # Created on 20 Sept 2017
 # @author: Andy Perrett
-#
+# MIT License
+# Copyright (c) 2017 Aperrett
 # Versions:
 # 1.0 - Baseline
 #
