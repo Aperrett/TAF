@@ -9,14 +9,14 @@ More details to be added later.
 
 Thank you :): 
 
-Author
+<h2>Author</h2>
 
 Andy Perrett
 
 https://github.com/Aperrett
 
 
-Copyright and License
+<h2>Copyright and License</h2>
 
 Copyright 2017 Aperrett
 
