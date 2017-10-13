@@ -34,15 +34,16 @@ module Utils
     begin
       lcBrowserType = $browserType.downcase
         # set up for any normal browser type
-          if ((lcBrowserType == 'firefox') || (lcBrowserType == 'chrome') || (lcBrowserType == 'ie') || (lcBrowserType == 'safari'))
-            $browser = Watir:: Browser.new :"#{lcBrowserType}",
-            # makes the browser full screen.
-            screen_width = $browser.execute_script("return screen.width;")
-            screen_height = $browser.execute_script("return screen.height;")
-            $browser.driver.manage.window.resize_to(screen_width, screen_height)
-            $browser.driver.manage.window.move_to(0, 0)
-          elsif ((lcBrowserType == 'headless'))
-            $browser = Watir:: Browser.new :chrome, :switches => %w[--start-maximized --disable-gpu --headless]
+        if((lcBrowserType == 'firefox') || (lcBrowserType == 'chrome') || (lcBrowserType == 'ie') || (lcBrowserType == 'safari'))
+          $browser = Watir::Browser.new:"#{lcBrowserType}"
+          # makes the browser full screen.
+          screen_width = $browser.execute_script("return screen.width;")
+          screen_height = $browser.execute_script("return screen.height;")
+          $browser.driver.manage.window.resize_to(screen_width,screen_height)
+          $browser.driver.manage.window.move_to(0,0)
+          #$browser.driver.manage.window.maximize
+        elsif((lcBrowserType == 'headless'))
+            $browser = Watir::Browser.new:chrome, :switches => %w[--start-maximized --disable-gpu --headless]
 
             # unable to select the specified browser so throw an exception
           else
