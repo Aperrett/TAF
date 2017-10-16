@@ -174,12 +174,10 @@ module TestSteps
       Report.checkFailureThreshold(test_file_name)
 
     elsif ($testStepFunction == 'ipause')
-      # one parameter: wait_time
-      time_to_wait = $test_value
       # print the test step information
       Report.printTestStepHeader
       # call the appropriate method
-      test_pass = (WebFuncs.ipause(wait_time))
+      test_pass = (WebFuncs.ipause($test_value))
       # Check for test Pass / Fail
       Report.testPassFail(test_pass)
       Report.checkFailureThreshold(test_file_name)
