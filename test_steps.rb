@@ -1,7 +1,6 @@
 # Created on 20 Sept 2017
 # @author: Andy Perrett
-# MIT License
-# Copyright (c) 2017 Aperrett
+#
 # Versions:
 # 1.0 - Baseline
 #
@@ -13,18 +12,33 @@ module TestSteps
   # processing the associated data accordingly
   def self.processTestSteps(test_file_name)
     if ($testStepFunction == 'open_url')
-      # one parameter: URL
-      url = $test_value
       # print the test step information
       Report.printTestStepHeader
       # call the appropriate method
-      test_pass = (WebFuncs.open_url(url))
+      test_pass = (WebFuncs.open_url($test_value))
+      Report.testPassFail(test_pass)
+      Report.checkFailureThreshold(test_file_name)
+
+    elsif ($testStepFunction == 'portal_login')
+      # one parameter: URL
+      # print the test step information
+      Report.printTestStepHeader
+      # call the appropriate method
+      test_pass = (CustomFuncs.portal_login())
+      Report.testPassFail(test_pass)
+      Report.checkFailureThreshold(test_file_name)
+
+    elsif ($testStepFunction == 'admin_portal_login')
+      # one parameter: URL
+      # print the test step information
+      Report.printTestStepHeader
+      # call the appropriate method
+      test_pass = (CustomFuncs.portal_admin_login())
       Report.testPassFail(test_pass)
       Report.checkFailureThreshold(test_file_name)
 
     elsif ($testStepFunction == 'ping_test')
       # one parameter: URL
-      url = $test_value
       # print the test step information
       Report.printTestStepHeader
       # call the appropriate method
@@ -34,7 +48,7 @@ module TestSteps
 
     elsif ($testStepFunction == 'check_url')
       # one parameter: URL
-      url = $test_value
+      # url = $test_value
       # print the test step information
       Report.printTestStepHeader
       # call the appropriate method
@@ -183,7 +197,7 @@ module TestSteps
       Report.checkFailureThreshold(test_file_name)
 
     elsif ($testStepFunction == 'execute_system_command')
-      # one parameter: sys_Command
+      # one parameter: syst_Command
       syst_Command = $test_value
       # print the test step information
       Report.printTestStepHeader

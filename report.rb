@@ -1,7 +1,6 @@
 # Created on 20 Sept 2017
 # @author: Andy Perrett
-# MIT License
-# Copyright (c) 2017 Aperrett
+#
 # Versions:
 # 1.0 - Baseline
 #
@@ -10,18 +9,18 @@ module Report
   require './taf_config.rb'
     # setup the test results output file
     def self.open_testreport_file
-	     $PDF = Prawn::Document.new # Pdf Test Results generator.
-        # open a new file for writing
-         $log.write("Opening Test Result file: #{$testResultFileName}")
-        $log.puts ''
-        $log.puts ''
+	    $PDF = Prawn::Document.new # Pdf Test Results generator.
+      # open a new file for writing
+      $log.write("Opening Test Result file: #{$testResultFileName}")
+      $log.puts ''
+      $log.puts ''
 
-        # open test results file for writing if not already open
-        if (!File.exists?($testResultFileName) || $testResultFileName.closed?)
-          $results_file = File.open($testResultFileName, 'w')
-        elsif
-          $log.puts "test results file name: #{$testResultFileName} is already open"
-        end
+      # open test results file for writing if not already open
+      if (!File.exists?($testResultFileName) || $testResultFileName.closed?)
+        $results_file = File.open($testResultFileName, 'w')
+      elsif
+        $log.puts "test results file name: #{$testResultFileName} is already open"
+      end
     end # open_testreport_file
 
     def self.close_testresults_file
@@ -57,22 +56,22 @@ module Report
       $results_file.write("Test ID: #{$testId} Test Description: #{$testDes}")
       $results_file.puts ''
       $results_file.write("Executed with browser: #{$browserType}")
-	  $results_file.puts ''
-	  $results_file.write("Test suite: #{$testSuiteFile}")
-	  $results_file.puts ''
-	  $results_file.write("Tester: #{$tester}")
-	  $results_file.puts ''
-	  $results_file.puts ''
+	    $results_file.puts ''
+	    $results_file.write("Test suite: #{$testSuiteFile}")
+	    $results_file.puts ''
+	    $results_file.write("Tester: #{$tester}")
+	    $results_file.puts ''
+	    $results_file.puts ''
       $results_file.puts ''
 
 	  # print to a PDF test result file File.
-	  $PDF.text("Project Name: #{$projectName} Project ID: #{$projectId} Sprint: #{$sprint}")
+	    $PDF.text("Project Name: #{$projectName} Project ID: #{$projectId} Sprint: #{$sprint}")
       $PDF.text ' '
       $PDF.text("Test ID: #{$testId} Test Description: #{$testDes}")
       $PDF.text("Executed with browser: #{$browserType}")
-	  $PDF.text("Test suite: #{$testSuiteFile}")
-	  $PDF.text("Tester: #{$tester}")
-	  $PDF.text ' '
+	    $PDF.text("Test suite: #{$testSuiteFile}")
+	    $PDF.text("Tester: #{$tester}")
+	    $PDF.text ' '
     end # printTestHeader
 
     # get the current time in the format Day - Month - Date - Time (HH:MM:SS)
@@ -86,10 +85,10 @@ module Report
     def self.printTestStepHeader
       $results_file.write("Test start time: #{f_time = get_time()}   \n")
       $results_file.write("Test step: #{$testStep} : #{$testStepDes}  ")
-	  # write the to pdf file.
-	  $PDF.text("Test start time: #{f_time = get_time()}   ")
-	  $PDF.text("Test step: #{$testStep} : #{$testStepDes}  ")
-	  puts "Test start time: #{f_time = get_time()}   \n"
+	    # write the to pdf file.
+	    $PDF.text("Test start time: #{f_time = get_time()}   ")
+	    $PDF.text("Test step: #{$testStep} : #{$testStepDes}  ")
+	    puts "Test start time: #{f_time = get_time()}   \n"
       puts "Test step: #{$testStep} : #{$testStepDes}  "
     end # printTestStepHeader
 
@@ -100,25 +99,25 @@ module Report
         $currentTestFail = false
         $testStepPasses += 1
         $results_file.write("Test #{$testStep} has Passed, ")
-		$PDF.text("Test #{$testStep} has Passed ")
-	    puts "Test #{$testStep} has Passed "
+		    $PDF.text("Test #{$testStep} has Passed ")
+	      puts "Test #{$testStep} has Passed ".green
       elsif (passFail == false)
         $previousTestFail = $currentTestFail
         $currentTestFail = true
         $testStepFailures += 1
         $results_file.write("Test #{$testStep} has FAILED, ")
-		$PDF.text ("Test #{$testStep} has FAILED ")
-	    puts "Test #{$testStep} has FAILED "
+		    $PDF.text ("Test #{$testStep} has FAILED ")
+	      puts "Test #{$testStep} has FAILED ".red
       else
         puts "Test #{$testStep} no checks performed "
-		$PDF.text "Test #{$testStep} no checks performed "
+	    	$PDF.text "Test #{$testStep} no checks performed "
     end
 	    $results_file.write("Test end time: #{f_time = get_time()}   \n")
-        $results_file.puts ''
-		$PDF.text("Test end time: #{f_time = get_time()}   ")
-		$PDF.text ' '
-        puts "Test end time: #{f_time = get_time()}   \n"
-        puts ''
+      $results_file.puts ''
+		  $PDF.text("Test end time: #{f_time = get_time()}   ")
+		  $PDF.text ' '
+      puts "Test end time: #{f_time = get_time()}   \n"
+      puts ''
     end # testPassFail
 
     # check if the test failure threshold has been reached for total failures or consecutive failures.
@@ -133,7 +132,7 @@ module Report
       if ($consecutiveTestFail >= $consecutiveFailThreshold) then
         $results_file.puts ''
         $results_file.write("Terminating the current test case as the test failure threshold (#{$consecutiveFailThreshold} ) has been reached")
-		$PDF.text("Terminating the current test case as the test failure threshold (#{$consecutiveFailThreshold} ) has been reached")
+		    $PDF.text("Terminating the current test case as the test failure threshold (#{$consecutiveFailThreshold} ) has been reached")
         $results_file.puts ''
 
         # write info to $stderr
@@ -149,7 +148,12 @@ module Report
     # output the test results summary for the current test case
     def self.printTestStepSummary(test_file_name, testFileNumber)
       # construct the test step report summary
-      $testStepReportSummary[testFileNumber] = "\n" 'Test file:', test_file_name, "\n" 'Browser type:', $browserType, "\n" 'Browser version:', ("#{Utils.browserVersion}"), "\n" 'Started at:', $test_case_start_time, "\n" 'Finished at:', $test_case_end_time, "\n" 'Has:', $testStepPasses, 'Passes and', $testStepFailures, 'FAILURES' "\n"
+      $testStepReportSummary[testFileNumber] = "\n" 'Test file:', test_file_name, \
+      "\n" 'Browser type:', $browserType, \
+      "\n" 'Browser version:', ("#{Utils.browserVersion}"), \
+      "\n" 'Started at:', $test_case_start_time, \
+      "\n" 'Finished at:', $test_case_end_time, \
+      "\n" 'Has:', $testStepPasses, 'Passes and', $testStepFailures, 'FAILURES' "\n"
       # ... and save in a format that is printable
       $testStepReportSummary[testFileNumber] = $testStepReportSummary[testFileNumber].join(' ')
       $results_file.puts ''
@@ -158,12 +162,12 @@ module Report
       $results_file.write("\n Test end time: #{$test_case_end_time}")
       $results_file.puts ''
 
-	  # print the test results summary info into the pdf test results file.
-	  $PDF.text ' '
-	  $PDF.text("Test Summary: #{$testStepReportSummary[testFileNumber]}")
-	  $PDF.text ' '
+	    # print the test results summary info into the pdf test results file.
+	    $PDF.text ' '
+	    $PDF.text("Test Summary: #{$testStepReportSummary[testFileNumber]}")
+	    $PDF.text ' '
       $PDF.text("Test end time: #{$test_case_end_time}")
-	  $PDF.render_file ($testResultFileNamePDF)
+	    $PDF.render_file ($testResultFileNamePDF)
     end # printTestStepSummary
 
     # output the overall test results summary
@@ -177,15 +181,15 @@ module Report
           puts testStepReportSummary
         end
       puts ''
-      print ("Tests started at: #{$test_start_time}")
+      print ("Total Tests started at: #{$test_start_time}")
       puts ''
-	  print ("Tests finished at: #{$test_end_time}")
-	  puts ''
-	  print ("Tests duration: " + TimeDifference.between($test_end_time, $test_start_time).humanize)
-	  puts ''
-      print ("Total Tests Passed: #{$totalTestPasses}")
+	    print ("Total Tests finished at: #{$test_end_time}")
+	    puts ''
+	    print ("Total Tests duration: " + TimeDifference.between($test_end_time, $test_start_time).humanize)
+	    puts ''
+      print ("Total Tests Passed: #{$totalTestPasses}").green
       puts ''
-      print ("Total Tests Failed: #{$totalTestFailures}")
+      print ("Total Tests Failed: #{$totalTestFailures}").red
       puts ''
 
       # output to the suite summary file
@@ -193,11 +197,11 @@ module Report
       # open the suite summary file for writing if not already open
         if (!File.exists?($testSuiteSummaryFileName) || $testSuiteSummaryFileName.closed?)
           $testSuiteSummaryFile = File.open($testSuiteSummaryFileName, 'w')
-		  puts ''
-		  puts 'Test Suite Summary file located at:'
-		  puts "#{$TestSuiteSummaryPDF}"
+		      puts ''
+		      puts 'Test Suite Summary file located at:'
+		      puts "#{$TestSuiteSummaryPDF}"
         elsif
-            $log.puts "test suite summary file name: #{$testSuiteSummarylFileName} is already open"
+          $log.puts "test suite summary file name: #{$testSuiteSummarylFileName} is already open"
         end
 
         $testSuiteSummaryFile.puts ''
@@ -208,12 +212,12 @@ module Report
           $testSuiteSummaryFile.puts testStepReportSummary
         end
         $testSuiteSummaryFile.puts ''
-        $testSuiteSummaryFile.write("Tests started at: #{$test_start_time}")
-		$testSuiteSummaryFile.puts ''
-		$testSuiteSummaryFile.write("Tests finished at: #{$test_end_time}")
+        $testSuiteSummaryFile.write("Total Tests started at: #{$test_start_time}")
+		    $testSuiteSummaryFile.puts ''
+		    $testSuiteSummaryFile.write("Total Tests finished at: #{$test_end_time}")
         $testSuiteSummaryFile.puts ''
-		$testSuiteSummaryFile.write("Tests duration: " + TimeDifference.between($test_end_time, $test_start_time).humanize)
-		$testSuiteSummaryFile.puts ''
+		    $testSuiteSummaryFile.write("Total Tests duration: " + TimeDifference.between($test_end_time, $test_start_time).humanize)
+		    $testSuiteSummaryFile.puts ''
         $testSuiteSummaryFile.write("Total Tests Passed: #{$totalTestPasses}")
         $testSuiteSummaryFile.puts ''
         $testSuiteSummaryFile.write("Total Tests Failed: #{$totalTestFailures}")
@@ -233,9 +237,9 @@ module Report
       text testStepReportSummary
     end
   text ' '
-  text("Tests started at: #{$test_start_time}")
-  text("Tests finished at: #{$test_end_time}")
-  text("Tests duration: " + TimeDifference.between($test_end_time, $test_start_time).humanize)
+  text("Total Tests started at: #{$test_start_time}")
+  text("Total Tests finished at: #{$test_end_time}")
+  text("Total Tests duration: " + TimeDifference.between($test_end_time, $test_start_time).humanize)
   text("Total Tests Passed: #{$totalTestPasses}")
   text("Total Tests Failed: #{$totalTestFailures}")
   end

@@ -1,7 +1,6 @@
 # Created on 20 Sept 2017
 # @author: Andy Perrett
-# MIT License
-# Copyright (c) 2017 Aperrett
+#
 # Versions:
 # 1.0 - Baseline
 #
@@ -30,28 +29,12 @@ module CreateDirectories
         Dir.mkdir(project_iddir)
       end
 
-    # create a directory from the 'test run' number - find the highest
-    # existing number already used and start at the next highest number
-    directories = Dir.entries(project_iddir).sort
-    final_dir = directories.last
-
-      # get the value of the next number in the sequence, if no directories exist then start at 1
-      if (final_dir.include? ('Run_'))
-        start_numindex = final_dir.index('Run_') + 4 # the number index starts at 4 chars from the 'Run_'
-        num_char = final_dir[start_numindex, 2]
-        run_number = num_char.to_i + 1
-      else
-        run_number = 1
-      end
-
-      # print a leading zero if a single digit
-      if run_number.between?(0, 9)
-        $runNoDir = project_iddir + '/' + 'Run_0' + run_number.to_s
-      else
-        $runNoDir = project_iddir + '/' + 'Run_' + run_number.to_s
-      end
-
-      Dir.mkdir($runNoDir)
+    # Creates a folder Ran_on_Time with the time as of now.
+    time = Time.new
+    f_date = time.strftime('%d-%b-%Y')
+    f_time = time.strftime('%H_%M_%S')
+    $runNoDir = project_iddir + '/' + 'Ran_on_' + f_date + '_' + f_time
+    Dir.mkdir($runNoDir)
   end
 
   def self.construct_testspecdirs

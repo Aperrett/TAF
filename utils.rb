@@ -1,7 +1,6 @@
 # Created on 20 Sept 2017
 # @author: Andy Perrett
-# MIT License
-# Copyright (c) 2017 Aperrett
+#
 # Versions:
 # 1.0 - Baseline
 #
@@ -14,15 +13,15 @@ module Utils
       # check if browser already created and the correct type
       if $browser.nil?
         return 'no browser'
-      elsif (($browser.driver.capabilities[:browser_name]).casecmp('internet explorer') == 0)
+      elsif (($browser.driver.capabilities[:b_name]).casecmp('internet explorer') == 0)
         return 'ie'
-      elsif (($browser.driver.capabilities[:browser_name]).casecmp('chrome') == 0)
+      elsif (($browser.driver.capabilities[:b_name]).casecmp('chrome') == 0)
         return 'chrome'
-      elsif (($browser.driver.capabilities[:browser_name]).casecmp('firefox') == 0)
+      elsif (($browser.driver.capabilities[:b_name]).casecmp('firefox') == 0)
         return 'firefox'
-      elsif (($browser.driver.capabilities[:browser_name]).casecmp('safari') == 0)
+      elsif (($browser.driver.capabilities[:b_name]).casecmp('safari') == 0)
         return 'safari'
-      elsif (($browser.driver.capabilities[:browser_name]).casecmp('headless') == 0)
+      elsif (($browser.driver.capabilities[:b_name]).casecmp('headless') == 0)
         return 'headless'
       else
         return 'unknown'
@@ -45,17 +44,17 @@ module Utils
         elsif((lcBrowserType == 'headless'))
             $browser = Watir::Browser.new:chrome, :switches => %w[--start-maximized --disable-gpu --headless]
 
-            # unable to select the specified browser so throw an exception
-          else
-            puts "unable to open selected browser: #{$browserType}"
-            raise Exception
-          end
+          # unable to select the specified browser so throw an exception
+        else
+          puts "unable to open selected browser: #{$browserType}"
+          raise Exception
+        end
 
-          # if unable to open browser then set error message and re-raise the exception
-          rescue Exception => error
-            # construct the error message from custom text and the actual system error message (converted to a string)
-            error_to_display = "Unable to open the requested browser: #{$browserType} " + error.to_s
-            raise error_to_display
+        # if unable to open browser then set error message and re-raise the exception
+        rescue Exception => error
+          # construct the error message from custom text and the actual system error message (converted to a string)
+          error_to_display = "Unable to open the requested browser: #{$browserType} " + error.to_s
+          raise error_to_display
     end
   end # open_browser
 
@@ -64,8 +63,8 @@ module Utils
 	  $browserversion = $browser.driver.capabilities[:version]
 	rescue
 	  $browserversion = "No Browser version"
-	end
-
+  end
+  
 # create screenshot filename and save the screenshot if the test has failed or if explictly required
   def self.checkSaveScreenShot(fullScDirName)
     begin
