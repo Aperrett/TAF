@@ -18,6 +18,7 @@ module TafConfig
   require 'nokogiri'
   require 'csv'
   require 'time_difference'
+  require 'colored'
 
   # list of all the required files
   require_relative 'test_steps.rb'
