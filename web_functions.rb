@@ -1,7 +1,6 @@
 # Created on 20 Sept 2017
 # @author: Andy Perrett
-# MIT License
-# Copyright (c) 2017 Aperrett
+#
 # Versions:
 # 1.0 - Baseline
 #
@@ -33,7 +32,7 @@ module WebFuncs
   def self.open_url(url)
     Utils.open_browser()
     $browser.goto(url)
-    sleep 5
+    sleep 2
     url_name = $browser.url
       if (url_name == url)
         $results_file.write("opened URL: #{url}")
@@ -266,6 +265,7 @@ module WebFuncs
   def self.check_screendata(text_check)
     # one parameter: text value to check if text is displayed on page.
     if ($browser.text.include?(text_check))
+      sleep 2
       $results_file.write("found text: #{text_check}")
       $PDF.text("found text: #{text_check}")
       $results_file.puts ''
@@ -386,4 +386,18 @@ module WebFuncs
     $results_file.puts ''
     return false
   end # browser forward
+
+    # Browser Quit function.
+    def self.browser_quit
+      $browser.quit
+      $results_file.write('Browser has closed successfully')
+      $PDF.text('Browser has closed successfully')
+      $results_file.puts ''
+      return true
+    rescue
+      $results_file.write('Browser has failed to close')
+      $PDF.text('Browser has failed to close')
+      $results_file.puts ''
+      return false
+    end # browser close
 end	# module web_functions
