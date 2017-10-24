@@ -19,24 +19,6 @@ module TestSteps
       Report.testPassFail(test_pass)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif ($testStepFunction == 'portal_login')
-      # one parameter: URL
-      # print the test step information
-      Report.printTestStepHeader
-      # call the appropriate method
-      test_pass = (CustomFuncs.portal_login())
-      Report.testPassFail(test_pass)
-      Report.checkFailureThreshold(test_file_name)
-
-    elsif ($testStepFunction == 'admin_portal_login')
-      # one parameter: URL
-      # print the test step information
-      Report.printTestStepHeader
-      # call the appropriate method
-      test_pass = (CustomFuncs.portal_admin_login())
-      Report.testPassFail(test_pass)
-      Report.checkFailureThreshold(test_file_name)
-
     elsif ($testStepFunction == 'ping_test')
       # one parameter: URL
       # print the test step information
@@ -250,6 +232,15 @@ module TestSteps
       Report.printTestStepHeader
       # call the appropriate method
       test_pass = (WebFuncs.browser_forward)
+      # Check for test Pass / Fail
+      Report.testPassFail(test_pass)
+      Report.checkFailureThreshold(test_file_name)
+
+    elsif ($testStepFunction == 'browser_quit')
+      # print the test step information
+      Report.printTestStepHeader
+      # call the appropriate method
+      test_pass = (WebFuncs.browser_quit)
       # Check for test Pass / Fail
       Report.testPassFail(test_pass)
       Report.checkFailureThreshold(test_file_name)
