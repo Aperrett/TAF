@@ -109,8 +109,8 @@ module Report
 		    $PDF.text "Test #{$testStep} has FAILED ", :color => "ff0000" # red
 	      puts "Test #{$testStep} has FAILED ".red
       else
-        puts "Test #{$testStep} no checks performed "
-	    	$PDF.text "Test #{$testStep} no checks performed "
+        puts "Test #{$testStep} no checks performed ".blue
+	    	$PDF.text "Test #{$testStep} no checks performed ", :color => "0000ff" # blue
     end
 	    $results_file.write("Test end time: #{f_time = get_time()}   \n")
       $results_file.puts ''
