@@ -99,14 +99,14 @@ module Report
         $currentTestFail = false
         $testStepPasses += 1
         $results_file.write("Test #{$testStep} has Passed, ")
-		    $PDF.text("Test #{$testStep} has Passed ")
+		    $PDF.text "Test #{$testStep} has Passed ", :color => "00ff00" # green
 	      puts "Test #{$testStep} has Passed ".green
       elsif (passFail == false)
         $previousTestFail = $currentTestFail
         $currentTestFail = true
         $testStepFailures += 1
         $results_file.write("Test #{$testStep} has FAILED, ")
-		    $PDF.text ("Test #{$testStep} has FAILED ")
+		    $PDF.text "Test #{$testStep} has FAILED ", :color => "ff0000" # red
 	      puts "Test #{$testStep} has FAILED ".red
       else
         puts "Test #{$testStep} no checks performed "
@@ -151,9 +151,11 @@ module Report
       $testStepReportSummary[testFileNumber] = "\n" 'Test file:', test_file_name, \
       "\n" 'Browser type:', $browserType, \
       "\n" 'Browser version:', ("#{Utils.browserVersion}"), \
+      "\n" 'Environment:', $env_type, \
       "\n" 'Started at:', $test_case_start_time, \
       "\n" 'Finished at:', $test_case_end_time, \
-      "\n" 'Has:', $testStepPasses, 'Passes and', $testStepFailures, 'FAILURES' "\n"
+      "\n" 'There are:', $testStepPasses, 'Passes' \
+      "\n" 'There are:', $testStepFailures, 'Failures' "\n"
       # ... and save in a format that is printable
       $testStepReportSummary[testFileNumber] = $testStepReportSummary[testFileNumber].join(' ')
       $results_file.puts ''
@@ -240,8 +242,8 @@ module Report
   text("Total Tests started at: #{$test_start_time}")
   text("Total Tests finished at: #{$test_end_time}")
   text("Total Tests duration: " + TimeDifference.between($test_end_time, $test_start_time).humanize)
-  text("Total Tests Passed: #{$totalTestPasses}")
-  text("Total Tests Failed: #{$totalTestFailures}")
+  text "Total Tests Passed: #{$totalTestPasses}", :color => "00ff00" # green
+  text "Total Tests Failed: #{$totalTestFailures}", :color => "ff0000" # red
   end
 end # printOverallTestSummary
 end # Report module
