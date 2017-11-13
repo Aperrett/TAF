@@ -1,0 +1,52 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    activesupport (5.1.4)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      i18n (~> 0.7)
+      minitest (~> 5.1)
+      tzinfo (~> 1.1)
+    childprocess (0.8.0)
+      ffi (~> 1.0, >= 1.0.11)
+    colored (1.2)
+    concurrent-ruby (1.0.5)
+    ffi (1.9.18)
+    i18n (0.9.1)
+      concurrent-ruby (~> 1.0)
+    logger (1.2.8)
+    mini_portile2 (2.3.0)
+    minitest (5.10.3)
+    net-ping (2.0.2)
+    nokogiri (1.8.1)
+      mini_portile2 (~> 2.3.0)
+    pdf-core (0.7.0)
+    prawn (2.2.2)
+      pdf-core (~> 0.7.0)
+      ttfunk (~> 1.5)
+    rubygems-update (2.7.2)
+    rubyzip (1.2.1)
+    selenium-webdriver (3.7.0)
+      childprocess (~> 0.5)
+      rubyzip (~> 1.0)
+    thread_safe (0.3.6)
+    time_difference (0.7.0)
+      activesupport (~> 5.1)
+    ttfunk (1.5.1)
+    tzinfo (1.2.4)
+      thread_safe (~> 0.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  colored!
+  logger!
+  net-ping!
+  nokogiri!
+  prawn!
+  rubygems-update!
+  selenium-webdriver!
+  time_difference!
+
+BUNDLED WITH
+   1.16.0
