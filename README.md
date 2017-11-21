@@ -4,6 +4,18 @@ Created in Ruby and using Watir to allow a user to Automate a website using an E
 
 Please see the Wiki for more details: https://github.com/Aperrett/TAF/wiki
 
+<h2>To use the Docker container image</h2>
+To build the Docker container navigate to the Code/ Folder:
+
+execute "docker build -t taf ./" in cmd line.
+
+To run the container in a interactive shell:
+
+execute "docker run —rm -it taf sh " in cmd line.
+
+To run a Test Suite:
+
+execute "ruby main.rb [Testsuite.csv or Testsuite.xml]" in cmd line.
 
 Enjoy and Thank you :) 
 
