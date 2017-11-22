@@ -42,7 +42,7 @@ module Utils
           $browser.driver.manage.window.move_to(0,0)
           #$browser.driver.manage.window.maximize
         elsif((lcBrowserType == 'headless'))
-            $browser = Watir::Browser.new:chrome, :switches => %w[--start-maximized --disable-gpu --headless]
+            $browser = Watir::Browser.new:chrome, :switches => %w[--start-maximized --disable-gpu --headless --no-sandbox --window-size=1920,1080]
 
           # unable to select the specified browser so throw an exception
         else
@@ -221,7 +221,7 @@ module Utils
       # row4: Test_Suite, Suite_Description, Tester
       # row5: nil
       # row6: header row containing test suite title fields
-      # row7: Test_ID, Test_Specification, Browser_Type
+      # row7: Test_ID, Test_Specification, Browser_Type, Environment type
       # row8: repeat of previous row with each test specification file until <endOfFile>
 
       # get the CSV file row containing the desired test spec data
@@ -229,14 +229,16 @@ module Utils
       $testId        = headerRow[0, 1][0]
       $testSpecDesc  = headerRow[1, 1][0]
       $browserType   = headerRow[2, 1][0]
+      $env_type      = headerRow[3, 1][0]
     end
   end
 
   def self.parseXmlTestSuiteData(testSpecIndex)
     begin
-      $testId           = $XmlSuiteDoc.xpath('//Test_ID')[testSpecIndex].content
-      $testSpecDesc     = $XmlSuiteDoc.xpath('//Test_Specification')[testSpecIndex].content
-      $browserType      = $XmlSuiteDoc.xpath('//Browser')[testSpecIndex].content
+      $testId       = $XmlSuiteDoc.xpath('//Test_ID')[testSpecIndex].content
+      $testSpecDesc = $XmlSuiteDoc.xpath('//Test_Specification')[testSpecIndex].content
+      $browserType  = $XmlSuiteDoc.xpath('//Browser')[testSpecIndex].content
+      $env_type     = $XmlSuiteDoc.xpath('//environement')[testSpecIndex].content
     end
   end
 
@@ -252,6 +254,7 @@ module Utils
         print 'Processing test file: ', testFileName
         puts ''
         puts "Browser Type: #{$browserType}"
+        puts "Environment: #{$env_type}"
         $XmlDoc = File.open(testFileName) { |f| Nokogiri::XML(f) }
         Utils.parseXmlTestHeaderData
         return 'XML'
@@ -261,6 +264,7 @@ module Utils
         print 'Processing test file: ', testFileName
         puts ''
         puts "Browser Type: #{$browserType}"
+        puts "Environment: #{$env_type}"
         $CsvDoc = CSV.read(File.open(testFileName))
         Utils.parseCsvTestHeaderData
         return 'CSV'
