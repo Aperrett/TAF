@@ -23,8 +23,15 @@ module CreateDirectories
   # ------------->directory named 'Screenshots'
 
   def self.construct_projectdirs
-    # create top-level 'Project' directory if it doesn't already exist
-    project_iddir = $projectId.gsub(' ', '')
+   # create top-level 'Results' directory if it doesn't already exist
+   result_home = 'Results'
+     if (!File.directory? (result_home))
+       Dir.mkdir(result_home)
+     end
+
+    # create the 'Project' directory if it doesn't already exist
+    project_id = $projectId.gsub(' ', '')
+    project_iddir = result_home + '/' + project_id
       if (!File.directory? (project_iddir))
         Dir.mkdir(project_iddir)
       end
@@ -43,10 +50,10 @@ module CreateDirectories
     # create directories for each test spec
     # create a sub-directory named from the 'testId' (with any spaces taken out)
     # if it doesn't already exist plus the browser type
-        testid_dir = $runNoDir + '/' + $testId.gsub(' ', '') + '_' + $browserType.capitalize
-      if (!File.directory? (testid_dir)) then
-        Dir.mkdir(testid_dir)
-      end
+    testid_dir = $runNoDir + '/' + $testId.gsub(' ', '') + '_' + $browserType.capitalize
+    if (!File.directory? (testid_dir)) then
+       Dir.mkdir(testid_dir)
+    end
 
     # create a screenshot directory under the 'testId' directory - it will always need creating
     screenshot_dir = testid_dir + '/' + 'Screenshots' + '/'
