@@ -33,14 +33,25 @@ module Utils
     begin
       lcBrowserType = $browserType.downcase
         # set up for any normal browser type
-        if((lcBrowserType == 'firefox') || (lcBrowserType == 'chrome') || (lcBrowserType == 'ie') || (lcBrowserType == 'safari'))
+        if((lcBrowserType == 'chrome'))
+          $browser = Watir::Browser.new:chrome, :switches => %w[--start-maximized --window-size=1920,1080]
+        elsif((lcBrowserType == 'firefox'))
+          caps = Selenium::WebDriver::Remote::Capabilities.firefox
+          caps['acceptInsecureCerts'] = true
+          driver = Selenium::WebDriver.for(:firefox, desired_capabilities: caps)
+          $browser = Watir::Browser.new(driver)
+          # makes the browser full screen.
+          screen_width = $browser.execute_script("return screen.width;")
+          screen_height = $browser.execute_script("return screen.height;")
+          $browser.driver.manage.window.resize_to(screen_width,screen_height)
+          $browser.driver.manage.window.move_to(0,0)
+        elsif((lcBrowserType == 'ie') || (lcBrowserType == 'safari'))
           $browser = Watir::Browser.new:"#{lcBrowserType}"
           # makes the browser full screen.
           screen_width = $browser.execute_script("return screen.width;")
           screen_height = $browser.execute_script("return screen.height;")
           $browser.driver.manage.window.resize_to(screen_width,screen_height)
           $browser.driver.manage.window.move_to(0,0)
-          #$browser.driver.manage.window.maximize
         elsif((lcBrowserType == 'headless'))
             $browser = Watir::Browser.new:chrome, :switches => %w[--start-maximized --disable-gpu --headless --no-sandbox --window-size=1920,1080]
 
