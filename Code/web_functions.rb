@@ -145,8 +145,7 @@ module WebFuncs
     $PDF.text("Item: #{item} does not exist")
     $results_file.puts ''
     return false
-    #end
-  end # select item.
+  end # click on a "h<font size>" tag.
 
   # Capture alerts status Function.
   def self.capture_alert
