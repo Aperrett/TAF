@@ -68,6 +68,16 @@ module TestSteps
       Report.testPassFail(test_pass)
       Report.checkFailureThreshold(test_file_name)
 
+    elsif ($testStepFunction == 'click_h_tag')
+      # one parameter: item
+      # print the test step information
+      Report.printTestStepHeader
+      # call the appropriate method
+      test_pass = (WebFuncs.click_h_tag($test_value, $locate))
+      # Check for test Pass / Fail
+      Report.testPassFail(test_pass)
+      Report.checkFailureThreshold(test_file_name)
+
     elsif ($testStepFunction == 'write_to_editor')
       # one parameter: iframe, value
       # print the test step information

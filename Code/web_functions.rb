@@ -121,6 +121,33 @@ module WebFuncs
    return false
   end # select item.
 
+  # click on a "h<font size>" tag.
+  def self.click_h_tag(item, locate)
+    found_tags = [
+      $browser.h1(:"#{locate}" => item).exist?,
+      $browser.h2(:"#{locate}" => item).exist?,
+      $browser.h3(:"#{locate}" => item).exist?,
+      $browser.h4(:"#{locate}" => item).exist?,
+      $browser.h5(:"#{locate}" => item).exist?,
+      $browser.h6(:"#{locate}" => item).exist?
+    ]
+
+    raise "Multiple matches" if found_tags.select { |i| i }.size > 1
+    index = found_tags.index(true)
+    return unless index
+    $browser.send("h#{index + 1}", :"#{locate}" => item).click
+    $results_file.write("Item: #{item} has been selected")
+    $PDF.text("Item: #{item} has been selected")
+    $results_file.puts ''
+    return true
+    else
+    $results_file.write("Item: #{item} does not exist")
+    $PDF.text("Item: #{item} does not exist")
+    $results_file.puts ''
+    return false
+    #end
+  end # select item.
+
   # Capture alerts status Function.
   def self.capture_alert
     $browser.div(:class => "alert").exist?
@@ -264,8 +291,8 @@ module WebFuncs
   # check screen data function.
   def self.check_screendata(text_check)
     # one parameter: text value to check if text is displayed on page.
+    sleep 2 
     if ($browser.text.include?(text_check))
-      sleep 2
       $results_file.write("found text: #{text_check}")
       $PDF.text("found text: #{text_check}")
       $results_file.puts ''
@@ -280,6 +307,7 @@ module WebFuncs
 
   # check browser title function.
   def self.check_title(text_check)
+    sleep 2
     # one parameter: text value to check if browser title is correct.
     if ($browser.title.eql?(text_check))
       $results_file.write("Browser title: #{text_check}")
@@ -387,17 +415,17 @@ module WebFuncs
     return false
   end # browser forward
 
-    # Browser Quit function.
-    def self.browser_quit
-      $browser.quit
-      $results_file.write('Browser has closed successfully')
-      $PDF.text('Browser has closed successfully')
-      $results_file.puts ''
-      return true
-    rescue
-      $results_file.write('Browser has failed to close')
-      $PDF.text('Browser has failed to close')
-      $results_file.puts ''
-      return false
-    end # browser close
+  # Browser Quit function.
+  def self.browser_quit
+    $browser.quit
+    $results_file.write('Browser has closed successfully')
+    $PDF.text('Browser has closed successfully')
+    $results_file.puts ''
+    return true
+  rescue
+    $results_file.write('Browser has failed to close')
+    $PDF.text('Browser has failed to close')
+    $results_file.puts ''
+    return false
+  end # browser close
 end	# module web_functions
