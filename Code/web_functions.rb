@@ -145,7 +145,7 @@ module WebFuncs
     $PDF.text("Item: #{item} does not exist")
     $results_file.puts ''
     return false
-  end # click on a "h<font size>" tag.
+  end # click on a "h<font size>" tag
 
   # Capture alerts status Function.
   def self.capture_alert
@@ -185,8 +185,21 @@ module WebFuncs
   # Write text box function.
   def self.write_text(box, value, locate)
     # two parameters: box, value
-    $browser.text_field(:"#{locate}" => box).wait_until_present.set value
-    ($browser.text_field(:"#{locate}" => box).value == value)
+    found_box = [
+      $browser.textarea(:"#{locate}" => box).exist?,
+      $browser.text_field(:"#{locate}" => box).exist?
+    ]
+
+    raise "Multiple matches" if found_box.select { |i| i }.size > 1
+    index = found_box.index(true)
+    return unless index
+    if (index == 0)
+      $browser.textarea(:"#{locate}" => box).wait_until_present.set value
+      ($browser.textarea(:"#{locate}" => box).value == value)
+    elsif (index == 1)
+      $browser.text_field(:"#{locate}" => box).wait_until_present.set value
+      ($browser.text_field(:"#{locate}" => box).value == value)
+    end
     $results_file.write("Text box: #{box} has correct value: #{value}")
     $PDF.text("Text box: #{box} has correct value: #{value}")
     $results_file.puts ''
@@ -220,8 +233,21 @@ module WebFuncs
   # Checkbox data function.
   def self.check_boxdata(box, value, locate)
     # two parameters: box, value
-    $browser.text_field(:"#{locate}" => box).wait_until_present
-    ($browser.text_field(:"#{locate}" => box).value == value)
+    found_box = [
+      $browser.textarea(:"#{locate}" => box).exist?,
+      $browser.text_field(:"#{locate}" => box).exist?
+    ]
+    
+    raise "Multiple matches" if found_box.select { |i| i }.size > 1
+    index = found_box.index(true)
+    return unless index
+    if (index == 0)
+      $browser.textarea(:"#{locate}" => box).wait_until_present
+      ($browser.textarea(:"#{locate}" => box).value == value)
+    elsif (index == 1)
+      $browser.text_field(:"#{locate}" => box).wait_until_present
+      ($browser.text_field(:"#{locate}" => box).value == value)
+    end
     $results_file.write("Text box: #{box} has the correct value: #{value}")
     $PDF.text("Text box: #{box} has the correct value: #{value}")
     $results_file.puts ''
