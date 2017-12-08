@@ -214,7 +214,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader
       # call the appropriate method
-      test_pass = (WebFuncs.radio_button($test_value, $locate))
+      test_pass = (WebFuncs.radio_button($test_value, $test_value2, $locate, $locate2))
       # Check for test Pass / Fail
       Report.testPassFail(test_pass)
       Report.checkFailureThreshold(test_file_name)

@@ -140,7 +140,7 @@ module WebFuncs
     $PDF.text("Item: #{item} has been selected")
     $results_file.puts ''
     return true
-    else
+  else
     $results_file.write("Item: #{item} does not exist")
     $PDF.text("Item: #{item} does not exist")
     $results_file.puts ''
@@ -265,8 +265,9 @@ module WebFuncs
   end # checkBoxData
 
   # Radio button function.
-  def self.radio_button(radio, locate)
+  def self.radio_button(radio, value, locate, locate2 )
     $browser.radio(:"#{locate}" => radio).wait_until_present.click
+    $browser.radio(:"#{locate}" => radio).option(:"#{locate2}" => value).set
     $results_file.write("Radio button: #{radio} has been selected")
     $PDF.text("Radio button: #{radio} has been selected")
     $results_file.puts ''
