@@ -9,15 +9,16 @@ RUN apk --update --upgrade add --no-cache \
     build-base \ 
     curl \
     unzip \
+    ca-certificates \
     libexif \
     libffi-dev \
     chromium \
-    chromium-chromedriver
-
+    chromium-chromedriver \
+    && rm -rf /var/cache/apk/*
+    
 WORKDIR /app
 COPY Gemfile Gemfile.lock /app/
 RUN bundle install
 COPY . /app/
-
 
 CMD bundle exec ruby main.rb [Test File]
