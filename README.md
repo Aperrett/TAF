@@ -7,17 +7,29 @@ Please see the Wiki for more details: https://github.com/Aperrett/TAF/wiki
 <h2>To use the Docker container image</h2>
 To build the Docker container navigate to the Code/ Folder:
 
-Execute "docker build -t taf ./" in cmd line.
+To build the TAF to use in a Docker conatainer use the following script in terminal:
 
-To run the container in an interactive shell:
+./Start_TAF_Only.sh
 
-Execute "docker run —rm -it taf sh " in cmd line.
+This will also start the TAF container for you.
+
+To build the TAF to use in a Docker conatainer and to use Selenium Grid Docker use the following script in terminal:
+
+./Start_TAF_With_Selenium_Grid.sh
+
+This will also start the TAF container and selenium Grid container with the following browsers: Firefox and Chrome.
+
+Also to note that this will Also link the TAF to the Selenium Grid Container --- Note not working at moment ---.
+
+To access the Selenium Grid navigate to your browser: http://localhost:4444/grid/console
 
 To run a Test Suite:
 
 Execute "ruby main.rb [Testsuite.csv or Testsuite.xml]" in cmd line.
 
 Enjoy and Thank you :) 
+
+If you would like to get involved in supporting this project going forward please get in touch.
 
 <h2>Author</h2>
 
