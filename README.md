@@ -27,7 +27,7 @@ To run a Test Suite:
 
 Execute "ruby main.rb [Testsuite.csv or Testsuite.xml]" in cmd line.
 
-Enjoy and Thank you :) 
+<h2>Contributing</h2>
 
 If you would like to get involved in supporting this project going forward please get in touch.
 
