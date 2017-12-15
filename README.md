@@ -13,7 +13,7 @@ To build the TAF to use in a Docker conatainer use the following script in termi
 
 This will also start the TAF container for you.
 
-To build the TAF to use in a Docker conatainer and to use Selenium Grid Docker use the following script in terminal:
+To build the TAF to use in a Docker conatainer and to use Selenium grid Docker use the following script in terminal:
 
 ./Start_TAF_With_Selenium_Grid.sh
 
@@ -26,6 +26,8 @@ To access the Selenium Grid navigate to your browser: http://localhost:4444/grid
 To run a Test Suite:
 
 Execute "ruby main.rb [Testsuite.csv or Testsuite.xml]" in cmd line.
+
+Note: To exit the TAF container type: 'exit' then type 'docker-compose down' to shutdown Selenium grid. 
 
 <h2>Contributing</h2>
 
