@@ -27,7 +27,7 @@ To run a Test Suite:
 
 Execute "ruby main.rb [Testsuite.csv or Testsuite.xml]" in cmd line.
 
-Note: To exit the TAF container type: 'exit' then type 'docker-compose down' to shutdown Selenium grid. 
+Note: To exit the TAF container type: 'exit' then type: 'docker-compose down' to shutdown Selenium grid. 
 
 <h2>Contributing</h2>
 
