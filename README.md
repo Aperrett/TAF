@@ -4,8 +4,8 @@ Created in Ruby and using Watir to allow a user to Automate a website using an E
 
 Please see the Wiki for more details: https://github.com/Aperrett/TAF/wiki
 
-<h2>To use the Docker container image</h2>
-To build the Docker container navigate to the Code/ Folder:
+<h2>To use the Docker container images</h2>
+To build the TAF Docker container navigate to the Code/ Folder:
 
 To build the TAF to use in a Docker conatainer use the following script in terminal:
 
