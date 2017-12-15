@@ -21,8 +21,9 @@ build_selenium_grid() {
 build_selenium_grid
 echo -e $(docker-compose up -d)
 echo ""
-echo "Open a browser to: http://localhost:4444/grid/console"
+echo 'Open a browser to Selenium grid: http://localhost:4444/grid/console'
 
+# Start TAF docker command with Results folder exposed from the container.
 echo ""
 echo "Launching the TAF container into the container shell"
 echo "To execute a test type the following code below:"
