@@ -19,7 +19,7 @@ To build the TAF to use in a Docker conatainer and to use Selenium grid Docker u
 
 This will also start the TAF container and selenium Grid container with the following browsers: Firefox and Chrome.
 
-Also to note that this will Also link the TAF to the Selenium Grid Container --- Note not working at moment ---.
+Also to note that this will link the TAF to the Selenium Grid Container via internal selenium grid docker network.
 
 To access the Selenium Grid navigate to your browser: http://localhost:4444/grid/console
 
