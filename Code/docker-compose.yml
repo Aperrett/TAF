@@ -1,22 +1,50 @@
 #docker-compose scale up file
 #To execute this docker-compose yml file use docker-compose up -d
 
-#selenium-hub: equivalent to manually running the command docker run -d -p 4444:4444 --name selenium-hub  -P selenium/hub
-selenium-hub:
-  restart: always
-  image: selenium/hub:latest
-  ports:
-    - "4444:4444"
-#selenium-chrome equivalent to manually running the command docker run -d --link selenium-hub:hub -P --name chrome selenium/node-chrome-debug
-selenium-chrome:
-  restart: always
-  image: selenium/node-chrome-debug
-  stdin_open: true
-  links:
-    - selenium-hub:hub
-#selenium-firefox equivalent to manually running the command docker run -d --link selenium-hub:hub -P --name firefox selenium/node-firefox-debug
-selenium-firefox:
-  restart: always
-  image: selenium/node-firefox-debug
-  links:
-    - selenium-hub:hub
+version: '2'
+
+services:
+    selenium_hub:
+        image: selenium/hub:latest
+        container_name: selenium_hub
+        privileged: true
+        ports:
+            - 4444:4444
+        environment:
+            - GRID_TIMEOUT=120000
+            - GRID_BROWSER_TIMEOUT=120000
+        networks:
+            - selenium_grid_internal
+
+    nodechrome:
+        image: selenium/node-chrome
+        privileged: true
+        depends_on:
+            - selenium_hub
+        ports:
+            - 5900
+        environment:
+            - no_proxy=localhost
+            - TZ=Europe/London
+            - HUB_PORT_4444_TCP_ADDR=selenium_hub
+            - HUB_PORT_4444_TCP_PORT=4444
+        networks:
+            - selenium_grid_internal
+
+    nodefirefox:
+        image: selenium/node-firefox
+        privileged: true
+        depends_on:
+            - selenium_hub
+        ports:
+            - 5900
+        environment:
+            - no_proxy=localhost
+            - TZ=Europe/London
+            - HUB_PORT_4444_TCP_ADDR=selenium_hub
+            - HUB_PORT_4444_TCP_PORT=4444
+        networks:
+            - selenium_grid_internal
+
+networks:
+    selenium_grid_internal:

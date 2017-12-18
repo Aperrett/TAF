@@ -36,7 +36,7 @@ module Utils
   def self.open_browser
     begin
       lcBrowserType = $browserType.downcase
-      selenium_grid_url = "http://localhost:4444/wd/hub"
+      selenium_grid_url = "http://hub:4444/wd/hub"
         # set up for any normal browser type
         if((lcBrowserType == 'chrome'))
           $browser = Watir::Browser.new:chrome, :switches => %w[
