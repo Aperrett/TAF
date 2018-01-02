@@ -29,7 +29,7 @@ echo ""
 echo "Launching the TAF container into the container shell"
 echo "To execute a test type the following code below:"
 echo "ruby main.rb Tests/TS_<filename>"
-docker run -v --rm --network taf_selenium_grid_internal --link selenium_hub:hub -it --name taf -v "$(pwd)"/target:/app/Results:cached taf sh
+docker run --rm --network taf_selenium_grid_internal --link selenium_hub:hub -it --name taf -v "$(pwd)"/target:/app/Results:cached taf sh
 
 # Exit the script.
 exit $?
