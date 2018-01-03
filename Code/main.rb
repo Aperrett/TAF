@@ -65,5 +65,6 @@ module Main
 
     # close browser after tests have completed
     $browser.quit
+    $?.exitstatus
   end
 end
