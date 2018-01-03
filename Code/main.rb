@@ -65,9 +65,7 @@ module Main
 
     # close browser after tests have completed
     $browser.quit
+	  rescue
+	  $browser = "No Browser Required"
   end
-  $?.exitstatus => return error code    
-  $?.success? => return true if error code is 0, otherwise false
-  $?.pid => created process pid
-end
 end
