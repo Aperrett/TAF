@@ -65,6 +65,7 @@ module Main
 
     # close browser after tests have completed
     $browser.quit
-    $?.exitstatus
+    rv = system(cmd)
+    status = $?.exitstatus
   end
 end
