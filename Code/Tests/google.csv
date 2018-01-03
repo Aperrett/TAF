@@ -1,0 +1,10 @@
+Project_Name,Project_ID,Sprint,,,,,
+Promon,Portal,1,,,,,
+,,,,,,,
+Test_ID,Test_Description,,,,,,
+test1,to test google,,,,,,
+,,,,,,,
+Test_Step,Test_Step_Description,Test_Step_Function,Test_Step_Value,Locator_Finder_Value,Test_Step_Value2,Locator_Finder_Value2,Screenshot
+1,Open a browser to google,Open_URL,https://www.google.co.uk/,,,,Y
+2,Insert bbc in to search box,Write_Box_Data,q,name,bbc,,Y
+3,Click the search button,Click_Button,btnK,name,,,Y
