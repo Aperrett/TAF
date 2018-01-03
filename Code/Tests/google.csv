@@ -2,9 +2,9 @@ Project_Name,Project_ID,Sprint,,,,,
 Promon,Portal,1,,,,,
 ,,,,,,,
 Test_ID,Test_Description,,,,,,
-test1,to test google,,,,,,
+test1,to test ipause,,,,,,
 ,,,,,,,
 Test_Step,Test_Step_Description,Test_Step_Function,Test_Step_Value,Locator_Finder_Value,Test_Step_Value2,Locator_Finder_Value2,Screenshot
-1,Open a browser to google,Open_URL,https://www.google.co.uk/,,,,Y
-2,Insert bbc in to search box,Write_Box_Data,q,name,bbc,,Y
-3,Click the search button,Click_Button,btnK,name,,,Y
+1,Pausing the tests this is a test,Ipause,5,,,,N
+2,Pausing the tests this is a test 2,Ipause,5,,,,N
+3,Pausing the tests this is a test 3,Ipause,5,,,,N
