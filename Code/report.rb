@@ -257,19 +257,19 @@ module Report
   # output to XML file format for Junit in jenkins
   builder = Nokogiri::XML::Builder.new do |xml|
     xml.testsuites {
-      xml.testsuite.name=%Q[#{$testSuiteFile} tests=#{$totalTests} failures=#{$totalTestFailures}]
+      xml.testsuite.name=%Q[#{$testSuiteFile} tests=#{$totalTests} failures=#{$totalTestFailures} time=#{$test_end_time}]
     }
   end
   puts builder.to_xml
 
     # open the suite summary file for writing if not already open
-    if (!File.exists?($TestSuiteSummaryXML) || $TestSuiteSummaryXML.closed?)
-      $testSuiteSummaryFile_xml = File.open($TestSuiteSummaryXML, 'w+')
+   # if (!File.exists?($TestSuiteSummaryXML) || $TestSuiteSummaryXML.closed?)
+      $testSuiteSummaryFile_xml = File.open($TestSuiteSummaryXML, "w+")
       $testSuiteSummaryFile_xml.write builder.to_xml
 
-    elsif
-      $log.puts "test suite summary file xml name: #{$TestSuiteSummaryXML} is already open"
-    end
+   # elsif
+   #   $log.puts "test suite summary file xml name: #{$TestSuiteSummaryXML} is already open"
+   # end
 
     # if the file is open then close it
     if (!$testSuiteSummaryFile_xml.closed?) then
