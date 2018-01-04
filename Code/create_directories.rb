@@ -81,7 +81,7 @@ module CreateDirectories
     $TestSuiteSummaryPDF = abs_path_run_no_dir + '/suite_summary.pdf'
 
     # the test suite summary is a XML report generated will be called 'suite_summary.xml'
-    $TestSuiteSummaryXML = result_home + '/suite_summary.xml'
+    $TestSuiteSummaryXML = "Results" + '/suite_summary.xml'
 
     # the log file name will be under the test ID directory
     $logFileName = testid_dir + '/TestLogFile.txt'
