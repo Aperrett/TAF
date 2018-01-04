@@ -264,7 +264,7 @@ module Report
 
     # open the suite summary file for writing if not already open
     if (!File.exists?($TestSuiteSummaryXML) || $TestSuiteSummaryXML.closed?)
-      $testSuiteSummaryFile_xml = File.open($TestSuiteSummaryXML, 'w')
+      $testSuiteSummaryFile_xml = File.open($TestSuiteSummaryXML, 'w+')
       $testSuiteSummaryFile_xml.write builder.to_xml
 
     elsif
