@@ -257,10 +257,11 @@ module Report
   # output to XML file format for Junit in jenkins
   builder = Nokogiri::XML::Builder.new do |xml|
     xml.testsuites {
-      xml.testsuite.name=%Q[#{$testSuiteFile} tests=#{$totalTests} failures=#{$totalTestFailures} time=#{$test_end_time}]
+      xml.testsuite("name" => "#{$testSuiteFile}", "tests" => "#{$totalTests}", "failures" => "#{$totalTestFailures}", "time"=> "#{$test_end_time}")
     }
   end
   puts builder.to_xml
+
 
     # open the suite summary file for writing if not already open
    # if (!File.exists?($TestSuiteSummaryXML) || $TestSuiteSummaryXML.closed?)
