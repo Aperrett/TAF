@@ -257,7 +257,7 @@ module Report
   # output to XML file format for Junit in jenkins
   builder = Nokogiri::XML::Builder.new do |xml|
     xml.testsuites {
-      xml.testsuite("name" => "#{$testSuiteFile}", "tests" => "#{$totalTests}", "failures" => "#{$totalTestFailures}", "time"=> "#{$test_end_time}")
+      xml.testsuite("name" => "#{$testSuiteFile}", "tests" => "#{$totalTests}", "failures" => "#{$totalTestFailures}")
     }
   end
   puts builder.to_xml
