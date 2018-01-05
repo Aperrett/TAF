@@ -259,7 +259,7 @@ module Report
     xml.testsuites {
       xml.testsuite("classname" => "#{$testSuiteFile}", "tests" => "#{$numberOfTestSpecs}")
       #xml.testsuite("tests" => "#{$totalTests}")
-      xml.testcase("name" => "#{$testSpecDesc.chomp}", "tests" => "#{$totalTests}", "failures" => "#{$totalTestFailures}")
+      xml.testcase("classname" => "#{$testSpecDesc.chomp}", "name" => "#{$testSpecDesc.chomp}", "tests" => "#{$numberOfTestSteps}", "failures" => "#{$totalTestFailures}")
      # xml.testcase("classname" => "#{$testSuiteFile}}","tests" => "#{$totalTests}", "failures" => "#{$totalTestFailures}")
     }
   end

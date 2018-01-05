@@ -6,3 +6,4 @@ Test_Suite,Suite_Description,Tester,
 ,,,
 Test_ID,Test_Specification,Browser,Enviroment
 Test_01,Tests/google.csv,Headless,N/A
+Test_02,Tests/google.csv,Chrome,N/A
