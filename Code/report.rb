@@ -255,7 +255,7 @@ module Report
   puts "this is a test please ignore XML out stuff"
 
   # output to XML file format for Junit in jenkins
-  builder = Nokogiri::XML::Builder.new do |xml|
+  builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
     xml.testsuites {
       xml.testsuite("name" => "#{$testSuiteFile}", "tests" => "#{$totalTests}", "failures" => "#{$totalTestFailures}")
     }
