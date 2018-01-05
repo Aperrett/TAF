@@ -258,9 +258,9 @@ module Report
   builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
     xml.testsuites {
       #xml.testsuite("classname" => "#{$testSuiteFile}", "tests" => "#{$numberOfTestSpecs}")
-      xml.testsuite("name" => "#{$testSuiteFile}", "tests" => "#{$numberOfTestSpecs}")
+      xml.testsuite("classname" => "#{$testSuiteFile}", "tests" => "#{$numberOfTestSpecs}")
       #xml.testsuite("tests" => "#{$totalTests}")
-      xml.testcase("classname" => "#{$testSpecDesc}", "name" => "#{$testSpecDesc}", "tests" => "#{$numberOfTestSteps}", "failures" => "#{$totalTestFailures}")
+      xml.testcase("name" => "#{$testSpecDesc}", "tests" => "#{$numberOfTestSteps}", "failures" => "#{$totalTestFailures}")
      # xml.testcase("classname" => "#{$testSuiteFile}}","tests" => "#{$totalTests}", "failures" => "#{$totalTestFailures}")
     }
   end
