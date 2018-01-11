@@ -21,4 +21,4 @@ COPY Gemfile Gemfile.lock /app/
 RUN bundle install
 COPY . /app/
 
-CMD bundle exec ruby main.rb [Test File]
+CMD bundle exec ruby main.rb [Test Suite name]

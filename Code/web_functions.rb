@@ -140,7 +140,7 @@ module WebFuncs
     $PDF.text("Item: #{item} has been selected")
     $results_file.puts ''
     return true
-  else
+  rescue
     $results_file.write("Item: #{item} does not exist")
     $PDF.text("Item: #{item} does not exist")
     $results_file.puts ''

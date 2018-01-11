@@ -80,12 +80,12 @@ module CreateDirectories
     # the test suite summary is a pdf report generated will be called 'suite_summary.pdf'
     $TestSuiteSummaryPDF = abs_path_run_no_dir + '/suite_summary.pdf'
 
-    # the test suite summary is a XML report generated will be called 'suite_summary.xml'
-    time = Time.new
-    f_date = time.strftime('%d-%b-%Y')
-    f_time = time.strftime('%H_%M_%S')
+    # the test suite summary is a XML report generated will be called 'suite_summary.xml' - not finished
+    #time = Time.new
+    #f_date = time.strftime('%d-%b-%Y')
+    #f_time = time.strftime('%H_%M_%S')
 
-    $TestSuiteSummaryXML = "Results/" + f_date + '_' + f_time + '_suite_summary.xml'
+    #$TestSuiteSummaryXML = "Results/" + f_date + '_' + f_time + '_suite_summary.xml'
 
     # the log file name will be under the test ID directory
     $logFileName = testid_dir + '/TestLogFile.txt'

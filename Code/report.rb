@@ -169,7 +169,7 @@ module Report
 	    $PDF.text("Test Summary: #{$testStepReportSummary[testFileNumber]}")
 	    $PDF.text ' '
       $PDF.text("Test end time: #{$test_case_end_time}")
-	    $PDF.render_file ($testResultFileNamePDF)
+      $PDF.render_file ($testResultFileNamePDF)
     end # printTestStepSummary
 
     # output the overall test results summary
@@ -251,34 +251,5 @@ module Report
   text "Total Tests Failed: #{$totalTestFailures}", :color => "ff0000" # red
   text "Total Tests: #{$totalTests}"
   end
-
-  puts "this is a test please ignore XML out stuff"
-
-  # output to XML file format for Junit in jenkins
-  builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
-    xml.testsuites {
-      #xml.testsuite("classname" => "#{$testSuiteFile}", "tests" => "#{$numberOfTestSpecs}")
-      xml.testsuite("classname" => "#{$testSuiteFile}", "tests" => "#{$totalTestPasses}", "failures" => "#{$totalTestFailures}")
-      #xml.testsuite("tests" => "#{$totalTests}")
-      xml.testcase("name" => "#{$testSpecDesc}", "assertions" => "#{$numberOfTestSteps}")
-     # xml.testcase("classname" => "#{$testSuiteFile}}","tests" => "#{$totalTests}", "failures" => "#{$totalTestFailures}")
-    }
-  end
-  puts builder.to_xml
-
-
-    # open the suite summary file for writing if not already open
-   # if (!File.exists?($TestSuiteSummaryXML) || $TestSuiteSummaryXML.closed?)
-      $testSuiteSummaryFile_xml = File.open($TestSuiteSummaryXML, "w+")
-      $testSuiteSummaryFile_xml.write builder.to_xml
-
-   # elsif
-   #   $log.puts "test suite summary file xml name: #{$TestSuiteSummaryXML} is already open"
-   # end
-
-    # if the file is open then close it
-    if (!$testSuiteSummaryFile_xml.closed?) then
-      $testSuiteSummaryFile_xml.close
-    end
 end # printOverallTestSummary
 end # Report module
