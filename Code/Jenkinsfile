@@ -1,0 +1,16 @@
+node {
+    stage('Code Checkout'){
+        echo 'Code Checkout'
+        git branch:"master", url:"https://github.com/Aperrett/TAF.git"
+    }
+    stage('Build Test Environment') {
+        echo 'Build Docker Test Environment'
+        sh "docker build -t taf ./Code/"
+        echo 'Finished Building Docker Test Enviroment'
+    }
+    stage('Run Full Regression Test Pack'){
+        echo 'Run Full Regression Test Pack in Docker'
+        sh 'docker run --rm taf ruby main.rb Tests/TS_test.csv'
+        echo 'Finished Running Tests'
+    }
+}
