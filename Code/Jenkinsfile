@@ -1,3 +1,6 @@
+#!/usr/bin/env groovy
+
+// Jenkinsfile for the TAF to run in pipeline to run full regression test pack.
 node {
     stage('Code Checkout'){
         echo 'Code Checkout'
