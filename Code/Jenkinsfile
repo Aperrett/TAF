@@ -16,4 +16,8 @@ node {
         sh 'docker run --rm taf ruby main.rb Tests/TS_test.csv'
         echo 'Finished Running Tests'
     }
+    stage('Clean Workspace'){
+        echo 'Clean Workspace'
+        cleanWs()
+    }
 }
