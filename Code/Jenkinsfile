@@ -19,6 +19,6 @@ node {
     stage('Clean Workspace'){
         echo 'Clean Workspace'
         cleanWs deleteDirs: true, patterns: [[pattern: 'Code', type: 'INCLUDE'], [pattern: 'Excel_Templates', type: 'INCLUDE'], [pattern: 'target', type: 'EXCLUDE']]
-        echo 'Test Result can be found in the Jenkins home dir in <target> folder'
+        echo 'Test Result can be found in the Jenkins workspace in the <target> folder'
     }
 }
