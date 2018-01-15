@@ -13,7 +13,7 @@ node {
     }
     stage('Run Full Regression Test Pack'){
         echo 'Run Full Regression Test Pack in Docker'
-        sh 'docker run --rm taf -v "$(pwd)"/target:/app/Results:cached ruby main.rb Tests/TS_test.csv'
+        sh 'docker run --rm taf -v /target:/app/Results:cached ruby main.rb Tests/TS_test.csv'
         echo 'Finished Running Tests'
     }
     stage('Clean Workspace'){
