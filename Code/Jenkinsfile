@@ -18,6 +18,6 @@ node {
     }
     stage('Clean Workspace'){
         echo 'Clean Workspace'
-        cleanWs deleteDirs: true
+        //cleanWs deleteDirs: true
     }
 }
