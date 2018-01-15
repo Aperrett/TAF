@@ -18,6 +18,7 @@ node {
     }
     stage('Clean Workspace'){
         echo 'Clean Workspace'
-        cleanWs deleteDirs: true, patterns:[[pattern:'/target', type:'EXCLUDE']]
+        //cleanWs deleteDirs: true, patterns:[[pattern:'/target', type:'EXCLUDE']]
+        cleanWs(patterns:[[pattern:'target', type:'EXCLUDE']])
     }
 }
