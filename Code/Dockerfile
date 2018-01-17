@@ -12,7 +12,7 @@ RUN apk --update --upgrade add --no-cache \
     ca-certificates \
     libexif \
     libffi-dev \
-    firefox \
+    firefox-esr \
     chromium \
     chromium-chromedriver \
     && rm -rf /var/cache/apk/*
