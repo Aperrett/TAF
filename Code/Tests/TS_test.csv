@@ -5,5 +5,5 @@ Test_Suite,Suite_Description,Tester,
 1,SC_Demo_Suite,Andy,
 ,,,
 Test_ID,Test_Specification,Browser,Enviroment
-Test_01,Tests/google.csv,Headless,N/A
-Test_02,Tests/google.csv,Headless,N/A
+Test_01,Tests/google.csv,Firefox-Headless,N/A
+Test_02,Tests/google.csv,Firefox-Headless,N/A

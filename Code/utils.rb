@@ -25,8 +25,10 @@ module Utils
         return 'firefox-remote'
       elsif (($browser.driver.capabilities[:b_name]).casecmp('safari') == 0)
         return 'safari'
-      elsif (($browser.driver.capabilities[:b_name]).casecmp('headless') == 0)
-        return 'headless'
+      elsif (($browser.driver.capabilities[:b_name]).casecmp('firefox-headless') == 0)
+        return 'firefox-headless'
+      elsif (($browser.driver.capabilities[:b_name]).casecmp('chrome-headless') == 0)
+        return 'chrome-headless'
       else
         return 'unknown'
       end
@@ -57,6 +59,18 @@ module Utils
           $browser.driver.manage.window.resize_to(screen_width,screen_height)
           $browser.driver.manage.window.move_to(0,0)
 
+        elsif((lcBrowserType == 'firefox-headless'))
+          caps = Selenium::WebDriver::Remote::Capabilities.firefox
+          options = Selenium::WebDriver::Firefox::Options.new(args: ['-headless'])
+          caps['acceptInsecureCerts'] = true
+          driver = Selenium::WebDriver.for(:firefox, options: options, desired_capabilities: caps)
+          $browser = Watir::Browser.new(driver)
+          # makes the browser full screen.
+          screen_width = $browser.execute_script("return screen.width;")
+          screen_height = $browser.execute_script("return screen.height;")
+          $browser.driver.manage.window.resize_to(screen_width,screen_height)
+          $browser.driver.manage.window.move_to(0,0)  
+
         elsif((lcBrowserType == 'firefox-remote'))
           caps = Selenium::WebDriver::Remote::Capabilities.firefox
           caps['acceptInsecureCerts'] = true
@@ -73,9 +87,9 @@ module Utils
           $browser.driver.manage.window.resize_to(screen_width,screen_height)
           $browser.driver.manage.window.move_to(0,0)
 
-        elsif((lcBrowserType == 'headless'))
+        elsif((lcBrowserType == 'chrome-headless'))
             $browser = Watir::Browser.new:chrome, :switches => %w[
-            --start-maximized --disable-gpu --headless
+            --start-maximized --disable-gpu --headless --acceptInsecureCerts-true
             --no-sandbox --window-size=1920,1080]
 
           # unable to select the specified browser so throw an exception
