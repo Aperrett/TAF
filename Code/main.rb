@@ -21,8 +21,10 @@ module Main
     # variables to manage the failure reporting
     $testStepPasses     = 0
     $testStepFailures   = 0
+    $testStepNotrun     = 0
     $totalTestPasses    = 0
     $totalTestFailures  = 0
+    $totalTestNotrun  = 0
     $consecutiveFailThreshold = 5
     $previousTestFail = false
     $currentTestFail = false

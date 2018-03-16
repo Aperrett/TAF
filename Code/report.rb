@@ -109,6 +109,8 @@ module Report
 		    $PDF.text "Test #{$testStep} has FAILED ", :color => "ff0000" # red
 	      puts "Test #{$testStep} has FAILED ".red
       else
+        $testStepNotrun += 1
+        $results_file.write("Test #{$testStep} no checks performed, ")
         puts "Test #{$testStep} no checks performed ".blue
 	    	$PDF.text "Test #{$testStep} no checks performed ", :color => "0000ff" # blue
     end
@@ -155,7 +157,8 @@ module Report
       "\n" 'Started at:', $test_case_start_time, \
       "\n" 'Finished at:', $test_case_end_time, \
       "\n" 'There are:', $testStepPasses, 'Passes' \
-      "\n" 'There are:', $testStepFailures, 'Failures' "\n"
+      "\n" 'There are:', $testStepFailures, 'Failures' \
+      "\n" 'There are:', $testStepNotrun, 'Not Runs' "\n"
       # ... and save in a format that is printable
       $testStepReportSummary[testFileNumber] = $testStepReportSummary[testFileNumber].join(' ')
       $results_file.puts ''
@@ -193,7 +196,9 @@ module Report
       puts ''
       print ("Total Tests Failed: #{$totalTestFailures}").red
       puts ''
-      $totalTests = [$totalTestPasses,$totalTestFailures].sum
+      print ("Total Tests Not Run: #{$totalTestNotrun}").blue
+      puts ''
+      $totalTests = [$totalTestPasses,$totalTestFailures,$totalTestNotrun].sum
       print ("Total Tests: #{$totalTests}")
       puts ''
 
@@ -227,6 +232,8 @@ module Report
         $testSuiteSummaryFile.puts ''
         $testSuiteSummaryFile.write("Total Tests Failed: #{$totalTestFailures}")
         $testSuiteSummaryFile.puts ''
+        $testSuiteSummaryFile.write("Total Tests Not Run: #{$totalTestNotrun}")
+        $testSuiteSummaryFile.puts ''
         $testSuiteSummaryFile.write("Total Tests: #{$totalTests}")
         $testSuiteSummaryFile.puts ''
 
@@ -249,6 +256,7 @@ module Report
   text("Total Tests duration: " + TimeDifference.between($test_end_time, $test_start_time).humanize)
   text "Total Tests Passed: #{$totalTestPasses}", :color => "00ff00" # green
   text "Total Tests Failed: #{$totalTestFailures}", :color => "ff0000" # red
+  text "Total Tests Failed: #{$totalTestNotrun}", :color => "0000ff" # blue
   text "Total Tests: #{$totalTests}"
   end
 end # printOverallTestSummary

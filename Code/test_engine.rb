@@ -80,7 +80,7 @@ module TestEngine
 
                 $results_file.write("Number of test steps: #{$numberOfTestSteps}")
                 # Show in the Test result pdf file
-				$PDF.text("Number of test steps: #{$numberOfTestSteps}")
+				        $PDF.text("Number of test steps: #{$numberOfTestSteps}")
                 $results_file.puts ''
 
                 # get the test case start time
@@ -134,8 +134,10 @@ module TestEngine
         # the test steps
         $totalTestPasses   += $testStepPasses
         $totalTestFailures += $testStepFailures
+        $totalTestNotrun += $testStepNotrun
         $testStepPasses   = 0
         $testStepFailures = 0
+        $testStepNotrun   = 0
 
       end # while loop for test files
     end
