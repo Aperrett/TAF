@@ -256,7 +256,7 @@ module Report
   text("Total Tests duration: " + TimeDifference.between($test_end_time, $test_start_time).humanize)
   text "Total Tests Passed: #{$totalTestPasses}", :color => "00ff00" # green
   text "Total Tests Failed: #{$totalTestFailures}", :color => "ff0000" # red
-  text "Total Tests Failed: #{$totalTestNotrun}", :color => "0000ff" # blue
+  text "Total Tests Not Run: #{$totalTestNotrun}", :color => "0000ff" # blue
   text "Total Tests: #{$totalTests}"
   end
 end # printOverallTestSummary
