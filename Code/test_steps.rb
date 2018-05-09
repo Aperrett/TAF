@@ -255,6 +255,15 @@ module TestSteps
       Report.testPassFail(test_pass)
       Report.checkFailureThreshold(test_file_name)
 
+    elsif ($testStepFunction == 'handle_browser_window')
+      # print the test step information
+      Report.printTestStepHeader
+      # call the appropriate method
+      test_pass = (WebFuncs.handle_browser_window($test_value))
+      # Check for test Pass / Fail
+      Report.testPassFail(test_pass)
+      Report.checkFailureThreshold(test_file_name)  
+
     else
       $results_file.write("Unable to match function: #{$testStepFunction}")
       $results_file.puts ''

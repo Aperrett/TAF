@@ -17,18 +17,14 @@ module Utils
         return 'ie'
       elsif (($browser.driver.capabilities[:b_name]).casecmp('chrome') == 0)
         return 'chrome'
-      elsif (($browser.driver.capabilities[:b_name]).casecmp('chrome-remote') == 0)
-        return 'chrome-remote'
-      elsif (($browser.driver.capabilities[:b_name]).casecmp('firefox') == 0)
-        return 'firefox'
-      elsif (($browser.driver.capabilities[:b_name]).casecmp('firefox-remote') == 0)
-        return 'firefox-remote'
-      elsif (($browser.driver.capabilities[:b_name]).casecmp('safari') == 0)
-        return 'safari'
-      elsif (($browser.driver.capabilities[:b_name]).casecmp('firefox-headless') == 0)
-        return 'firefox-headless'
       elsif (($browser.driver.capabilities[:b_name]).casecmp('chrome-headless') == 0)
         return 'chrome-headless'
+      elsif (($browser.driver.capabilities[:b_name]).casecmp('firefox') == 0)
+        return 'firefox'
+      elsif (($browser.driver.capabilities[:b_name]).casecmp('firefox-headless') == 0)
+        return 'firefox-headless'
+      elsif (($browser.driver.capabilities[:b_name]).casecmp('safari') == 0)
+        return 'safari'
       else
         return 'unknown'
       end
@@ -38,15 +34,15 @@ module Utils
   def self.open_browser
     begin
       lcBrowserType = $browserType.downcase
-      selenium_grid_url = "http://hub:4444/wd/hub"
-        # set up for any normal browser type
+      # set up for any normal browser type
         if((lcBrowserType == 'chrome'))
           $browser = Watir::Browser.new:chrome, :switches => %w[
             --start-maximized --window-size=1920,1080]
 
-        elsif((lcBrowserType == 'chrome-remote'))
-         $browser = Watir::Browser.new:chrome, {timeout: 120, url: 
-         selenium_grid_url}
+        elsif((lcBrowserType == 'chrome-headless'))
+          $browser = Watir::Browser.new:chrome, :switches => %w[
+          --start-maximized --disable-gpu --headless --acceptInsecureCerts-true
+          --no-sandbox --window-size=1920,1080]
 
         elsif((lcBrowserType == 'firefox'))
           caps = Selenium::WebDriver::Remote::Capabilities.firefox
@@ -71,14 +67,6 @@ module Utils
           $browser.driver.manage.window.resize_to(screen_width,screen_height)
           $browser.driver.manage.window.move_to(0,0)  
 
-        elsif((lcBrowserType == 'firefox-remote'))
-          caps = Selenium::WebDriver::Remote::Capabilities.firefox
-          caps['acceptInsecureCerts'] = true
-          $browser = Watir::Browser.new(
-            :remote,
-            :url => selenium_grid_url,
-            :desired_capabilities => caps)
-
         elsif((lcBrowserType == 'ie') || (lcBrowserType == 'safari'))
           $browser = Watir::Browser.new:"#{lcBrowserType}"
           # makes the browser full screen.
@@ -86,11 +74,6 @@ module Utils
           screen_height = $browser.execute_script("return screen.height;")
           $browser.driver.manage.window.resize_to(screen_width,screen_height)
           $browser.driver.manage.window.move_to(0,0)
-
-        elsif((lcBrowserType == 'chrome-headless'))
-            $browser = Watir::Browser.new:chrome, :switches => %w[
-            --start-maximized --disable-gpu --headless --acceptInsecureCerts-true
-            --no-sandbox --window-size=1920,1080]
 
           # unable to select the specified browser so throw an exception
         else

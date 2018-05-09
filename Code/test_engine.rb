@@ -20,7 +20,7 @@ module TestEngine
       $test_start_time = Report.get_time
 
       # create project folders - these only need creating once per test suite
-	  CreateDirectories.construct_projectdirs
+	    CreateDirectories.construct_projectdirs
 
       # loop through all the available test files to execute the tests
       while (test_file_name_index < $numberOfTestSpecs) do
@@ -33,7 +33,7 @@ module TestEngine
           Utils.parseTestSuiteData(test_file_name_index)
 
           # remove any unwanted end-of-line characters from the file name
-		  test_file_name = $testSpecDesc.chomp
+		      test_file_name = $testSpecDesc.chomp
 
             begin # start of rescue block for readTestData
               # read in the test data
@@ -84,9 +84,9 @@ module TestEngine
                 $results_file.puts ''
 
                 # get the test case start time
-		        $test_case_start_time = Report.get_time
+		            $test_case_start_time = Report.get_time
                 # initialise the test end time
-		        $test_case_end_time = Report.get_time
+		            $test_case_end_time = Report.get_time
 
                 while (testStepIndex < finalTestStepIndex) do
                   begin
@@ -134,7 +134,7 @@ module TestEngine
         # the test steps
         $totalTestPasses   += $testStepPasses
         $totalTestFailures += $testStepFailures
-        $totalTestNotrun += $testStepNotrun
+        $totalTestNotrun   += $testStepNotrun
         $testStepPasses   = 0
         $testStepFailures = 0
         $testStepNotrun   = 0

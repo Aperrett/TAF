@@ -20,6 +20,9 @@ module TafConfig
   require 'time_difference'
   require 'colored'
 
+  # Config setting for Pawn to hide warning message.
+  Prawn::Font::AFM.hide_m17n_warning = true
+
   # list of all the required files
   require_relative 'test_steps.rb'
   require_relative 'report.rb'

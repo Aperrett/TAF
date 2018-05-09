@@ -454,4 +454,20 @@ module WebFuncs
     $results_file.puts ''
     return false
   end # browser close
+
+  # handle browser windows function.
+  def self.handle_browser_window(text_check)
+        $browser.window(title: "#{text_check}").use
+        ($browser.title.eql?("#{text_check}"))
+        $results_file.write("Window title: #{text_check} is correct")
+        $PDF.text("Window title: #{text_check} is correct")
+        $results_file.puts ''
+        return true
+  rescue
+        #$browser.quit
+        $results_file.write("Window not found: #{text_check}")
+        $PDF.text("Window not found: #{text_check}")
+        $results_file.puts ''
+        return false 
+  end # handle browser windows function. 
 end	# module web_functions

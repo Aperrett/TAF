@@ -1,4 +1,4 @@
-FROM ruby:2.4.2-alpine3.6 
+FROM ruby:2.5.1-alpine3.7 
 
 LABEL author="Andy Perrett"
 
@@ -21,12 +21,20 @@ RUN apk --update --upgrade add --no-cache \
 #============
 # GeckoDriver
 #============
-ARG GECKODRIVER_VERSION=0.19.1
+ARG GECKODRIVER_VERSION=0.20.1
 RUN wget --no-verbose -O geckodriver.tar.gz https://github.com/mozilla/geckodriver/releases/download/v$GECKODRIVER_VERSION/geckodriver-v$GECKODRIVER_VERSION-linux64.tar.gz \
   && tar -zxf geckodriver.tar.gz \
   && rm geckodriver.tar.gz \
   && mv geckodriver /usr/bin/geckodriver \
-  && chmod 755 /usr/bin/geckodriver   
+  && chmod 755 /usr/bin/geckodriver  
+
+ENV PORTAL_URL=blank \
+    ADMINL_URL=blank \
+    PORTAL_USER_EMAIL=blank \
+    PORTAL_USER_PASS=blank \ 
+    ADMIN_USER=blank \
+    ADMIN_USER_PASS=blank \
+    PORTAL_USER_CHANGE_PASS=blank
     
 WORKDIR /app
 COPY Gemfile Gemfile.lock /app/
