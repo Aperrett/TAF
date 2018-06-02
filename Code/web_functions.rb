@@ -64,7 +64,19 @@ module WebFuncs
 
   # Click button function.
   def self.click_button(button, locate)
-    $browser.button(:"#{locate}" => button).wait_until_present.click
+    found_button = [
+      $browser.button(:"#{locate}" => button).exist?,
+      $browser.span(:"#{locate}" => button).exist?
+    ]
+
+    raise "Multiple matches" if found_button.select { |i| i }.size > 1
+    index = found_button.index(true)
+    return unless index
+    if (index == 0)
+      $browser.button(:"#{locate}" => button).wait_until_present.click
+    elsif (index == 1)
+      $browser.span(:"#{locate}" => button).wait_until_present.click
+    end
     $results_file.write("Button: #{button} has been selected")
     $PDF.text("Button: #{button} has been selected")
     $results_file.puts ''
@@ -458,6 +470,7 @@ module WebFuncs
   # handle browser windows function.
   def self.handle_browser_window(text_check)
         $browser.window(title: "#{text_check}").use
+        sleep 3
         ($browser.title.eql?("#{text_check}"))
         $results_file.write("Window title: #{text_check} is correct")
         $PDF.text("Window title: #{text_check} is correct")
@@ -470,4 +483,18 @@ module WebFuncs
         $results_file.puts ''
         return false 
   end # handle browser windows function. 
+
+  # Send Special keys.
+  def self.send_special_keys(special_key)
+    $browser.send_keys :"#{special_key}"
+    $results_file.write("Browser Sent key: :#{special_key} successfully")
+    $PDF.text("Browser Sent key: :#{special_key} successfully")
+    $results_file.puts ''
+    return true
+  rescue
+    $results_file.write("Browser Failed to Send key: :#{special_key}")
+    $PDF.text("Browser Failed to Send key: :#{special_key}")
+    $results_file.puts ''
+    return false
+  end # browser back
 end	# module web_functions
