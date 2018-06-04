@@ -175,6 +175,17 @@ module Report
       $PDF.render_file ($testResultFileNamePDF)
     end # printTestStepSummary
 
+    def self.printTestStepSummaryXml(test_file_name, testFileNumber)
+      # construct the test step report summary
+      $testStepReportSummary2[testFileNumber] = {
+      "classname" => test_file_name,
+      "name" => test_file_name,
+      "assertions"=> $numberOfTestSteps,
+      "tests" => $testStepPasses,
+      "failures" => $testStepFailures
+      }
+    end # printTestStepSummary
+
     # output the overall test results summary
     def self.printOverallTestSummary
       # output to the console
@@ -260,4 +271,39 @@ module Report
   text "Total Tests: #{$totalTests}"
   end
 end # printOverallTestSummary
+  
+def self.testSummaryJunit
+# output to XML file format for Junit for CI.
+builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
+  xml.testsuites("tests" => "#{$totalTestPasses}", "failures" => "#{$totalTestFailures}",
+   "skipped" => "#{$totalTestNotrun}", "time"=>TimeDifference.between($test_end_time,
+   $test_start_time).in_seconds) do |testsuites|
+    
+    testsuites.testsuite("classname" => "#{$testSuiteFile}","name" => "#{$testSuiteFile}",
+    "tests" => "#{$totalTestPasses}", "failures" => "#{$totalTestFailures}",
+    "skipped" => "#{$totalTestNotrun}", "time"=>TimeDifference.between($test_end_time,
+    $test_start_time).in_seconds) do |testsuite|
+      $testStepReportSummary2.each do |testStepReportSummary2|
+        testsuite.testcase(testStepReportSummary2) 
+      end
+    end
+  end
+end
+# output XML content to console for debug
+# puts builder.to_xml
+
+  # open the suite summary file for writing if not already open
+  if (!File.exists?($TestSuiteSummaryXML) || $TestSuiteSummaryXML.closed?)
+    $testSuiteSummaryFile_xml = File.open($TestSuiteSummaryXML, "w+")
+    $testSuiteSummaryFile_xml.write builder.to_xml
+
+  elsif
+    $log.puts "test suite summary file xml name: #{$TestSuiteSummaryXML} is already open"
+  end
+
+  # if the file is open then close it
+  if (!$testSuiteSummaryFile_xml.closed?) then
+    $testSuiteSummaryFile_xml.close
+  end
+end
 end # Report module

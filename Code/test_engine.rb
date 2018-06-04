@@ -114,7 +114,8 @@ module TestEngine
 
         # output the test results summary for the current test case,
         # pass in the test file number to save the summary against it's test file
-        Report.printTestStepSummary(test_file_name, test_file_name_index + 1)
+        Report.printTestStepSummary(test_file_name, test_file_name_index)
+        Report.printTestStepSummaryXml(test_file_name, test_file_name_index)
 
         # close the test results file for the current test case
         Report.close_testresults_file

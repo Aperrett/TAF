@@ -18,6 +18,7 @@ module Main
 
     # holds printable test report summary for all the executed tests
     $testStepReportSummary = Array.new
+    $testStepReportSummary2 = []
     # variables to manage the failure reporting
     $testStepPasses     = 0
     $testStepFailures   = 0
@@ -64,6 +65,7 @@ module Main
 
     # output the overall test summary
     Report.printOverallTestSummary
+    Report.testSummaryJunit
 
     # close browser after tests have completed
     $browser.quit
