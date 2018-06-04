@@ -85,7 +85,7 @@ module CreateDirectories
     f_date = time.strftime('%d-%b-%Y')
     f_time = time.strftime('%H_%M_%S')
 
-    $TestSuiteSummaryXML = "Results/" + f_date + '_' + f_time + '_test_result.xml'
+    $TestSuiteSummaryXML = 'Results/' + $projectId + '/' + f_date + '_' + f_time + '_test_result.xml'
 
     # the log file name will be under the test ID directory
     $logFileName = testid_dir + '/TestLogFile.txt'
