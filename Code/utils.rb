@@ -100,19 +100,19 @@ module Utils
   def self.checkSaveScreenShot(fullScDirName)
     begin
       if ($currentTestFail || $screenShot)
-        time = Time.now.strftime('%m%d%H%M')
+        time = Time.now.strftime('%H%M')
         if ($currentTestFail)
-          scFileName = fullScDirName + "/FAILEDteststep-#{$testStep}-#{time}.png"
+          scFileName = fullScDirName + "/Test_step-#{$testStep}_Failed_#{time}.png"
         else
-          # file name will be teststepn.jpeg
-          scFileName = fullScDirName + "/teststep-#{$testStep}-#{time}.png"
+          # file name will be teststep.png
+          scFileName = fullScDirName + "/Test_step-#{$testStep}_#{time}.png"
         end
 
 			 # Screenshot capture for websites
        $browser.screenshot.save scFileName
 			 $results_file.write("Screenshot saved to: #{scFileName}")
 			 # PDF image size is 500 and add the image to a pdf.
-			 size = 500
+			 size = 400
 			 $PDF.image (scFileName), :fit => [size, size]
 			 $PDF.text ' '
        $results_file.puts ''

@@ -69,7 +69,8 @@ module Main
 
     # close browser after tests have completed
     $browser.quit
-	  rescue
-	  $browser = "No Browser Required"
+    rescue StandardError => e
+    $browser = "No Browser Required"
+    raise e
   end
 end

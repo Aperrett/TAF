@@ -82,7 +82,7 @@ module Report
     end
 
     # print the test Step info to the test results file
-    def self.printTestStepHeader
+    def self.printTestStepHeader(test_file_name = nil)
       $results_file.write("Test start time: #{f_time = get_time()}   \n")
       $results_file.write("Test step: #{$testStep} : #{$testStepDes}  ")
 	    # write the to pdf file.
@@ -90,6 +90,19 @@ module Report
 	    $PDF.text("Test step: #{$testStep} : #{$testStepDes}  ")
 	    puts "Test start time: #{f_time = get_time()}   \n"
       puts "Test step: #{$testStep} : #{$testStepDes}  "
+
+      step = {
+        "id" => $testStep,
+        "classname" => "Test Step " + $testStep + " " + $testStepDes,
+        "name" => $testStepDes
+      }
+      # output to console to show test step 
+      # puts step
+
+      return unless test_file_name
+      $testStep_xml ||= {}
+      $testStep_xml[test_file_name] ||= []
+      $testStep_xml[test_file_name] << step 
     end # printTestStepHeader
 
     # print the Pass / Fail status of a test to the test results file
@@ -100,14 +113,14 @@ module Report
         $testStepPasses += 1
         $results_file.write("Test #{$testStep} has Passed, ")
 		    $PDF.text "Test #{$testStep} has Passed ", :color => "00ff00" # green
-	      puts "Test #{$testStep} has Passed ".green
+        puts "Test #{$testStep} has Passed ".green
       elsif (passFail == false)
         $previousTestFail = $currentTestFail
         $currentTestFail = true
         $testStepFailures += 1
         $results_file.write("Test #{$testStep} has FAILED, ")
 		    $PDF.text "Test #{$testStep} has FAILED ", :color => "ff0000" # red
-	      puts "Test #{$testStep} has FAILED ".red
+        puts "Test #{$testStep} has FAILED ".red
       else
         $testStepNotrun += 1
         $results_file.write("Test #{$testStep} no checks performed, ")
@@ -175,16 +188,17 @@ module Report
       $PDF.render_file ($testResultFileNamePDF)
     end # printTestStepSummary
 
+    # construct the test suite header for junit
     def self.printTestStepSummaryXml(test_file_name, testFileNumber)
-      # construct the test step report summary
       $testStepReportSummary2[testFileNumber] = {
       "classname" => test_file_name,
       "name" => test_file_name,
       "assertions"=> $numberOfTestSteps,
+      "failures" => $testStepFailures,
       "tests" => $testStepPasses,
-      "failures" => $testStepFailures
+      "skipped" => $testStepNotrun
       }
-    end # printTestStepSummary
+    end # printTestStepSummaryXml
 
     # output the overall test results summary
     def self.printOverallTestSummary
@@ -271,24 +285,24 @@ module Report
   text "Total Tests: #{$totalTests}"
   end
 end # printOverallTestSummary
-  
+
 def self.testSummaryJunit
-# output to XML file format for Junit for CI.
-builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
-  xml.testsuites("tests" => "#{$totalTestPasses}", "failures" => "#{$totalTestFailures}",
-   "skipped" => "#{$totalTestNotrun}", "time"=>TimeDifference.between($test_end_time,
-   $test_start_time).in_seconds) do |testsuites|
-    
-    testsuites.testsuite("classname" => "#{$testSuiteFile}","name" => "#{$testSuiteFile}",
-    "tests" => "#{$totalTestPasses}", "failures" => "#{$totalTestFailures}",
-    "skipped" => "#{$totalTestNotrun}", "time"=>TimeDifference.between($test_end_time,
-    $test_start_time).in_seconds) do |testsuite|
+  # output to XML file format for Junit for CI.
+  builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
+    xml.testsuites("classname" => "#{$testSuiteFile}", "name" => "#{$testSuiteFile}",
+     "tests" => "#{$totalTests}", "failures" => "#{$totalTestFailures}", "timestamp" => "#{$test_start_time}",
+     "skipped" => "#{$totalTestNotrun}", "time"=>TimeDifference.between($test_end_time,
+     $test_start_time).in_seconds) do |testsuites|
       $testStepReportSummary2.each do |testStepReportSummary2|
-        testsuite.testcase(testStepReportSummary2) 
+        testsuites.testsuite(testStepReportSummary2) do |testsuite|
+       $testStep_xml[testStepReportSummary2['name']].each do |testStep_xml|
+        testsuite.testcase(testStep_xml) 
+        end
       end
     end
   end
 end
+
 # output XML content to console for debug
 # puts builder.to_xml
 
