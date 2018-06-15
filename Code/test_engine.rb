@@ -79,8 +79,6 @@ module TestEngine
                 end
 
                 $results_file.write("Number of test steps: #{$numberOfTestSteps}")
-                # Show in the Test result pdf file
-				        $PDF.text("Number of test steps: #{$numberOfTestSteps}")
                 $results_file.puts ''
 
                 # get the test case start time
@@ -97,7 +95,7 @@ module TestEngine
                     $log.puts error
                   else
                     # process the test step data
-                    TestSteps.processTestSteps(test_file_name)
+                    TestSteps.processTestSteps(test_file_name, testStepIndex)
                     # see if screenshot required
                     Utils.checkSaveScreenShot(fullScDirName)
                   end # of rescue block for parseTestStepData
