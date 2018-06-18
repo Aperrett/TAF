@@ -111,19 +111,10 @@ module Utils
 			 # Screenshot capture for websites
        $browser.screenshot.save scFileName
 			 $results_file.write("Screenshot saved to: #{scFileName}")
-			 # PDF image size is 500 and add the image to a pdf.
-			 size = 400
-			 $PDF.image (scFileName), :fit => [size, size]
-			 $PDF.text ' '
        $results_file.puts ''
-       # $results_file.puts ''
         else
           $results_file.write 'No screenshot requested'
-	 		    $PDF.text 'No screenshot requested'
-			    $PDF.text ' '
           $results_file.puts ''
-          # $results_file.puts ''
-        # end
 		  end
 
         # if any issues with saving the screenshot then log a warning

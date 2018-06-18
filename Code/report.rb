@@ -81,7 +81,8 @@ module Report
     step = {
       "id" => $testStep,
       "classname" => "Test Step " + $testStep + " " + $testStepDes,
-      "name" => $testStepDes
+      "name" => $testStepDes,
+      "file" => test_file_name
     }
     # output to console to show test step 
     # puts step
@@ -107,7 +108,9 @@ module Report
       $results_file.write("Test #{$testStep} has FAILED, ")
       puts "Test #{$testStep} has FAILED ".red
       failstep = {
-      "message" => "Failed Test Step " + $testStep + " " + $testStepDes + " - Check logs"
+      "message" => "Test " + $testStep + " Test has FAILED - Check logs",
+      "type" => "FAILURE",
+      "file" => test_file_name
     }
     # output to console to show test step failure 
      # puts failstep
@@ -120,6 +123,18 @@ module Report
       $testStepNotrun += 1
       $results_file.write("Test #{$testStep} no checks performed, ")
       puts "Test #{$testStep} no checks performed ".blue
+      skipstep = {
+        "message" => "Test: " + $testStep + " No checks performed - Check logs",
+        "type" => "SKIPPED",
+        "file" => test_file_name
+      }
+    # output to console to show test step failure 
+     # puts failstep
+
+    return unless test_file_name
+    $skiptestStep_xml ||= {}
+    $skiptestStep_xml[test_file_name] ||= []
+    $skiptestStep_xml[test_file_name][testStepIndex] = skipstep
   end
     $results_file.write("Test end time: #{f_time = get_time()}   \n")
     $results_file.puts ''
@@ -271,7 +286,9 @@ module Report
             $testStep_xml[testStepReportSummary2['name']].each do |testStepIndex, testStep_xml|
               testsuite.testcase(testStep_xml) do |testcase|
                 failure = $failtestStep_xml&.[](testStepReportSummary2['name'])&.[](testStepIndex)
+                skipped = $skiptestStep_xml&.[](testStepReportSummary2['name'])&.[](testStepIndex)
                 testcase.failure(failure) if failure
+                testcase.skipped(skipped) if skipped
               end
             end
           end

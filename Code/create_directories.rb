@@ -71,16 +71,10 @@ module CreateDirectories
     # the test results file name will be 'testId'_Res.txt
     $testResultFileName = abs_path_test_res_dir + '/' + $testId + '_Res.txt'
 
-    # the test results file name will be 'testId'_Res.pdf
-    $testResultFileNamePDF = abs_path_test_res_dir + '/' + $testId + '_Res.pdf'
-
     # the test suite summary file name will be 'suite_summary.txt'
     $testSuiteSummaryFileName = abs_path_run_no_dir + '/suite_summary.txt'
 
-    # the test suite summary is a pdf report generated will be called 'suite_summary.pdf'
-    $TestSuiteSummaryPDF = abs_path_run_no_dir + '/suite_summary.pdf'
-
-    # the test suite summary is a XML report generated will be called 'suite_summary.xml' - not finished
+    # the test suite summary is a XML report generated will be called 'suite_summary.xml'
     time = Time.new
     f_date = time.strftime('%d-%b-%Y')
     f_time = time.strftime('%H_%M_%S')
