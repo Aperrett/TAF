@@ -62,9 +62,9 @@ module Utils
           driver = Selenium::WebDriver.for(:firefox, options: options, desired_capabilities: caps)
           $browser = Watir::Browser.new(driver)
           # makes the browser full screen.
-          screen_width = $browser.execute_script("return screen.width;")
-          screen_height = $browser.execute_script("return screen.height;")
-          $browser.driver.manage.window.resize_to(screen_width,screen_height)
+          #screen_width = $browser.execute_script("return screen.width;")
+          #screen_height = $browser.execute_script("return screen.height;")
+          $browser.driver.manage.window.resize_to(1920,1200)
           $browser.driver.manage.window.move_to(0,0)  
 
         elsif((lcBrowserType == 'ie') || (lcBrowserType == 'safari'))
