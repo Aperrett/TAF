@@ -69,13 +69,11 @@ module TestEngine
 
                 # step through the test file
                 # CSV test step data starts at row 8 of the file and iterates for the number of test steps
-                # XML test step processing starts at the first test step in the file (0) and iterates for the number of test steps
                 if (testFileType == 'CSV')
                   testStepIndex = 7
                   finalTestStepIndex = testStepIndex + $numberOfTestSteps
                 else
-                  testStepIndex = 0
-                  finalTestStepIndex = $numberOfTestSteps
+                  puts "Not a valid CSV File Type"
                 end
 
                 $results_file.write("Number of test steps: #{$numberOfTestSteps}")

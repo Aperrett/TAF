@@ -136,22 +136,16 @@ module Utils
           # get the file type
           fileType = File.extname($testSuiteFile)
           # extract the test data from the test suite
-          # the test spec file names are extracted differently for csv and xml files...
-          # select XML or CSV depending on the file extension
-          if (fileType.casecmp($XmlFileNameType) == 0)
-            # process as xml...
-            $XmlSuiteDoc = File.open($testSuiteFile) { |f| Nokogiri::XML(f) }
-            # ...and parse...
-            Utils.parseXmlTestSuiteHeaderData
+          # select CSV for the file extension
 
-          elsif (fileType.casecmp($CsvFileNameType) == 0)
+          if (fileType.casecmp($CsvFileNameType) == 0)
             # process as csv...
             $CsvSuiteDoc = CSV.read(File.open($testSuiteFile))
             # ...and parse...
             Utils.parseCsvTestSuiteHeaderData
           else
             # the file type is not that expected so create a error message and raise an exception
-            error_to_display = 'Test Suite file: \'' + $testSuiteFile.to_s + '\' type not recognised (must be .csv or .xml)'
+            error_to_display = 'Test Suite file: \'' + $testSuiteFile.to_s + '\' type not recognised (must be .csv)'
             raise IOError, error_to_display
           end
           # if unable to read the test file list then construct a custom error message and raise an exception
@@ -162,22 +156,6 @@ module Utils
       rescue Exception => error
           raise error
       end
-  end
-
-  def self.parseXmlTestSuiteHeaderData
-    begin
-
-      # get the number of test specifications in the file (number of occurences of "Test_Specification"
-      $numberOfTestSpecs = $XmlSuiteDoc.xpath('//Test_Specification').length
-
-      $projectName  = $XmlSuiteDoc.at_xpath('//Project_Name').content
-      $projectId    = $XmlSuiteDoc.at_xpath('//Project_ID').content
-      $sprint       = $XmlSuiteDoc.at_xpath('//Sprint').content
-      $testSuiteId  = $XmlSuiteDoc.at_xpath('//Test_Suite').content
-      $testSuiteDes = $XmlSuiteDoc.at_xpath('//Suite_Description').content
-      $tester       = $XmlSuiteDoc.at_xpath('//Tester').content
-
-    end
   end
 
   def self.parseCsvTestSuiteHeaderData
@@ -218,16 +196,13 @@ module Utils
       # get the file type
       fileType = File.extname($testSuiteFile)
 
-      # select XML or CSV depending on the file extension of the test file name
-        if (fileType.casecmp($XmlFileNameType) == 0)
-          Utils.parseXmlTestSuiteData(testSpecIndex)
-
-        elsif (fileType.casecmp($CsvFileNameType) == 0)
+      # select CSV for the file extension of the test file name
+        if (fileType.casecmp($CsvFileNameType) == 0)
           Utils.parseCsvTestSuiteData(testSpecIndex)
 
         else
           # the file type is not that expected so create a error message and raise an exception
-          error_to_display = 'Test Suite file: \'' + $testSuiteFile.to_s + '\' type not recognised (must be .csv or .xml)'
+          error_to_display = 'Test Suite file: \'' + $testSuiteFile.to_s + '\' type not recognised (must be .csv)'
           raise IOError, error_to_display
         end
     end
@@ -255,33 +230,12 @@ module Utils
     end
   end
 
-  def self.parseXmlTestSuiteData(testSpecIndex)
-    begin
-      $testId       = $XmlSuiteDoc.xpath('//Test_ID')[testSpecIndex].content
-      $testSpecDesc = $XmlSuiteDoc.xpath('//Test_Specification')[testSpecIndex].content
-      $browserType  = $XmlSuiteDoc.xpath('//Browser')[testSpecIndex].content
-      $env_type     = $XmlSuiteDoc.xpath('//environement')[testSpecIndex].content
-    end
-  end
-
   def self.readTestData(testFileName)
     begin
 
     # get the file type
     fileType = File.extname(testFileName)
-
-    # select XML or CSV depending on the file extension of the test file name
-      if (fileType.casecmp($XmlFileNameType) == 0)
-        puts ''
-        print 'Processing test file: ', testFileName
-        puts ''
-        puts "Browser Type: #{$browserType}"
-        puts "Environment: #{$env_type}"
-        $XmlDoc = File.open(testFileName) { |f| Nokogiri::XML(f) }
-        Utils.parseXmlTestHeaderData
-        return 'XML'
-
-      elsif (fileType.casecmp($CsvFileNameType) == 0)
+      if (fileType.casecmp($CsvFileNameType) == 0)
         puts ''
         print 'Processing test file: ', testFileName
         puts ''
@@ -293,7 +247,7 @@ module Utils
 
       else
         # if unable to read the test file list then construct a custom error message and raise an exception
-        error_to_display = 'Test File Name: \'' + testFileName.to_s + '\' type not recognised (must be .csv or .xml)'
+        error_to_display = 'Test File Name: \'' + testFileName.to_s + '\' type not recognised (must be .csv)'
         raise IOError, error_to_display
       end
 
@@ -328,13 +282,6 @@ module Utils
 
   end # parseCsvTestHeaderData
 
-  def self.parseXmlTestHeaderData
-    # get the number of test steps in the file
-    $numberOfTestSteps = $XmlDoc.xpath('//Test_Step').length
-    # get the remaining test data
-    $testDes = $XmlDoc.at_xpath('//Test_Description').content
-  end # parseXmlTestHeaderData
-
   def self.parseTestStepData(testFileType, testStepIndex)
     begin
       # clear the global test step data
@@ -349,7 +296,7 @@ module Utils
           # row5: nil
           # row6: header row containing the test step header title fields
           # row7: Test_Step, Test_Step_Description, Test_Step_Function,
-          # Test_Step_Value, Test_Step_Value2, Screenshot, nil
+          # Test_Step_Value, Test_Step_Value2, Screenshot, Skip_Test_Case, nil
           # repeat of previous row with each test step data until...
           # nil, <endOfFile>
 
@@ -373,25 +320,17 @@ module Utils
               $screenShot = screenShotData
             end
 
-        else # testFileType == "XML"
+            # get skipped test request, check for a null value and default to 'N'
+          skipTestData    = row[8, 1][0]
 
-          $testStep         = $XmlDoc.xpath('//Test_Step')[testStepIndex].content
-          $testStepDes      = $XmlDoc.xpath('//Test_Step_Description')[testStepIndex].content
-          $testStepFunction = $XmlDoc.xpath('//Test_Step_Function')[testStepIndex].content
-          $test_value       = $XmlDoc.xpath('//Test_Step_Value')[testStepIndex].content
-          $locate           = $XmlDoc.xpath('//Locator_Finder_Value')[testStepIndex].content
-          $test_value2      = $XmlDoc.xpath('//Test_Step_Value2')[testStepIndex].content
-          $locate2          = $XmlDoc.xpath('//Locator_Finder_Value2')[testStepIndex].content
+            if (skipTestData.to_s.empty?)
+              $skipTestCase = 'N'
+            else
+              $skipTestCase = skipTestData
+            end
 
-          # get screenshot request, check for a null value and default to 'N'
-          screenShotData    = $XmlDoc.xpath('//Screenshot')[testStepIndex].content
-
-      	    if (screenShotData.to_s.empty?)
-      	      $screenShot = 'N'
-      	    else
-      	      $screenShot = screenShotData
-      	    end
-
+        else
+          puts 'Not valid CSV file type.'
         end
 
         # convert test step function to lower case to remove any case-variation
@@ -403,6 +342,14 @@ module Utils
              $screenShot = true
           else
             $screenShot = false
+          end
+
+        # convert skip test case to lower case and then to a boolean value
+        $skipTestCase.downcase!
+          if ($skipTestCase == 'y')
+            $skipTestCase = true
+          else
+            $skipTestCase = false
           end
 
         # if there is an element locator then use it, otherwise default to use an ID
@@ -431,5 +378,6 @@ module Utils
     $test_value2      = ''
     $locate2          = ''
     $screenShot       = ''
+    $skipTestCase     = ''
   end # clearTestStepData
 end

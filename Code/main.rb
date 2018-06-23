@@ -13,7 +13,6 @@ module Main
     test_file_names = Array.new
     $commandLineCsvFile = false
 
-    $XmlFileNameType = '.xml'
     $CsvFileNameType = '.csv'
 
     # holds printable test report summary for all the executed tests
@@ -26,11 +25,10 @@ module Main
     $totalTestPasses    = 0
     $totalTestFailures  = 0
     $totalTestNotrun  = 0
-    $consecutiveFailThreshold = 5
+    $consecutiveFailThreshold = 10
     $previousTestFail = false
     $currentTestFail = false
-    # initialised stores for the input XML and CSV test data
-    $XmlDoc = ''
+    # initialised stores for the input CSV test data
     $CsvDoc = ''
 
     begin # start of rescue block for readTestSuiteData
