@@ -121,7 +121,6 @@ module Report
     $failtestStep_xml[test_file_name][testStepIndex] = failstep 
     else
       $testStepNotrun += 1
-      $skipTestCase = true
       $results_file.write("Test #{$testStep} no checks performed, ")
       puts "Test #{$testStep} no checks performed ".blue
       skipstep = {
