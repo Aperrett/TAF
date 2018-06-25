@@ -17,7 +17,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (WebFuncs.open_url($test_value)) if runtest == false
+      test_pass = (WebFuncs.open_url($test_value)) if (runtest == false)
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
@@ -25,7 +25,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (CustomFuncs.portal_login) if runtest == false
+      test_pass = (CustomFuncs.portal_login) if (runtest == false)
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
@@ -33,7 +33,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (CustomFuncs.portal_admin_login) if runtest == false
+      test_pass = (CustomFuncs.portal_admin_login) if (runtest == false)
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
@@ -41,7 +41,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (CustomFuncs.sint_login) if runtest == false
+      test_pass = (CustomFuncs.sint_login) if (runtest == false)
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name) 
 
@@ -50,7 +50,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (WebFuncs.ping_test($test_value)) if runtest == false
+      test_pass = (WebFuncs.ping_test($test_value)) if (runtest == false)
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
@@ -60,7 +60,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (WebFuncs.check_url($test_value)) if runtest == false
+      test_pass = (WebFuncs.check_url($test_value)) if (runtest == false)
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
@@ -69,7 +69,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (WebFuncs.select_link($test_value, $locate)) if runtest == false
+      test_pass = (WebFuncs.select_link($test_value, $locate)) if (runtest == false)
       # Check for test Pass / Fail
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
@@ -79,7 +79,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (WebFuncs.select_image($test_value, $locate)) if runtest == false
+      test_pass = (WebFuncs.select_image($test_value, $locate)) if (runtest == false)
       # Check for test Pass / Fail
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
@@ -89,7 +89,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (WebFuncs.select_item($test_value, $locate)) if runtest == false
+      test_pass = (WebFuncs.select_item($test_value, $locate)) if (runtest == false)
       # Check for test Pass / Fail
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
@@ -99,7 +99,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (WebFuncs.click_h_tag($test_value, $locate)) if runtest == false
+      test_pass = (WebFuncs.click_h_tag($test_value, $locate)) if (runtest == false)
       # Check for test Pass / Fail
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
@@ -109,7 +109,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (WebFuncs.write_to_editor($test_value, $locate, $test_value2)) if runtest == false
+      test_pass = (WebFuncs.write_to_editor($test_value, $locate, $test_value2)) if (runtest == false)
       # Check for test Pass / Fail
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
@@ -118,7 +118,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (WebFuncs.capture_alert) if runtest == false
+      test_pass = (WebFuncs.capture_alert) if (runtest == false)
       # Check for test Pass / Fail
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
@@ -128,7 +128,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (WebFuncs.click_button($test_value, $locate)) if runtest == false
+      test_pass = (WebFuncs.click_button($test_value, $locate)) if (runtest == false)
       # Check for test Pass / Fail
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
@@ -138,7 +138,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (WebFuncs.select_dropdown($test_value, $test_value2, $locate, $locate2)) if runtest == false
+      test_pass = (WebFuncs.select_dropdown($test_value, $test_value2, $locate, $locate2)) if (runtest == false)
       # Check for test Pass / Fail
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
@@ -148,7 +148,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (WebFuncs.list_dropdowns($test_value, $locate)) if runtest == false
+      test_pass = (WebFuncs.list_dropdowns($test_value, $locate)) if (runtest == false)
       # Check for test Pass / Fail
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
@@ -158,7 +158,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (WebFuncs.write_text($test_value, $test_value2, $locate)) if runtest == false
+      test_pass = (WebFuncs.write_text($test_value, $test_value2, $locate)) if (runtest == false)
       # Check for test Pass / Fail
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
@@ -168,7 +168,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (WebFuncs.check_boxdata($test_value, $test_value2, $locate)) if runtest == false
+      test_pass = (WebFuncs.check_boxdata($test_value, $test_value2, $locate)) if (runtest == false)
       # Check for test Pass / Fail
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
@@ -178,7 +178,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (WebFuncs.check_screendata($test_value)) if runtest == false
+      test_pass = (WebFuncs.check_screendata($test_value)) if (runtest == false)
       # Check for test Pass / Fail
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
@@ -188,7 +188,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (WebFuncs.check_title($test_value)) if runtest == false
+      test_pass = (WebFuncs.check_title($test_value)) if (runtest == false)
       # Check for test Pass / Fail
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
@@ -200,7 +200,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (WebFuncs.check_log_file(text, file, output)) if runtest == false
+      test_pass = (WebFuncs.check_log_file(text, file, output)) if (runtest == false)
       # Check for test Pass / Fail
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
@@ -209,7 +209,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (WebFuncs.ipause($test_value)) if runtest == false
+      test_pass = (WebFuncs.ipause($test_value)) if (runtest == false)
       # Check for test Pass / Fail
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
@@ -220,7 +220,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (WebFuncs.sys_command(syst_Command)) if runtest == false
+      test_pass = (WebFuncs.sys_command(syst_Command)) if (runtest == false)
       # Check for test Pass / Fail
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
@@ -230,7 +230,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (WebFuncs.check_box($test_value, $locate)) if runtest == false
+      test_pass = (WebFuncs.check_box($test_value, $locate)) if (runtest == false)
       # Check for test Pass / Fail
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
@@ -240,7 +240,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (WebFuncs.radio_button($test_value, $test_value2, $locate, $locate2)) if runtest == false
+      test_pass = (WebFuncs.radio_button($test_value, $test_value2, $locate, $locate2)) if (runtest == false)
       # Check for test Pass / Fail
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
@@ -249,7 +249,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (WebFuncs.browser_refresh) if runtest == false
+      test_pass = (WebFuncs.browser_refresh) if (runtest == false)
       # Check for test Pass / Fail
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
@@ -258,7 +258,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (WebFuncs.browser_back) if runtest == false
+      test_pass = (WebFuncs.browser_back) if (runtest == false)
       # Check for test Pass / Fail
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
@@ -267,7 +267,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (WebFuncs.browser_forward) if runtest == false
+      test_pass = (WebFuncs.browser_forward) if (runtest == false)
       # Check for test Pass / Fail
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
@@ -276,7 +276,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (WebFuncs.browser_quit) if runtest == false
+      test_pass = (WebFuncs.browser_quit) if (runtest == false)
       # Check for test Pass / Fail
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
@@ -285,7 +285,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (CustomFuncs.insert_value_config($test_value, $test_value2, $locate))
+      test_pass = (CustomFuncs.insert_value_config($test_value, $test_value2, $locate)) if (runtest == false)
       # Check for test Pass / Fail
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
@@ -294,7 +294,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (CustomFuncs.open_portal_url($test_value)) if runtest == false
+      test_pass = (CustomFuncs.open_portal_url($test_value)) if (runtest == false)
       # Check for test Pass / Fail
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
@@ -303,7 +303,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (WebFuncs.handle_browser_window($test_value)) if runtest == false
+      test_pass = (WebFuncs.handle_browser_window($test_value)) if (runtest == false)
       # Check for test Pass / Fail
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
@@ -312,7 +312,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = (WebFuncs.send_special_keys($test_value)) if runtest == false
+      test_pass = (WebFuncs.send_special_keys($test_value)) if (runtest == false)
       # Check for test Pass / Fail
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)

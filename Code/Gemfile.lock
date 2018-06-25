@@ -10,31 +10,26 @@ GEM
       ffi (~> 1.0, >= 1.0.11)
     colored (1.2)
     concurrent-ruby (1.0.5)
-    ffi (1.9.23)
+    ffi (1.9.25)
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
     logger (1.2.8)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
     net-ping (2.0.4)
-    nokogiri (1.8.2)
+    nokogiri (1.8.3)
       mini_portile2 (~> 2.3.0)
-    pdf-core (0.7.0)
-    prawn (2.2.2)
-      pdf-core (~> 0.7.0)
-      ttfunk (~> 1.5)
-    rubygems-update (2.7.6)
+    rubygems-update (2.7.7)
     rubyzip (1.2.1)
-    selenium-webdriver (3.11.0)
+    selenium-webdriver (3.12.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.2)
     thread_safe (0.3.6)
     time_difference (0.7.0)
       activesupport (~> 5.1)
-    ttfunk (1.5.1)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    watir (6.10.3)
+    watir (6.11.0)
       selenium-webdriver (~> 3.4, >= 3.4.1)
 
 PLATFORMS
@@ -45,11 +40,10 @@ DEPENDENCIES
   logger!
   net-ping!
   nokogiri!
-  prawn!
   rubygems-update!
   selenium-webdriver!
   time_difference!
   watir!
 
 BUNDLED WITH
-   1.16.1
+   1.16.2

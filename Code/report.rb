@@ -120,6 +120,7 @@ module Report
     $failtestStep_xml[test_file_name] ||= []
     $failtestStep_xml[test_file_name][testStepIndex] = failstep 
     else
+      $currentTestFail = false
       $testStepNotrun += 1
       $results_file.write("Test #{$testStep} no checks performed, ")
       puts "Test #{$testStep} no checks performed ".blue

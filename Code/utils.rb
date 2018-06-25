@@ -115,6 +115,7 @@ module Utils
         else
           $results_file.write 'No screenshot requested'
           $results_file.puts ''
+          $results_file.puts ''
 		  end
 
         # if any issues with saving the screenshot then log a warning

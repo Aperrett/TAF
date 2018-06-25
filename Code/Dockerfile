@@ -22,7 +22,7 @@ RUN apk --update --upgrade add --no-cache \
 #============
 # GeckoDriver
 #============
-ARG GECKODRIVER_VERSION=0.20.1
+ARG GECKODRIVER_VERSION=0.20.0
 RUN wget --no-verbose --no-check-certificate -O geckodriver.tar.gz https://github.com/mozilla/geckodriver/releases/download/v$GECKODRIVER_VERSION/geckodriver-v$GECKODRIVER_VERSION-linux64.tar.gz \
   && tar -zxf geckodriver.tar.gz \
   && rm geckodriver.tar.gz \
