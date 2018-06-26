@@ -8,95 +8,96 @@
 module Utils
   require './taf_config.rb'
 
-  def self.currentBrowserType()
-    begin
+  def self.currentBrowserType
+      # begin
       # check if browser already created and the correct type
       if $browser.nil?
-        return 'no browser'
-      elsif (($browser.driver.capabilities[:b_name]).casecmp('internet explorer') == 0)
-        return 'ie'
-      elsif (($browser.driver.capabilities[:b_name]).casecmp('chrome') == 0)
-        return 'chrome'
-      elsif (($browser.driver.capabilities[:b_name]).casecmp('chrome-headless') == 0)
-        return 'chrome-headless'
-      elsif (($browser.driver.capabilities[:b_name]).casecmp('firefox') == 0)
-        return 'firefox'
-      elsif (($browser.driver.capabilities[:b_name]).casecmp('firefox-headless') == 0)
-        return 'firefox-headless'
-      elsif (($browser.driver.capabilities[:b_name]).casecmp('safari') == 0)
-        return 'safari'
+        'no browser'
+      elsif $browser.driver.capabilities[:b_name].casecmp('internet explorer').zero?
+        'ie'
+      elsif $browser.driver.capabilities[:b_name].casecmp('chrome').zero?
+        'chrome'
+      elsif $browser.driver.capabilities[:b_name].casecmp('chrome-headless').zero?
+        'chrome-headless'
+      elsif $browser.driver.capabilities[:b_name].casecmp('firefox').zero?
+        'firefox'
+      elsif $browser.driver.capabilities[:b_name].casecmp('firefox-headless').zero?
+        'firefox-headless'
+      elsif $browser.driver.capabilities[:b_name].casecmp('safari').zero?
+        'safari'
       else
-        return 'unknown'
+        'unknown'
       end
-    end
   end
 
-  def self.open_browser
-    begin
-      lcBrowserType = $browserType.downcase
-      # set up for any normal browser type
-        if((lcBrowserType == 'chrome'))
-          $browser = Watir::Browser.new:chrome, :switches => %w[
-            --start-maximized --window-size=1920,1080]
+# open_browser function
+def self.open_browser
+  lcBrowserType = $browserType.downcase
+  # set up for any normal browser type
+  if lcBrowserType == 'chrome'
+    $browser = Watir::Browser.new :chrome, switches: %w[
+      --start-maximized --window-size=1920,1080
+    ]
 
-        elsif((lcBrowserType == 'chrome-headless'))
-          $browser = Watir::Browser.new:chrome, :switches => %w[
-          --start-maximized --disable-gpu --headless --acceptInsecureCerts-true
-          --no-sandbox --window-size=1920,1080]
+  elsif lcBrowserType == 'chrome-headless'
+    $browser = Watir::Browser.new :chrome, switches: %w[
+      --start-maximized --disable-gpu --headless --acceptInsecureCerts-true
+      --no-sandbox --window-size=1920,1080
+    ]
 
-        elsif((lcBrowserType == 'firefox'))
-          caps = Selenium::WebDriver::Remote::Capabilities.firefox
-          caps['acceptInsecureCerts'] = true
-          driver = Selenium::WebDriver.for(:firefox, desired_capabilities: caps)
-          $browser = Watir::Browser.new(driver)
-          # makes the browser full screen.
-          screen_width = $browser.execute_script("return screen.width;")
-          screen_height = $browser.execute_script("return screen.height;")
-          $browser.driver.manage.window.resize_to(screen_width,screen_height)
-          $browser.driver.manage.window.move_to(0,0)
+  elsif lcBrowserType == 'firefox'
+    caps = Selenium::WebDriver::Remote::Capabilities.firefox
+    caps['acceptInsecureCerts'] = true
+    driver = Selenium::WebDriver.for(:firefox, desired_capabilities: caps)
+    $browser = Watir::Browser.new(driver)
+    # makes the browser full screen.
+    screen_width = $browser.execute_script('return screen.width;')
+    screen_height = $browser.execute_script('return screen.height;')
+    $browser.driver.manage.window.resize_to(screen_width, screen_height)
+    $browser.driver.manage.window.move_to(0, 0)
 
-        elsif((lcBrowserType == 'firefox-headless'))
-          caps = Selenium::WebDriver::Remote::Capabilities.firefox
-          options = Selenium::WebDriver::Firefox::Options.new(args: ['-headless'])
-          caps['acceptInsecureCerts'] = true
-          driver = Selenium::WebDriver.for(:firefox, options: options, desired_capabilities: caps)
-          $browser = Watir::Browser.new(driver)
-          # makes the browser full screen.
-          #screen_width = $browser.execute_script("return screen.width;")
-          #screen_height = $browser.execute_script("return screen.height;")
-          $browser.driver.manage.window.resize_to(1920,1200)
-          $browser.driver.manage.window.move_to(0,0)  
+  elsif lcBrowserType == 'firefox-headless'
+    caps = Selenium::WebDriver::Remote::Capabilities.firefox
+    options = Selenium::WebDriver::Firefox::Options.new(args: ['-headless'])
+    caps['acceptInsecureCerts'] = true
+    driver = Selenium::WebDriver.for(:firefox, options: options, desired_capabilities: caps)
+    $browser = Watir::Browser.new(driver)
+    # makes the browser full screen.
+    # screen_width = $browser.execute_script("return screen.width;")
+    # screen_height = $browser.execute_script("return screen.height;")
+    $browser.driver.manage.window.resize_to(1920, 1200)
+    $browser.driver.manage.window.move_to(0, 0)
 
-        elsif((lcBrowserType == 'ie') || (lcBrowserType == 'safari'))
-          $browser = Watir::Browser.new:"#{lcBrowserType}"
-          # makes the browser full screen.
-          screen_width = $browser.execute_script("return screen.width;")
-          screen_height = $browser.execute_script("return screen.height;")
-          $browser.driver.manage.window.resize_to(screen_width,screen_height)
-          $browser.driver.manage.window.move_to(0,0)
+  elsif (lcBrowserType == 'ie') || (lcBrowserType == 'safari')
+    $browser = Watir::Browser.new :"#{lcBrowserType}"
+    # makes the browser full screen.
+    screen_width = $browser.execute_script('return screen.width;')
+    screen_height = $browser.execute_script('return screen.height;')
+    $browser.driver.manage.window.resize_to(screen_width, screen_height)
+    $browser.driver.manage.window.move_to(0, 0)
 
-          # unable to select the specified browser so throw an exception
-        else
-          puts "unable to open selected browser: #{$browserType}"
-          raise Exception
-        end
-
-        # if unable to open browser then set error message and re-raise the exception
-        rescue Exception => error
-          # construct the error message from custom text and the actual system error message (converted to a string)
-          error_to_display = "Unable to open the requested browser: #{$browserType} " + error.to_s
-          raise error_to_display
-    end
-  end # open_browser
-
-	#  Check browser version
-	def self.browserVersion
-	  $browserversion = $browser.driver.capabilities[:version]
-	rescue
-	  $browserversion = "No Browser version"
+    # unable to select the specified browser so throw an exception
+  else
+    puts "unable to open selected browser: #{$browserType}"
+    raise Exception
   end
-  
-# create screenshot filename and save the screenshot if the test has failed or if explictly required
+
+# if unable to open browser then set error message and re-raise the exception
+rescue Exception => error
+  # construct the error message from custom text and the actual system error message (converted to a string)
+  error_to_display = "Unable to open the requested browser: #{$browserType} " + error.to_s
+  raise error_to_display
+end
+
+  # Check browser version
+  def self.browserVersion
+    $browserversion = $browser.driver.capabilities[:version]
+  rescue StandardError
+    $browserversion = 'No Browser version'
+  end
+
+  # create screenshot filename and save the screenshot if the test has failed or
+  # if explictly required
   def self.checkSaveScreenShot(fullScDirName)
     begin
       if ($currentTestFail || $screenShot)
@@ -108,28 +109,29 @@ module Utils
           scFileName = fullScDirName + "/Test_step-#{$testStep}_#{time}.png"
         end
 
-			 # Screenshot capture for websites
+       # Screenshot capture for websites
        $browser.screenshot.save scFileName
-			 $results_file.write("Screenshot saved to: #{scFileName}")
+       $results_file.write("Screenshot saved to: #{scFileName}")
        $results_file.puts ''
-        else
-          $results_file.write 'No screenshot requested'
-          $results_file.puts ''
-          $results_file.puts ''
-		  end
+      else
+        $results_file.write 'No screenshot requested'
+        $results_file.puts ''
+        $results_file.puts ''
+      end
 
         # if any issues with saving the screenshot then log a warning
         rescue Exception => error
-            # construct the error message from custom text and the actual system error message (converted to a string)
+            # construct the error message from custom text and the actual system
+            # error message (converted to a string).
             $log.write("Error saving the screenshot: #{scFileName}   #{error.to_s}")
             $log.puts ''
         end
-  end # checkSaveScreenShot
+  end
 
-    # read in the data from the test suite file
+  # read in the data from the test suite file
   def self.readTestSuiteData
     begin
-      # check if the file list exists and is readable
+        # check if the file list exists and is readable
         if (File.file?($testSuiteFile) & File.readable?($testSuiteFile))
           puts ''
           print 'Processing test suite file: ', $testSuiteFile
@@ -150,10 +152,10 @@ module Utils
             raise IOError, error_to_display
           end
           # if unable to read the test file list then construct a custom error message and raise an exception
-          elsif error_to_display = 'Test Suite file: \'' + $testSuiteFile.to_s + '\' does not exist or is unreadable'
-              raise IOError, error_to_display
-          end
-          # if an error occurred reading the test file list then re-raise the exception
+        elsif error_to_display = 'Test Suite file: \'' + $testSuiteFile.to_s + '\' does not exist or is unreadable'
+            raise IOError, error_to_display
+        end
+      # if an error occurred reading the test file list then re-raise the exception
       rescue Exception => error
           raise error
       end
@@ -161,7 +163,6 @@ module Utils
 
   def self.parseCsvTestSuiteHeaderData
     begin
-
       # each row in the input file is stored as an array of elements:
       # row0: header row containing test suite title fields
       # row1: Project_Name, Project_ID, Sprint
@@ -171,9 +172,10 @@ module Utils
       # row5: nil
       # row6: header row containing test suite title fields
       # row7: Test_ID, Test_Specification, Browser_Type
-      # row8: repeat of previous row with each test specification file until <endOfFile>
+      # row8: repeat of previous row with each test spec file until <endOfFile>
 
-      # get the number of test specifications in the file (number or rows - number of non test spec rows)
+      # get the number of test specifications in the file:
+      # (number or rows - number of non test spec rows)
       $numberOfTestSpecs = ($CsvSuiteDoc.length) - 7
 
       # get the CSV file row containing the header data
@@ -187,17 +189,15 @@ module Utils
       $testSuiteId  = headerRow[0, 1][0]
       $testSuiteDes = headerRow[1, 1][0]
       $tester       = headerRow[2, 1][0]
-
     end
   end
 
   def self.parseTestSuiteData(testSpecIndex)
     begin
-
       # get the file type
       fileType = File.extname($testSuiteFile)
 
-      # select CSV for the file extension of the test file name
+        # select CSV for the file extension of the test file name
         if (fileType.casecmp($CsvFileNameType) == 0)
           Utils.parseCsvTestSuiteData(testSpecIndex)
 
@@ -209,6 +209,7 @@ module Utils
     end
   end
 
+  # parseCsvTestSuiteData
   def self.parseCsvTestSuiteData(testSpecIndex)
     begin
       # each row in the input file is stored as an array of elements:
@@ -220,7 +221,7 @@ module Utils
       # row5: nil
       # row6: header row containing test suite title fields
       # row7: Test_ID, Test_Specification, Browser_Type, Environment type
-      # row8: repeat of previous row with each test specification file until <endOfFile>
+      # row8: repeat of previous row with each test spec file until <endOfFile>
 
       # get the CSV file row containing the desired test spec data
       headerRow = $CsvSuiteDoc[testSpecIndex + 7]
@@ -231,9 +232,9 @@ module Utils
     end
   end
 
+  # readTestData
   def self.readTestData(testFileName)
     begin
-
     # get the file type
     fileType = File.extname(testFileName)
       if (fileType.casecmp($CsvFileNameType) == 0)
@@ -247,17 +248,20 @@ module Utils
         return 'CSV'
 
       else
-        # if unable to read the test file list then construct a custom error message and raise an exception
+        # if unable to read the test file list then construct a custom error
+        # message and raise an exception.
         error_to_display = 'Test File Name: \'' + testFileName.to_s + '\' type not recognised (must be .csv)'
         raise IOError, error_to_display
       end
 
-        # if an error occurred reading the test file list then re-raise the exception
+        # if an error occurred reading the test file list then
+        # re-raise the exception.
         rescue Exception => error
             raise IOError, error
         end
-  end # readTestData
+  end
 
+  # parseCsvTestHeaderData
   def self.parseCsvTestHeaderData
     # each row in the input file is stored as an array of elements:
     # row0: header row containing the header title fields
@@ -271,18 +275,20 @@ module Utils
     # Test_Step_Value, S, Test_Step_Value2, Screenshot, nil
     # repeat of previous row with each test step data until <endOfFile>
 
-    # get the number of test steps in the file (number or rows - number of non-test step rows)
+    # get the number of test steps in the file:
+    # (number or rows - number of non-test step rows)
     $numberOfTestSteps = ($CsvDoc.length) - 7
 
-    # NB: the projectName, projectId and sprint data is now sourced from the test suite file
+    # NB: the projectName, projectId and sprint data
+    # is now sourced from the test suite file
 
     # get the CSV file row containing the header data
-    # NB: the testId and browserType data is now sourced from the test suite file
+    # NB: the testId and browserType data is now sourced from the testsuite file
     headerRow = $CsvDoc[4]
     $testDes = headerRow[1, 1][0]
+  end
 
-  end # parseCsvTestHeaderData
-
+  # parseTestStepData
   def self.parseTestStepData(testFileType, testStepIndex)
     begin
       # clear the global test step data
@@ -321,8 +327,8 @@ module Utils
               $screenShot = screenShotData
             end
 
-            # get skipped test request, check for a null value and default to 'N'
-          skipTestData    = row[8, 1][0]
+          # get skipped test request, check for a null value and default to 'N'
+          skipTestData      = row[8, 1][0]
 
             if (skipTestData.to_s.empty?)
               $skipTestCase = 'N'
@@ -353,7 +359,7 @@ module Utils
             $skipTestCase = false
           end
 
-        # if there is an element locator then use it, otherwise default to use an ID
+        # if there is an element locator then use it, otherwise use an ID
         if ($locate.to_s == '')
           $locate = 'id'
         end
@@ -366,8 +372,9 @@ module Utils
         rescue Exception
           raise
         end
-  end # parseTestStepData
+  end
 
+  # clearTestStepData
   def self.clearTestStepData
     # clear the global test step data so the value from the previous test,
     # doesn't persist if the read data fails for the current test step
@@ -380,5 +387,5 @@ module Utils
     $locate2          = ''
     $screenShot       = ''
     $skipTestCase     = ''
-  end # clearTestStepData
+  end
 end

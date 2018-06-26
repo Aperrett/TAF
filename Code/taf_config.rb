@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Created on 20 Sept 2017
 # @author: Andy Perrett
 # MIT License
@@ -27,4 +29,4 @@ module TafConfig
   require_relative 'test_engine.rb'
   require_relative 'report.rb'
   require_relative 'web_functions.rb'
-end # end of module.
+end

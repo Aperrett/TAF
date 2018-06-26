@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Created on 20 Sept 2017
 # @author: Andy Perrett
 #
@@ -10,13 +12,13 @@ module Main
 
   begin
     # holds list of test file names read from the input file
-    test_file_names = Array.new
+    test_file_names = []
     $commandLineCsvFile = false
 
     $CsvFileNameType = '.csv'
 
     # holds printable test report summary for all the executed tests
-    $testStepReportSummary = Array.new
+    $testStepReportSummary = []
     $testStepReportSummary2 = []
     # variables to manage the failure reporting
     $testStepPasses     = 0
@@ -24,7 +26,7 @@ module Main
     $testStepNotrun     = 0
     $totalTestPasses    = 0
     $totalTestFailures  = 0
-    $totalTestNotrun  = 0
+    $totalTestNotrun = 0
     $consecutiveFailThreshold = 5
     $previousTestFail = false
     $currentTestFail = false
@@ -33,7 +35,7 @@ module Main
 
     begin # start of rescue block for readTestSuiteData
     # check if the test suite file name exists on the command line
-    if (ARGV.length > 0)
+    if !ARGV.empty?
       $testSuiteFile = ARGV[0]
     else
       # unable to open file as not supplied as command-line parameter
@@ -46,8 +48,8 @@ module Main
     Utils.readTestSuiteData
 
   # unable to read the test file then handle the error and terminate
-  rescue => error
-    $stderr.puts error
+  rescue StandardError => error
+    warn error
     $stdout.puts error
     abort
   end
@@ -67,8 +69,8 @@ module Main
 
     # close browser after tests have completed
     $browser.quit
-    rescue StandardError => e
-    $browser = "No Browser Required"
+  rescue StandardError => e
+    $browser = 'No Browser Required'
     raise e
   end
 end

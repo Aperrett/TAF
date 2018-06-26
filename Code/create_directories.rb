@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Created on 20 Sept 2017
 # @author: Andy Perrett
 #
@@ -23,18 +25,14 @@ module CreateDirectories
   # ------------->directory named 'Screenshots'
 
   def self.construct_projectdirs
-   # create top-level 'Results' directory if it doesn't already exist
-   result_home = 'Results'
-     if (!File.directory? (result_home))
-       Dir.mkdir(result_home)
-     end
+    # create top-level 'Results' directory if it doesn't already exist
+    result_home = 'Results'
+    Dir.mkdir(result_home) unless File.directory? result_home
 
     # create the 'Project' directory if it doesn't already exist
-    project_id = $projectId.gsub(' ', '')
+    project_id = $projectId.delete(' ')
     project_iddir = result_home + '/' + project_id
-      if (!File.directory? (project_iddir))
-        Dir.mkdir(project_iddir)
-      end
+    Dir.mkdir(project_iddir) unless File.directory? project_iddir
 
     # Creates a folder Ran_on_Time with the time as of now.
     time = Time.new
@@ -45,15 +43,11 @@ module CreateDirectories
   end
 
   def self.construct_testspecdirs
-    begin
-
     # create directories for each test spec
     # create a sub-directory named from the 'testId' (with any spaces taken out)
     # if it doesn't already exist plus the browser type
-    testid_dir = $runNoDir + '/' + $testId.gsub(' ', '') + '_' + $browserType.capitalize
-    if (!File.directory? (testid_dir)) then
-       Dir.mkdir(testid_dir)
-    end
+    testid_dir = $runNoDir + '/' + $testId.delete(' ') + '_' + $browserType.capitalize
+    Dir.mkdir(testid_dir) unless File.directory? testid_dir
 
     # create a screenshot directory under the 'testId' directory - it will always need creating
     screenshot_dir = testid_dir + '/' + 'Screenshots' + '/'
@@ -91,14 +85,13 @@ module CreateDirectories
     print 'Test result directory: ', abs_path_test_res_dir
     puts ''
 
-    # if any issues then set error message and re-raise the exception
-    rescue Exception => error
+  # if any issues then set error message and re-raise the exception
+  rescue Exception => error
     # construct the error message from custom text and the actual system error message (converted to a string)
-      error_to_display = 'Error creating the test directory structure or opening the test results file : ' + error.to_s
-    raise RuntimeError, error_to_display
+    error_to_display = 'Error creating the test directory structure or opening the test results file : ' + error.to_s
+    raise error_to_display
   else
     # if no exception then return the screenshot file directory path
-    return abs_path_screenshot_dir
-      end
+    abs_path_screenshot_dir
   end
 end
