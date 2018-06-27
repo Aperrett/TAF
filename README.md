@@ -1,6 +1,6 @@
 This is the Test Automation Framework (TAF)
 
-Created in Ruby and using Watir to allow a user to Automate a website using an Excel file and exporting that file in to a XML or CSV file type.
+Created in Ruby and using Watir to allow a user to Automate a website using an Excel file and exporting that file in to a CSV file type.
 
 Please see the Wiki for more details: https://github.com/Aperrett/TAF/wiki
 
