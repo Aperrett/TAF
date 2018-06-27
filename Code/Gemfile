@@ -2,6 +2,7 @@
 
 # Gem file for TAF
 source 'https://rubygems.org' do
+  gem 'bundler-audit'
   gem 'colored'
   gem 'logger'
   gem 'net-ping'
