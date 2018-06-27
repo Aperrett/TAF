@@ -25,7 +25,10 @@ To access the Selenium Grid navigate to your browser: http://localhost:4444/grid
 
 To run a Test Suite:
 
-Execute "ruby main.rb [Testsuite.csv or Testsuite.xml]" in cmd line.
+There are 2 ways to execute the TAF.
+
+Execute "ruby main.rb [Testsuite.csv]" in cmd line.
+Execute "ruby main.rb [Testsuite.csv] [Browser i.e. Firefox]" in cmd line.
 
 Note: To exit the TAF container type: 'exit' then type: 'docker-compose down' to shutdown Selenium grid. 
 
