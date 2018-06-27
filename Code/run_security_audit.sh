@@ -1,7 +1,10 @@
 set -e
 
-docker build -f Dockerfile .
+build_record() {
+  docker build -t taf .
+}
 
-RUNNER_IMAGE=$(docker build -f Dockerfile -q .)
+build_record
+echo -e $(docker build -t taf .)
 
-docker run --rm --volume "$(pwd):/app" "$RUNNER_IMAGE" bundle audit check --update
+docker run --rm --volume "$(pwd):/app" taf bundle audit check --update
