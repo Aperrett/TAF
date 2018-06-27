@@ -33,16 +33,23 @@ module Main
     # initialised stores for the input CSV test data
     $CsvDoc = ''
 
-    begin # start of rescue block for readTestSuiteData
-    # check if the test suite file name exists on the command line
-    if !ARGV.empty?
-      $testSuiteFile = ARGV[0]
-    else
-      # unable to open file as not supplied as command-line parameter
-      $testSuiteFile = 'unknown'
-      error_to_display = 'Test File has not been supplied as a command-line parameter as expected'
-      raise IOError, error_to_display
-    end
+    begin
+      # check if the test suite file name exists on the command line
+      # allow a user to input 1 or 2 arguments in to CMD line the 2 values are:
+      # Testsuite File and Browser.
+      if ARGV.length < 2
+        $testSuiteFile = ARGV[0]
+        puts "Only one argument needed: TestSuite File"
+      elsif ARGV.length < 3
+        $testSuiteFile = ARGV[0]
+        $browserType = ARGV[1]
+        puts "Only 2 arguments needed: {TestSuite File} {Browser}"
+      else
+        # unable to open file as not supplied as command-line parameter
+        $testSuiteFile = 'unknown'
+        error_to_display = 'Test File has not been supplied as a command-line parameter as expected'
+        raise IOError, error_to_display  
+      end
 
     # Get the test suite data
     Utils.readTestSuiteData

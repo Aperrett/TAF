@@ -227,8 +227,21 @@ end
       headerRow = $CsvSuiteDoc[testSpecIndex + 7]
       $testId        = headerRow[0, 1][0]
       $testSpecDesc  = headerRow[1, 1][0]
-      $browserType   = headerRow[2, 1][0]
       $env_type      = headerRow[3, 1][0]
+      
+      if ARGV.length < 2
+        $browserType = headerRow[2, 1][0]
+        puts "Will use the following browser from Test Suite: " + $browserType
+        puts ''
+      elsif ARGV.length < 3
+        $browserType = ARGV[1]
+        puts "Will use the following browser from CMD line: " + ARGV[1]
+        puts ''
+      else
+        $browserType = 'unknown'
+        error_to_display = 'Unable to open browser'
+        raise IOError, error_to_display  
+      end  
     end
   end
 
