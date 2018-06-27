@@ -4,6 +4,9 @@ Created in Ruby and using Watir to allow a user to Automate a website using an E
 
 Please see the Wiki for more details: https://github.com/Aperrett/TAF/wiki
 
+<h2>Security Audit of Ruby Gems used </h2>
+Run the following script: ./run_security_audit.sh
+
 <h2>To use the Docker container images</h2>
 To build the TAF Docker container navigate to the Code/ Folder:
 
