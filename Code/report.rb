@@ -76,7 +76,7 @@ module Report
 
     step = {
       'id' => $testStep,
-      'classname' => 'Test Step ' + $testStep + ' ' + $testStepDes,
+      'classname' => 'SuiteID: ' + $testId + ' Test Step: ' + $testStep + ' ' + $testStepDes,
       'name' => $testStepDes,
       'file' => test_file_name
     }
@@ -104,7 +104,7 @@ module Report
       $results_file.write("Test #{$testStep} has FAILED, ")
       puts "Test #{$testStep} has FAILED ".red
       failstep = {
-        'message' => 'Test ' + $testStep + ' Test has FAILED - Check logs',
+        'message' => 'SuiteID: ' + $testId + ' Test Step: ' + $testStep + ' Test has FAILED - Check logs',
         'type' => 'FAILURE',
         'file' => test_file_name
       }
@@ -121,7 +121,7 @@ module Report
       $results_file.write("Test #{$testStep} no checks performed, ")
       puts "Test #{$testStep} no checks performed ".blue
       skipstep = {
-        'message' => 'Test: ' + $testStep + ' No checks performed - Check logs',
+        'message' => 'SuiteID: ' + $testId + ' Test Step: ' + $testStep + ' No checks performed - Check logs',
         'type' => 'SKIPPED',
         'file' => test_file_name
       }
