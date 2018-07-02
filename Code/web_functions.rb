@@ -85,6 +85,19 @@ module WebFuncs
     false
   end
 
+  # Select Link Function.
+  def self.select_link(link, locate)
+    $browser.link(:"#{locate}" => link).exist?
+    $browser.link(:"#{locate}" => link).wait_until_present.click
+    $results_file.write("Link: #{link} has been selected")
+    $results_file.puts ''
+    true
+  rescue StandardError
+    $results_file.write("Link: #{link} does not exist")
+    $results_file.puts ''
+    false
+  end
+
   # Select Image Function.
   def self.select_image(image, locate)
     $browser.image(:"#{locate}" => image).exist?
@@ -94,19 +107,6 @@ module WebFuncs
     true
   rescue StandardError
     $results_file.write("Image: #{image} does not exist")
-    $results_file.puts ''
-    false
-  end
-
-  # Select Item Function.
-  def self.select_item(item, locate)
-    $browser.a(:"#{locate}" => item).exist?
-    $browser.a(:"#{locate}" => item).wait_until_present.click
-    $results_file.write("Item: #{item} has been selected")
-    $results_file.puts ''
-    true
-  rescue StandardError
-    $results_file.write("Item: #{item} does not exist")
     $results_file.puts ''
     false
   end
