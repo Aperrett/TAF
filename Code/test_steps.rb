@@ -86,16 +86,6 @@ module TestSteps
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'select_item'
-      # one parameter: item
-      # print the test step information
-      Report.printTestStepHeader(test_file_name, testStepIndex)
-      # call the appropriate method
-      test_pass = WebFuncs.select_item($test_value, $locate) if runtest == false
-      # Check for test Pass / Fail
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
-      Report.checkFailureThreshold(test_file_name)
-
     elsif $testStepFunction == 'click_h_tag'
       # one parameter: item
       # print the test step information
