@@ -67,7 +67,7 @@ module WebFuncs
       $browser.div(:"#{locate}" => button).exist?
     ]
 
-    raise 'Multiple matches' if found_button.select { |i| i }.size > 1
+    raise 'Multiple matches' if found_button.select { |i| i }.size < 1
     index = found_button.index(true)
     return unless index
     if index.zero?
@@ -125,7 +125,7 @@ module WebFuncs
       $browser.h6(:"#{locate}" => item).exist?
     ]
 
-    raise 'Multiple matches' if found_tags.select { |i| i }.size > 1
+    raise 'Multiple matches' if found_tags.select { |i| i }.size < 1
     index = found_tags.index(true)
     return unless index
     $browser.send("h#{index + 1}", :"#{locate}" => item).click
@@ -176,7 +176,7 @@ module WebFuncs
       $browser.text_field(:"#{locate}" => box).exist?
     ]
 
-    raise 'Multiple matches' if found_box.select { |i| i }.size > 1
+    raise 'Multiple matches' if found_box.select { |i| i }.size < 1
     index = found_box.index(true)
     return unless index
     if index.zero?
@@ -219,7 +219,7 @@ module WebFuncs
       $browser.text_field(:"#{locate}" => box).exist?
     ]
 
-    raise 'Multiple matches' if found_box.select { |i| i }.size > 1
+    raise 'Multiple matches' if found_box.select { |i| i }.size < 1
     index = found_box.index(true)
     return unless index
     if index.zero?
