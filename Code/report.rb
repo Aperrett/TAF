@@ -167,12 +167,12 @@ module Report
   def self.printTestStepSummary(test_file_name, testFileNumber)
     # construct the test step report summary
     $testStepReportSummary[testFileNumber] = "\n" 'Test file:', test_file_name, \
-                                             "\n" 'Browser type:', $browserType, \
-                                             "\n" 'Browser version:', Utils.browserVersion.to_s, \
-                                             "\n" 'Environment:', $env_type, \
-                                             "\n" 'Started at:', $test_case_start_time, \
-                                             "\n" 'Finished at:', $test_case_end_time, \
-                                             "\n" 'There are:', $testStepPasses, 'Passes' \
+    "\n" 'Browser type:', $browserType, \
+    "\n" 'Browser version:', Utils.browserVersion.to_s, \
+    "\n" 'Environment:', $env_type, \
+    "\n" 'Started at:', $test_case_start_time, \
+    "\n" 'Finished at:', $test_case_end_time, \
+    "\n" 'There are:', $testStepPasses, 'Passes' \
     "\n" 'There are:', $testStepFailures, 'Failures' \
     "\n" 'There are:', $testStepNotrun, 'Skipped Tests' "\n"
     # ... and save in a format that is printable

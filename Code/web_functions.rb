@@ -63,18 +63,21 @@ module WebFuncs
     found_button = [
       $browser.button(:"#{locate}" => button).exist?,
       $browser.span(:"#{locate}" => button).exist?,
-      $browser.a(:"#{locate}" => button).exist?
+      $browser.a(:"#{locate}" => button).exist?,
+      $browser.div(:"#{locate}" => button).exist?
     ]
 
     raise 'Multiple matches' if found_button.select { |i| i }.size > 1
     index = found_button.index(true)
     return unless index
-    if index == 0
+    if index.zero?
       $browser.button(:"#{locate}" => button).wait_until_present.click
     elsif index == 1
       $browser.span(:"#{locate}" => button).wait_until_present.click
     elsif index == 2
-      $browser.a(:"#{locate}" => button).wait_until_present.click  
+      $browser.a(:"#{locate}" => button).wait_until_present.click
+    elsif index == 3
+      $browser.div(:"#{locate}" => button).wait_until_present.click  
     end
     $results_file.write("Button: #{button} has been selected")
     $results_file.puts ''
@@ -422,6 +425,7 @@ module WebFuncs
   # Send Special keys.
   def self.send_special_keys(special_key)
     $browser.send_keys :"#{special_key}"
+    sleep 1
     $results_file.write("Browser Sent key: :#{special_key} successfully")
     $results_file.puts ''
     true
