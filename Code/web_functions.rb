@@ -64,7 +64,8 @@ module WebFuncs
       $browser.button(:"#{locate}" => button).exist?,
       $browser.span(:"#{locate}" => button).exist?,
       $browser.a(:"#{locate}" => button).exist?,
-      $browser.div(:"#{locate}" => button).exist?
+      $browser.div(:"#{locate}" => button).exist?,
+      $browser.link(:"#{locate}" => button).exist?
     ]
 
     raise 'Multiple matches' if found_button.select { |i| i }.size < 1
@@ -77,39 +78,15 @@ module WebFuncs
     elsif index == 2
       $browser.a(:"#{locate}" => button).wait_until_present.click
     elsif index == 3
-      $browser.div(:"#{locate}" => button).wait_until_present.click  
+      $browser.div(:"#{locate}" => button).wait_until_present.click
+    elsif index == 4
+      $browser.link(:"#{locate}" => button).wait_until_present.click
     end
     $results_file.write("Button: #{button} has been selected")
     $results_file.puts ''
     true
   rescue StandardError
     $results_file.write("Button: #{button} does not exist")
-    $results_file.puts ''
-    false
-  end
-
-  # Select Link Function.
-  def self.select_link(link, locate)
-    $browser.link(:"#{locate}" => link).exist?
-    $browser.link(:"#{locate}" => link).wait_until_present.click
-    $results_file.write("Link: #{link} has been selected")
-    $results_file.puts ''
-    true
-  rescue StandardError
-    $results_file.write("Link: #{link} does not exist")
-    $results_file.puts ''
-    false
-  end
-
-  # Select Image Function.
-  def self.select_image(image, locate)
-    $browser.image(:"#{locate}" => image).exist?
-    $browser.image(:"#{locate}" => image).wait_until_present.click
-    $results_file.write("Image: #{image} has been selected")
-    $results_file.puts ''
-    true
-  rescue StandardError
-    $results_file.write("Image: #{image} does not exist")
     $results_file.puts ''
     false
   end

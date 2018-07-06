@@ -66,26 +66,6 @@ module TestSteps
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'select_link'
-      # one parameter: link
-      # print the test step information
-      Report.printTestStepHeader(test_file_name, testStepIndex)
-      # call the appropriate method
-      test_pass = WebFuncs.select_link($test_value, $locate) if runtest == false
-      # Check for test Pass / Fail
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
-      Report.checkFailureThreshold(test_file_name)
-
-    elsif $testStepFunction == 'select_image'
-      # one parameter: image
-      # print the test step information
-      Report.printTestStepHeader(test_file_name, testStepIndex)
-      # call the appropriate method
-      test_pass = WebFuncs.select_image($test_value, $locate) if runtest == false
-      # Check for test Pass / Fail
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
-      Report.checkFailureThreshold(test_file_name)
-
     elsif $testStepFunction == 'click_h_tag'
       # one parameter: item
       # print the test step information
