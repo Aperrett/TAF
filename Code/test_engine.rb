@@ -75,8 +75,7 @@ module TestEngine
             puts 'Not a valid CSV File Type'
           end
 
-          $results_file.write("Number of test steps: #{$numberOfTestSteps}")
-          $results_file.puts ''
+          $results_file.write("Number of test steps: #{$numberOfTestSteps} \n")
 
           # get the test case start time
           $test_case_start_time = Report.get_time

@@ -111,12 +111,9 @@ end
 
        # Screenshot capture for websites
        $browser.screenshot.save scFileName
-       $results_file.write("Screenshot saved to: #{scFileName}")
-       $results_file.puts ''
+       $results_file.write("Screenshot saved to: #{scFileName} \n")
       else
-        $results_file.write 'No screenshot requested'
-        $results_file.puts ''
-        $results_file.puts ''
+        $results_file.write 'No screenshot requested', "\n"
       end
 
         # if any issues with saving the screenshot then log a warning

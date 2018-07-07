@@ -66,16 +66,6 @@ module TestSteps
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'click_h_tag'
-      # one parameter: item
-      # print the test step information
-      Report.printTestStepHeader(test_file_name, testStepIndex)
-      # call the appropriate method
-      test_pass = WebFuncs.click_h_tag($test_value, $locate) if runtest == false
-      # Check for test Pass / Fail
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
-      Report.checkFailureThreshold(test_file_name)
-
     elsif $testStepFunction == 'write_to_editor'
       # one parameter: iframe, value
       # print the test step information
@@ -290,8 +280,7 @@ module TestSteps
       Report.checkFailureThreshold(test_file_name)
 
     else
-      $results_file.write("Unable to match function: #{$testStepFunction}")
-      $results_file.puts ''
+      $results_file.write("Unable to match function: #{$testStepFunction} \n")
       print "Unable to match function: #{$testStepFunction}"
       puts ''
     end

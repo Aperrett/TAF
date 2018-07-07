@@ -45,19 +45,11 @@ module Report
 
   # print the main test header info to the test results file
   def self.printTestHeader
-    $results_file.write("Project Name: #{$projectName} Project ID: #{$projectId} Sprint: #{$sprint} ")
-    $results_file.puts ''
-    $results_file.puts ''
-    $results_file.write("Test ID: #{$testId} Test Description: #{$testDes}")
-    $results_file.puts ''
-    $results_file.write("Executed with browser: #{$browserType}")
-    $results_file.puts ''
-    $results_file.write("Test suite: #{$testSuiteFile}")
-    $results_file.puts ''
-    $results_file.write("Tester: #{$tester}")
-    $results_file.puts ''
-    $results_file.puts ''
-    $results_file.puts ''
+    $results_file.write("Project Name: #{$projectName} Project ID: #{$projectId} Sprint: #{$sprint} \n")
+    $results_file.write("Test ID: #{$testId} Test Description: #{$testDes} \n")
+    $results_file.write("Executed with browser: #{$browserType} \n")
+    $results_file.write("Test suite: #{$testSuiteFile} \n")
+    $results_file.write("Tester: #{$tester}", "\n \n \n")
   end # printTestHeader
 
   # get the current time in the format Day - Month - Date - Time (HH:MM:SS)
@@ -69,8 +61,8 @@ module Report
 
   # print the test Step info to the test results file
   def self.printTestStepHeader(test_file_name, testStepIndex)
-    $results_file.write("Test start time: #{f_time = get_time}   \n")
-    $results_file.write("Test step: #{$testStep} : #{$testStepDes}  ")
+    $results_file.write("\n" + "Test start time: #{f_time = get_time} \n")
+    $results_file.write("Test step: #{$testStep} : #{$testStepDes} \n")
     puts "Test start time: #{f_time = get_time}   \n"
     puts "Test step: #{$testStep} : #{$testStepDes}  "
 
@@ -95,13 +87,13 @@ module Report
       $previousTestFail = $currentTestFail
       $currentTestFail = false
       $testStepPasses += 1
-      $results_file.write("Test #{$testStep} has Passed, ")
+      $results_file.write("Test #{$testStep} has Passed, \n")
       puts "Test #{$testStep} has Passed ".green
     elsif passFail == false
       $previousTestFail = $currentTestFail
       $currentTestFail = true
       $testStepFailures += 1
-      $results_file.write("Test #{$testStep} has FAILED, ")
+      $results_file.write("Test #{$testStep} has FAILED, \n")
       puts "Test #{$testStep} has FAILED ".red
       failstep = {
         'message' => 'SuiteID: ' + $testId + ' Test Step: ' + $testStep + ' Test has FAILED - Check logs',
@@ -133,8 +125,7 @@ module Report
       $skiptestStep_xml[test_file_name] ||= []
       $skiptestStep_xml[test_file_name][testStepIndex] = skipstep
   end
-    $results_file.write("Test end time: #{f_time = get_time}   \n")
-    $results_file.puts ''
+    $results_file.write("Test end time: #{f_time = get_time} \n")
     puts "Test end time: #{f_time = get_time}   \n"
     puts ''
   end # testPassFail
@@ -150,8 +141,7 @@ module Report
 
     if $consecutiveTestFail >= $consecutiveFailThreshold
       $results_file.puts ''
-      $results_file.write("Terminating the current test case as the test failure threshold (#{$consecutiveFailThreshold} ) has been reached")
-      $results_file.puts ''
+      $results_file.write("Terminating the current test case as the test failure threshold (#{$consecutiveFailThreshold} ) has been reached \n")
 
       # write info to $stderr
       warn ''
@@ -166,7 +156,7 @@ module Report
   # output the test results summary for the current test case
   def self.printTestStepSummary(test_file_name, testFileNumber)
     # construct the test step report summary
-    $testStepReportSummary[testFileNumber] = "\n" 'Test file:', test_file_name, \
+    $testStepReportSummary[testFileNumber] = 'Test file:', test_file_name, \
     "\n" 'Browser type:', $browserType, \
     "\n" 'Browser version:', Utils.browserVersion.to_s, \
     "\n" 'Environment:', $env_type, \
@@ -178,10 +168,8 @@ module Report
     # ... and save in a format that is printable
     $testStepReportSummary[testFileNumber] = $testStepReportSummary[testFileNumber].join(' ')
     $results_file.puts ''
-    $results_file.write("Test Summary: #{$testStepReportSummary[testFileNumber]}")
-    $results_file.puts ''
-    $results_file.write("\n Test end time: #{$test_case_end_time}")
-    $results_file.puts ''
+    $results_file.write("Test Summary: #{$testStepReportSummary[testFileNumber]} \n")
+    $results_file.write("Test end time: #{$test_case_end_time} \n")
   end # printTestStepSummary
 
   # construct the test suite header for junit
