@@ -49,6 +49,6 @@ https://github.com/Aperrett
 
 <h2>Copyright and License</h2>
 
-Copyright 2017 Aperrett
+Copyright 2018 Aperrett
 
 Code released under the MIT License.
