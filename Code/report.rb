@@ -156,7 +156,7 @@ module Report
   # output the test results summary for the current test case
   def self.printTestStepSummary(test_file_name, testFileNumber)
     # construct the test step report summary
-    $testStepReportSummary[testFileNumber] = 'Test file:', test_file_name, \
+    $testStepReportSummary[testFileNumber] = "\n" 'Test file:', test_file_name,\
     "\n" 'Browser type:', $browserType, \
     "\n" 'Browser version:', Utils.browserVersion.to_s, \
     "\n" 'Environment:', $env_type, \
