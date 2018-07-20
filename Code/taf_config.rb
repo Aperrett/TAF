@@ -29,4 +29,6 @@ module TafConfig
   require_relative 'test_engine.rb'
   require_relative 'report.rb'
   require_relative 'web_functions.rb'
+  require_relative 'custom_funcs.rb'
 end
+# end of module.

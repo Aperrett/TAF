@@ -41,17 +41,24 @@ module CustomFuncs
 
     # mem word function.
     def self.mem_word
+      password = ENV['USER_MEM']
+
       if $browser.title.eql?('Memorable word')
         nums = (1..256).to_a
-        found_mem = nums.each_with_object([]) do |num, memo|
-          id = "user_memorable_parts_#{num}"
-          memo.push(num) if $browser.select(:id => id).exist?
+        found_mem_nums = nums.each_with_object([]) do |num_val, mem_word|
+          element_id = "user_memorable_parts_#{num_val}"
+          mem_word.push(num_val) if $browser.select(:id => element_id).exist?
         end.compact
 
-        found_mem.each { |x|
-          id = "user_memorable_parts_#{x}"
-          $browser.select_list(:id => id).option(:text => "#{x}").select
+        array_password = password.split('')
+        array_password.map!(&:upcase)
+
+        found_mem_nums.each { |mem_num|
+          char = array_password[(mem_num-1)]
+          element_id = "user_memorable_parts_#{mem_num}"
+          $browser.select_list(:id => element_id).option(:value => "#{char}").select
         }
+
         $browser.button(value: 'Sign in').wait_until_present.click
         return true
         if $browser.title.eql?('Home')
@@ -60,7 +67,7 @@ module CustomFuncs
         else
           $results_file.write("User: #{user} has failed to log in. \n")
           return false
-        end    
+        end
       end
     end
 

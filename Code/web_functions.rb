@@ -56,9 +56,9 @@ module WebFuncs
   def self.click_button(button, locate)
     elms = %i{button span a div link image h1 h2 h3 h4}
 
-     found_button = elms.map do |elm|
-     $browser.send(elm, :"#{locate}" => button).exist?
-     end.compact
+    found_button = elms.map do |elm|
+      $browser.send(elm, :"#{locate}" => button).exist?
+    end.compact
 
     # raise 'Multiple matches' if found_button.size > 0
     # found_button.first.wait_until_present.click
@@ -66,27 +66,19 @@ module WebFuncs
     raise 'Multiple matches' if found_button.select { |i| i }.empty?
     index = found_button.index(true)
     return unless index
-    if index.zero?
-      $browser.button(:"#{locate}" => button).wait_until_present.click
-    elsif index == 1
-      $browser.span(:"#{locate}" => button).wait_until_present.click
-    elsif index == 2
-      $browser.a(:"#{locate}" => button).wait_until_present.click
-    elsif index == 3
-      $browser.div(:"#{locate}" => button).wait_until_present.click
-    elsif index == 4
-      $browser.link(:"#{locate}" => button).wait_until_present.click
-    elsif index == 5
-      $browser.image(:"#{locate}" => button).wait_until_present.click
-    elsif index == 6
-      $browser.h1(:"#{locate}" => button).wait_until_present.click
-    elsif index == 7
-      $browser.h2(:"#{locate}" => button).wait_until_present.click
-    elsif index == 8
-      $browser.h3(:"#{locate}" => button).wait_until_present.click
-    elsif index == 9
-      $browser.h4(:"#{locate}" => button).wait_until_present.click
-    end     
+
+    case index
+      when 0 then $browser.button(:"#{locate}" => button).wait_until_present.click
+      when 1 then $browser.span(:"#{locate}" => button).wait_until_present.click
+      when 2 then $browser.a(:"#{locate}" => button).wait_until_present.click
+      when 3 then $browser.div(:"#{locate}" => button).wait_until_present.click
+      when 4 then $browser.link(:"#{locate}" => button).wait_until_present.click
+      when 5 then $browser.image(:"#{locate}" => button).wait_until_present.click
+      when 6 then $browser.h1(:"#{locate}" => button).wait_until_present.click
+      when 7 then $browser.h2(:"#{locate}" => button).wait_until_present.click
+      when 8 then $browser.h3(:"#{locate}" => button).wait_until_present.click
+      when 9 then $browser.h4(:"#{locate}" => button).wait_until_present.click
+    end
     $results_file.write("Button: #{button} has been selected \n")
     true
   rescue StandardError
