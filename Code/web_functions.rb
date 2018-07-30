@@ -60,9 +60,6 @@ module WebFuncs
       $browser.send(elm, :"#{locate}" => button).exist?
     end.compact
 
-    # raise 'Multiple matches' if found_button.size > 0
-    # found_button.first.wait_until_present.click
-
     raise 'Multiple matches' if found_button.select { |i| i }.empty?
     index = found_button.index(true)
     return unless index
@@ -338,5 +335,4 @@ module WebFuncs
     $results_file.write("Browser Failed to Send key: :#{special_key} \n")
     false
   end
-  # module web_functions
 end

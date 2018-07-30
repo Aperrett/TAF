@@ -9,25 +9,25 @@ module Utils
   require './taf_config.rb'
 
   def self.currentBrowserType
-      # begin
-      # check if browser already created and the correct type
-      if $browser.nil?
-        'no browser'
-      elsif $browser.driver.capabilities[:b_name].casecmp('internet explorer').zero?
-        'ie'
-      elsif $browser.driver.capabilities[:b_name].casecmp('chrome').zero?
-        'chrome'
-      elsif $browser.driver.capabilities[:b_name].casecmp('chrome-headless').zero?
-        'chrome-headless'
-      elsif $browser.driver.capabilities[:b_name].casecmp('firefox').zero?
-        'firefox'
-      elsif $browser.driver.capabilities[:b_name].casecmp('firefox-headless').zero?
-        'firefox-headless'
-      elsif $browser.driver.capabilities[:b_name].casecmp('safari').zero?
-        'safari'
-      else
-        'unknown'
-      end
+    # begin
+    # check if browser already created and the correct type
+    if $browser.nil?
+      'no browser'
+    elsif $browser.driver.capabilities[:b_name].casecmp('internet explorer').zero?
+      'ie'
+    elsif $browser.driver.capabilities[:b_name].casecmp('chrome').zero?
+      'chrome'
+    elsif $browser.driver.capabilities[:b_name].casecmp('chrome-headless').zero?
+      'chrome-headless'
+    elsif $browser.driver.capabilities[:b_name].casecmp('firefox').zero?
+      'firefox'
+    elsif $browser.driver.capabilities[:b_name].casecmp('firefox-headless').zero?
+      'firefox-headless'
+    elsif $browser.driver.capabilities[:b_name].casecmp('safari').zero?
+      'safari'
+    else
+      'unknown'
+    end
   end
 
 # open_browser function
@@ -63,8 +63,6 @@ def self.open_browser
     driver = Selenium::WebDriver.for(:firefox, options: options, desired_capabilities: caps)
     $browser = Watir::Browser.new(driver)
     # makes the browser full screen.
-    # screen_width = $browser.execute_script("return screen.width;")
-    # screen_height = $browser.execute_script("return screen.height;")
     $browser.driver.manage.window.resize_to(1920, 1200)
     $browser.driver.manage.window.move_to(0, 0)
 
@@ -135,17 +133,16 @@ end
           puts ''
           # get the file type
           fileType = File.extname($testSuiteFile)
-          # extract the test data from the test suite
-          # select CSV for the file extension
+          # extract the test data from the test suite xlsx file type
 
-          if (fileType.casecmp($CsvFileNameType) == 0)
-            # process as csv...
-            $CsvSuiteDoc = CSV.read(File.open($testSuiteFile))
+          if (fileType.casecmp($XlsxFileNameType) == 0)
+            # process as xlsx...
+            $XlsxSuiteDoc = RubyXL::Parser.parse($testSuiteFile)
             # ...and parse...
-            Utils.parseCsvTestSuiteHeaderData
+            Utils.parseXlxsTestSuiteHeaderData
           else
             # the file type is not that expected so create a error message and raise an exception
-            error_to_display = 'Test Suite file: \'' + $testSuiteFile.to_s + '\' type not recognised (must be .csv)'
+            error_to_display = 'Test Suite file: \'' + $testSuiteFile.to_s + '\' type not recognised (must be .xlsx)'
             raise IOError, error_to_display
           end
           # if unable to read the test file list then construct a custom error message and raise an exception
@@ -158,87 +155,56 @@ end
       end
   end
 
-  def self.parseCsvTestSuiteHeaderData
+  def self.parseXlxsTestSuiteHeaderData
     begin
-      # each row in the input file is stored as an array of elements:
-      # row0: header row containing test suite title fields
-      # row1: Project_Name, Project_ID, Sprint
-      # row2: nil
-      # row3: header row containing test suite title fields
-      # row4: Test_Suite, Suite_Description, Tester
-      # row5: nil
-      # row6: header row containing test suite title fields
-      # row7: Test_ID, Test_Specification, Browser_Type
-      # row8: repeat of previous row with each test spec file until <endOfFile>
+      # get the number of test specifications in the file (number of
+      # occurences of "Test_Specification"
+      $numberOfTestSpecs = $XlsxSuiteDoc[0].sheet_data.size - 7
 
-      # get the number of test specifications in the file:
-      # (number or rows - number of non test spec rows)
-      $numberOfTestSpecs = ($CsvSuiteDoc.length) - 7
+      worksheet = $XlsxSuiteDoc[0]
+      $projectName = worksheet.sheet_data[1][0].value
+      $projectId = worksheet.sheet_data[1][1].value
+      $sprint = worksheet.sheet_data[1][2].value
 
-      # get the CSV file row containing the header data
-      headerRow     = $CsvSuiteDoc[1]
-      $projectName  = headerRow[0, 1][0]
-      $projectId    = headerRow[1, 1][0]
-      $sprint       = headerRow[2, 1][0]
-
-      # get the CSV file row containing more header data
-      headerRow = $CsvSuiteDoc[4]
-      $testSuiteId  = headerRow[0, 1][0]
-      $testSuiteDes = headerRow[1, 1][0]
-      $tester       = headerRow[2, 1][0]
+      $testSuiteId = worksheet.sheet_data[4][0].value
+      $testSuiteDes = worksheet.sheet_data[4][1].value
+      $tester  = worksheet.sheet_data[4][2].value
     end
-  end
+ end
 
   def self.parseTestSuiteData(testSpecIndex)
-    begin
-      # get the file type
-      fileType = File.extname($testSuiteFile)
+    # get the file type
+    fileType = File.extname($testSuiteFile)
 
-        # select CSV for the file extension of the test file name
-        if (fileType.casecmp($CsvFileNameType) == 0)
-          Utils.parseCsvTestSuiteData(testSpecIndex)
-
-        else
-          # the file type is not that expected so create a error message and raise an exception
-          error_to_display = 'Test Suite file: \'' + $testSuiteFile.to_s + '\' type not recognised (must be .csv)'
-          raise IOError, error_to_display
-        end
+    # select Xlsx depending on the file extension of the test file name
+    if (fileType.casecmp($XlsxFileNameType) == 0)
+      Utils.parseXlxsTestSuiteData(testSpecIndex)
+    else
+      # the file type is not that expected so create a error message and raise an exception
+      errorToDisplay = 'Test Suite file: \'' + $testSuiteFile.to_s + '\' type not recognised (must be .xlsx)'
+      raise IOError, errorToDisplay
     end
   end
 
-  # parseCsvTestSuiteData
-  def self.parseCsvTestSuiteData(testSpecIndex)
-    begin
-      # each row in the input file is stored as an array of elements:
-      # row0: header row containing test suite title fields
-      # row1: Project_Name, Project_ID, Sprint
-      # row2: nil
-      # row3: header row containing test suite title fields
-      # row4: Test_Suite, Suite_Description, Tester
-      # row5: nil
-      # row6: header row containing test suite title fields
-      # row7: Test_ID, Test_Specification, Browser_Type, Environment type
-      # row8: repeat of previous row with each test spec file until <endOfFile>
+  def self.parseXlxsTestSuiteData(testSpecIndex)
+    worksheet = $XlsxSuiteDoc[0]
 
-      # get the CSV file row containing the desired test spec data
-      headerRow = $CsvSuiteDoc[testSpecIndex + 7]
-      $testId        = headerRow[0, 1][0]
-      $testSpecDesc  = headerRow[1, 1][0]
-      $env_type      = headerRow[3, 1][0]
-      
+    worksheet[7..$numberOfTestSpecs+7].map do |row|
+      suite = {
+        id: row[0].value,
+        specdesc: row[1].value,
+        env: row[3].value,
+      }
+
       if ARGV.length < 2
-        $browserType = headerRow[2, 1][0]
-        puts "Will use the following browser from Test Suite: " + $browserType
-        puts ''
+        suite[:browser] = row[2].value
       elsif ARGV.length < 3
-        $browserType = ARGV[1]
-        puts "Will use the following browser from CMD line: " + ARGV[1]
-        puts ''
+        suite[:browser] = ARGV[1]
       else
-        $browserType = 'unknown'
-        error_to_display = 'Unable to open browser'
-        raise IOError, error_to_display  
-      end  
+        raise IOError, 'Unable to open browser'  
+      end
+
+      suite
     end
   end
 
@@ -247,141 +213,93 @@ end
     begin
     # get the file type
     fileType = File.extname(testFileName)
-      if (fileType.casecmp($CsvFileNameType) == 0)
-        puts ''
-        print 'Processing test file: ', testFileName
-        puts ''
-        puts "Browser Type: #{$browserType}"
-        puts "Environment: #{$env_type}"
-        $CsvDoc = CSV.read(File.open(testFileName))
-        Utils.parseCsvTestHeaderData
-        return 'CSV'
 
-      else
-        # if unable to read the test file list then construct a custom error
-        # message and raise an exception.
-        error_to_display = 'Test File Name: \'' + testFileName.to_s + '\' type not recognised (must be .csv)'
-        raise IOError, error_to_display
+    # select xlsx depending on the file extension of the test file name
+    if (fileType.casecmp($XlsxFileNameType) == 0)
+      puts''
+      print 'Processing test file: ', testFileName
+      puts''
+      puts"Browser Type: #{$browserType}"
+
+      $xlsxDoc = RubyXL::Parser.parse(testFileName)
+      Utils.parseXlxsTestHeaderData
+      return 'XLSX'
+    else
+      # if unable to read the test file list then construct a custom error
+      # message and raise an exception.
+      error_to_display = 'Test File Name: \'' + testFileName.to_s + '\' type not recognised (must be .xlsx)'
+      raise IOError, error_to_display
+    end
+
+      # if an error occurred reading the test file list then
+      # re-raise the exception.
+      rescue Exception => error
+          raise IOError, error
       end
-
-        # if an error occurred reading the test file list then
-        # re-raise the exception.
-        rescue Exception => error
-            raise IOError, error
-        end
   end
 
-  # parseCsvTestHeaderData
-  def self.parseCsvTestHeaderData
-    # each row in the input file is stored as an array of elements:
-    # row0: header row containing the header title fields
-    # row1: Project_Name, Project_ID, Sprint
-    # row2: nil
-    # row3: header row containing the test header title fields
-    # row4: Test_ID, Test_Description, Browser_Type
-    # row5: nil
-    # row6: header row containing the test step header title fields
-    # row7: Test_Step, Test_Step_Description, Test_Step_Function,
-    # Test_Step_Value, S, Test_Step_Value2, Screenshot, nil
-    # repeat of previous row with each test step data until <endOfFile>
-
-    # get the number of test steps in the file:
-    # (number or rows - number of non-test step rows)
-    $numberOfTestSteps = ($CsvDoc.length) - 7
-
-    # NB: the projectName, projectId and sprint data
-    # is now sourced from the test suite file
-
-    # get the CSV file row containing the header data
-    # NB: the testId and browserType data is now sourced from the testsuite file
-    headerRow = $CsvDoc[4]
-    $testDes = headerRow[1, 1][0]
-  end
+  def self.parseXlxsTestHeaderData
+    # get the number of test steps in the file
+    $numberOfTestSteps = ($xlsxDoc[0].sheet_data.size) - 7
+    worksheet = $xlsxDoc[0]
+    # get the remaining test data
+    $testDes      = worksheet.sheet_data[4][1].value
+    puts "Number of test steps: #{$numberOfTestSteps}"
+    puts "Test Description: #{$testDes}"
+    
+  end # parseXlxsTestHeaderData
 
   # parseTestStepData
   def self.parseTestStepData(testFileType, testStepIndex)
-    begin
-      # clear the global test step data
-      Utils.clearTestStepData
-        if (testFileType == 'CSV')
-          # each row in the input file is stored as an array of elements:
-          # row0: header row containing the header title fields
-          # row1: Project_Name, Project_ID, Sprint
-          # row2: nil
-          # row3: header row containing the test header title fields
-          # row4: Test_ID, Test_Description, Browser_Type
-          # row5: nil
-          # row6: header row containing the test step header title fields
-          # row7: Test_Step, Test_Step_Description, Test_Step_Function,
-          # Test_Step_Value, Test_Step_Value2, Screenshot, Skip_Test_Case, nil
-          # repeat of previous row with each test step data until...
-          # nil, <endOfFile>
+    # clear the global test step data
+    Utils.clearTestStepData
 
-          row = $CsvDoc[testStepIndex]
+    worksheet = $xlsxDoc[0]
+    worksheet[7..$numberOfTestSteps+7].map do |row|
+      test = {
+        testStep: row[0].value,
+        testdesc: row[1].value,
+        testFunction: row[2].value,
+        testvalue: row[3].value,
+        locate: row[4].value,
+        testvalue2: row[5].value,
+        locate2: row[6].value,
+        screenShotData: row[7].value,
+        skipTestCase: row[8].value,
+      }
 
-          # read data
-          $testStep         = row[0, 1][0]
-          $testStepDes      = row[1, 1][0]
-          $testStepFunction = row[2, 1][0]
-          $test_value       = row[3, 1][0]
-          $locate           = row[4, 1][0]
-          $test_value2      = row[5, 1][0]
-          $locate2          = row[6, 1][0]
+      # convert test step, screenshot and skip test case functions to lowercase.
+      test[:testFunction].downcase!
 
-          # get screenshot request, check for a null value and default to 'N'
-          screenShotData    = row[7, 1][0]
+      # get screenshot request, check for a null value and default to 'N'
 
-            if (screenShotData.to_s.empty?)
-              $screenShot = 'N'
-            else
-              $screenShot = screenShotData
-            end
+      if (test[:screenShotData] == 'Y')
+        test[:screenShotData] = true
+      elsif (test[:screenShotData] == 'N')
+        test[:screenShotData] = false
+      else
+        test[:screenShotData] = false
+      end
 
-          # get skipped test request, check for a null value and default to 'N'
-          skipTestData      = row[8, 1][0]
+      if (test[:skipTestCase] == 'Y')
+        test[:skipTestCase] = true
+      elsif(test[:skipTestCase] == 'N')
+        test[:skipTestCase] = false
+      else
+        test[:skipTestCase] = false
+      end
 
-            if (skipTestData.to_s.empty?)
-              $skipTestCase = 'N'
-            else
-              $skipTestCase = skipTestData
-            end
+      # if there is an element locator then use it, otherwise use an ID
+      if (test[:locate].to_s == '')
+        test[:locate] = 'id'
+      end
 
-        else
-          puts 'Not valid CSV file type.'
-        end
+      if (test[:locate2].to_s == '')
+        test[:locate2] = 'id'
+      end
 
-        # convert test step function to lower case to remove any case-variation
-        $testStepFunction.downcase!
-
-        # convert to lower case and then to a boolean value
-        $screenShot.downcase!
-          if ($screenShot == 'y')
-             $screenShot = true
-          else
-            $screenShot = false
-          end
-
-        # convert skip test case to lower case and then to a boolean value
-        $skipTestCase.downcase!
-          if ($skipTestCase == 'y')
-            $skipTestCase = true
-          else
-            $skipTestCase = false
-          end
-
-        # if there is an element locator then use it, otherwise use an ID
-        if ($locate.to_s == '')
-          $locate = 'id'
-        end
-
-        if ($locate2.to_s == '')
-          $locate2 = 'id'
-        end
-
-        # if an error reading the test step data then re-raise the exception
-        rescue Exception
-          raise
-        end
+      test
+    end
   end
 
   # clearTestStepData

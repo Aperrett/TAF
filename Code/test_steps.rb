@@ -27,7 +27,7 @@ module TestSteps
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = CustomFuncs.portal_login if runtest == false
+      test_pass = CustomFuncs.portal_login($test_value) if runtest == false
       Report.testPassFail(test_pass, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 

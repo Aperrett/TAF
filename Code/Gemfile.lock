@@ -22,6 +22,9 @@ GEM
     net-ping (2.0.4)
     nokogiri (1.8.3)
       mini_portile2 (~> 2.3.0)
+    rubyXL (3.3.29)
+      nokogiri (>= 1.4.4)
+      rubyzip (>= 1.1.6)
     rubygems-update (2.7.7)
     rubyzip (1.2.1)
     selenium-webdriver (3.13.0)
@@ -45,6 +48,7 @@ DEPENDENCIES
   logger!
   net-ping!
   nokogiri!
+  rubyXL!
   rubygems-update!
   selenium-webdriver!
   time_difference!

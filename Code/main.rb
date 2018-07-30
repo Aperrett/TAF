@@ -13,9 +13,9 @@ module Main
   begin
     # holds list of test file names read from the input file
     test_file_names = []
-    $commandLineCsvFile = false
+    $commandLineXlsxFile = false
 
-    $CsvFileNameType = '.csv'
+    $XlsxFileNameType = '.xlsx'
 
     # holds printable test report summary for all the executed tests
     $testStepReportSummary = []
@@ -30,8 +30,8 @@ module Main
     $consecutiveFailThreshold = 5
     $previousTestFail = false
     $currentTestFail = false
-    # initialised stores for the input CSV test data
-    $CsvDoc = ''
+    # initialised stores for the input xlsx test data
+    $XlsxDoc = ''
 
     begin
       # check if the test suite file name exists on the command line
@@ -75,7 +75,7 @@ module Main
     Report.testSummaryJunit
 
     # close browser after tests have completed
-    $browser.quit
+    $browser&.quit
   rescue StandardError => e
     $browser = 'No Browser Required'
     raise e

@@ -17,9 +17,9 @@ module TafConfig
   require 'logger'
   require 'net/ping'
   require 'nokogiri'
-  require 'csv'
   require 'time_difference'
   require 'colored'
+  require 'RubyXL'
 
   # list of all the required files
   require_relative 'test_steps.rb'
