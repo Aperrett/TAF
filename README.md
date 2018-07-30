@@ -1,6 +1,6 @@
 This is the Test Automation Framework (TAF)
 
-Created in Ruby and using Watir to allow a user to Automate a website using an Excel file and exporting that file in to a CSV file type.
+Created in Ruby and using Watir to allow a user to Automate a website using an Excel file file type.
 
 Please see the Wiki for more details: https://github.com/Aperrett/TAF/wiki
 
@@ -30,9 +30,9 @@ To run a Test Suite:
 
 There are 2 ways to execute the TAF.
 
-Execute "ruby main.rb [Testsuite.csv]" in cmd line.
+Execute "ruby main.rb [Testsuite.xlsx]" in cmd line.
 
-Execute "ruby main.rb [Testsuite.csv] [Browser i.e. Firefox]" in cmd line.
+Execute "ruby main.rb [Testsuite.xlsx] [Browser i.e. Firefox]" in cmd line.
 
 Note: To exit the TAF container type: 'exit' then type: 'docker-compose down' to shutdown Selenium grid. 
 
