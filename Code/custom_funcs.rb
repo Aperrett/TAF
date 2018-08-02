@@ -16,7 +16,7 @@ module CustomFuncs
     url = ENV['URL']
     user = ENV['USER_EMAIL']
     pass = ENV['USER_PASS']
-    Utils.open_browser
+    Browser.open_browser
     $browser.goto(url)
     url_name = $browser.url
     if url_name == url
@@ -90,7 +90,7 @@ module CustomFuncs
   # open_web_url from ENV variable.
   def self.open_web_url(value)
     url = ENV[value.to_s]
-    Utils.open_browser
+    Browser.open_browser
     $browser.goto(url)
     url_nme = $browser.url
     if url_nme == url

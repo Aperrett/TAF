@@ -28,7 +28,7 @@ module WebFuncs
 
   # Open URL function. - the browser object is created via the main program
   def self.open_url(url)
-    Utils.open_browser
+    Browser.open_browser
     $browser.goto(url)
     sleep 2
     url_nme = $browser.url
@@ -177,7 +177,7 @@ module WebFuncs
   # Radio button function.
   def self.radio_button(radio, value, locate, locate2)
     $browser.radio(:"#{locate}" => radio).wait_until_present
-    $browser.radio(:"#{locate}" => radio, :"#{locate2}" => value).set
+    $browser.radio(:"#{locate}" => radio, :"#{locate2}" => "#{value}").set
     $results_file.write("Radio button: #{radio} has been selected \n")
     true
   rescue StandardError
@@ -199,7 +199,7 @@ module WebFuncs
   def self.select_dropdown(dropdown, value, locate, locate2)
     # two parameters: dropdown, value
     $browser.select_list(:"#{locate}" => dropdown).wait_until_present
-    $browser.select_list(:"#{locate}" => dropdown).option(:"#{locate2}" => value).select
+    $browser.select_list(:"#{locate}" => dropdown).option(:"#{locate2}" => "#{value}").select
     $results_file.write("Dropdown item: #{value} has been selected \n")
     true
   rescue StandardError
@@ -213,7 +213,7 @@ module WebFuncs
   # check screen data function.
   def self.check_screendata(text_check)
     # one parameter: text value to check if text is displayed on page.
-    sleep 2
+    sleep 5
     if $browser.text.include?(text_check)
       $results_file.write("found text: #{text_check} \n")
       return true

@@ -68,7 +68,7 @@ module Report
 
     step = {
       'id' => $testStep,
-      'classname' => 'SuiteID: ' + "#{$testId}" + ' Test Step: ' + "#{$testStep}" + ' ' + "#{$testStepDes}",
+      'classname' => 'SuiteID: ' + $testId.to_s + ' Test Step: ' + $testStep.to_s + ' ' + $testStepDes.to_s,
       'name' => $testStepDes,
       'file' => test_file_name
     }
@@ -96,7 +96,7 @@ module Report
       $results_file.write("Test #{$testStep} has FAILED, \n")
       puts "Test #{$testStep} has FAILED ".red
       failstep = {
-        'message' => 'SuiteID: ' + "#{$testId}" + ' Test Step: ' + "#{$testStep}" + ' Test has FAILED - Check logs',
+        'message' => 'SuiteID: ' + $testId.to_s + ' Test Step: ' + $testStep.to_s + ' Test has FAILED - Check logs',
         'type' => 'FAILURE',
         'file' => test_file_name
       }
@@ -113,7 +113,7 @@ module Report
       $results_file.write("Test #{$testStep} no checks performed, ")
       puts "Test #{$testStep} no checks performed ".blue
       skipstep = {
-        'message' => 'SuiteID: ' + "#{$testId}" + ' Test Step: ' + "#{$testStep}" + ' No checks performed - Check logs',
+        'message' => 'SuiteID: ' + $testId.to_s + ' Test Step: ' + $testStep.to_s + ' No checks performed - Check logs',
         'type' => 'SKIPPED',
         'file' => test_file_name
       }
@@ -158,7 +158,7 @@ module Report
     # construct the test step report summary
     $testStepReportSummary[testFileNumber] = "\n" 'Test file:', test_file_name,\
     "\n" 'Browser type:', $browserType, \
-    "\n" 'Browser version:', Utils.browserVersion.to_s, \
+    "\n" 'Browser version:', Browser.browserVersion.to_s, \
     "\n" 'Environment:', $env_type, \
     "\n" 'Started at:', $test_case_start_time, \
     "\n" 'Finished at:', $test_case_end_time, \

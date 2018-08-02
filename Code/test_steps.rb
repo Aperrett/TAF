@@ -14,269 +14,270 @@ module TestSteps
   # processing the associated data accordingly
   def self.processTestSteps(test_file_name, testStepIndex)
     runtest = $skipTestCase
-    if $testStepFunction == 'open_url'
+    case $testStepFunction 
+    when 'open_url'
       # one parameter: URL
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = WebFuncs.open_url($test_value) if runtest == false
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
+      testfunc = WebFuncs.open_url($test_value) if runtest == false
+      Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'portal_login'
+    when 'portal_login'
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = CustomFuncs.portal_login($test_value) if runtest == false
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
+      testfunc = CustomFuncs.portal_login($test_value) if runtest == false
+      Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'admin_portal_login'
+    when 'admin_portal_login'
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = CustomFuncs.portal_admin_login if runtest == false
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
+      testfunc = CustomFuncs.portal_admin_login if runtest == false
+      Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'sint_login'
+    when 'sint_login'
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = CustomFuncs.sint_login if runtest == false
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
+      testfunc = CustomFuncs.sint_login if runtest == false
+      Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'ping_test'
+    when 'ping_test'
       # one parameter: URL
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = WebFuncs.ping_test($test_value) if runtest == false
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
+      testfunc = WebFuncs.ping_test($test_value) if runtest == false
+      Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'check_url'
+    when 'check_url'
       # one parameter: URL
       # url = $test_value
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = WebFuncs.check_url($test_value) if runtest == false
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
+      testfunc = WebFuncs.check_url($test_value) if runtest == false
+      Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'write_to_editor'
+    when 'write_to_editor'
       # one parameter: iframe, value
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = WebFuncs.write_to_editor($test_value, $locate, $test_value2) if runtest == false
+      testfunc = WebFuncs.write_to_editor($test_value, $locate, $test_value2) if runtest == false
       # Check for test Pass / Fail
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
+      Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'capture_alert'
+    when 'capture_alert'
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = WebFuncs.capture_alert if runtest == false
+      testfunc = WebFuncs.capture_alert if runtest == false
       # Check for test Pass / Fail
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
+      Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'click_button'
+    when 'click_button'
       # one parameter: button
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = WebFuncs.click_button($test_value, $locate) if runtest == false
+      testfunc = WebFuncs.click_button($test_value, $locate) if runtest == false
       # Check for test Pass / Fail
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
+      Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'select_dropdown'
+    when 'select_dropdown'
       # two parameters: dropdown, value
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = WebFuncs.select_dropdown($test_value, $test_value2, $locate, $locate2) if runtest == false
+      testfunc = WebFuncs.select_dropdown($test_value, $test_value2, $locate, $locate2) if runtest == false
       # Check for test Pass / Fail
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
+      Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'list_all_dropdown_values'
+    when 'list_all_dropdown_values'
       # one parameter: dropdown
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = WebFuncs.list_dropdowns($test_value, $locate) if runtest == false
+      testfunc = WebFuncs.list_dropdowns($test_value, $locate) if runtest == false
       # Check for test Pass / Fail
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
+      Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'write_box_data'
+    when 'write_box_data'
       # two parameters: Box, value
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = WebFuncs.write_text($test_value, $test_value2, $locate) if runtest == false
+      testfunc = WebFuncs.write_text($test_value, $test_value2, $locate) if runtest == false
       # Check for test Pass / Fail
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
+      Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'check_box_data'
+    when 'check_box_data'
       # two parameters: Box, value
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = WebFuncs.check_boxdata($test_value, $test_value2, $locate) if runtest == false
+      testfunc = WebFuncs.check_boxdata($test_value, $test_value2, $locate) if runtest == false
       # Check for test Pass / Fail
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
+      Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'check_screen_data'
+    when 'check_screen_data'
       # one parameters: the text to search for on screen
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = WebFuncs.check_screendata($test_value) if runtest == false
+      testfunc = WebFuncs.check_screendata($test_value) if runtest == false
       # Check for test Pass / Fail
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
+      Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'check_browser_title'
+    when 'check_browser_title'
       # one parameters: text to check browser title.
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = WebFuncs.check_title($test_value) if runtest == false
+      testfunc = WebFuncs.check_title($test_value) if runtest == false
       # Check for test Pass / Fail
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
+      Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'check_log_file'
+    when 'check_log_file'
       text = $test_value
       file = $test_value2
       output = $test_value3
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = WebFuncs.check_log_file(text, file, output) if runtest == false
+      testfunc = WebFuncs.check_log_file(text, file, output) if runtest == false
       # Check for test Pass / Fail
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
+      Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'ipause'
+    when 'ipause'
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = WebFuncs.ipause($test_value) if runtest == false
+      testfunc = WebFuncs.ipause($test_value) if runtest == false
       # Check for test Pass / Fail
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
+      Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'execute_system_command'
+    when 'execute_system_command'
       # one parameter: syst_Command
       syst_Command = $test_value
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = WebFuncs.sys_command(syst_Command) if runtest == false
+      testfunc = WebFuncs.sys_command(syst_Command) if runtest == false
       # Check for test Pass / Fail
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
+      Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'check_box'
+    when 'check_box'
       # one parameter: checkbox
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = WebFuncs.check_box($test_value, $locate) if runtest == false
+      testfunc = WebFuncs.check_box($test_value, $locate) if runtest == false
       # Check for test Pass / Fail
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
+      Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'radio_button'
+    when 'radio_button'
       # one parameter: radio
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = WebFuncs.radio_button($test_value, $test_value2, $locate, $locate2) if runtest == false
+      testfunc = WebFuncs.radio_button($test_value, $test_value2, $locate, $locate2) if runtest == false
       # Check for test Pass / Fail
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
+      Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'browser_refresh'
+    when 'browser_refresh'
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = WebFuncs.browser_refresh if runtest == false
+      testfunc = WebFuncs.browser_refresh if runtest == false
       # Check for test Pass / Fail
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
+      Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'browser_back'
+    when 'browser_back'
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = WebFuncs.browser_back if runtest == false
+      testfunc = WebFuncs.browser_back if runtest == false
       # Check for test Pass / Fail
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
+      Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'browser_forward'
+    when 'browser_forward'
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = WebFuncs.browser_forward if runtest == false
+      testfunc = WebFuncs.browser_forward if runtest == false
       # Check for test Pass / Fail
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
+      Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'browser_quit'
+    when 'browser_quit'
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = WebFuncs.browser_quit if runtest == false
+      testfunc = WebFuncs.browser_quit if runtest == false
       # Check for test Pass / Fail
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
+      Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'insert_value_config'
+    when 'insert_value_config'
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = CustomFuncs.insert_value_config($test_value, $test_value2, $locate) if runtest == false
+      testfunc = CustomFuncs.insert_value_config($test_value, $test_value2, $locate) if runtest == false
       # Check for test Pass / Fail
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
+      Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'open_portal_url'
+    when 'open_portal_url'
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = CustomFuncs.open_portal_url($test_value) if runtest == false
+      testfunc = CustomFuncs.open_portal_url($test_value) if runtest == false
       # Check for test Pass / Fail
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
+      Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'handle_browser_window'
+    when 'handle_browser_window'
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = WebFuncs.handle_browser_window($test_value) if runtest == false
+      testfunc = WebFuncs.handle_browser_window($test_value) if runtest == false
       # Check for test Pass / Fail
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
+      Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    elsif $testStepFunction == 'send_special_keys'
+    when 'send_special_keys'
       # print the test step information
       Report.printTestStepHeader(test_file_name, testStepIndex)
       # call the appropriate method
-      test_pass = WebFuncs.send_special_keys($test_value) if runtest == false
+      testfunc = WebFuncs.send_special_keys($test_value) if runtest == false
       # Check for test Pass / Fail
-      Report.testPassFail(test_pass, test_file_name, testStepIndex)
+      Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
     else
@@ -284,5 +285,5 @@ module TestSteps
       print "Unable to match function: #{$testStepFunction}"
       puts ''
     end
-  end # processTestSteps method
-end # module
+  end
+end

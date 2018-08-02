@@ -16,6 +16,7 @@ module Main
     $commandLineXlsxFile = false
 
     $XlsxFileNameType = '.xlsx'
+    $CsvFileNameType = '.csv'
 
     # holds printable test report summary for all the executed tests
     $testStepReportSummary = []
@@ -27,11 +28,12 @@ module Main
     $totalTestPasses    = 0
     $totalTestFailures  = 0
     $totalTestNotrun = 0
-    $consecutiveFailThreshold = 5
+    $consecutiveFailThreshold = 8
     $previousTestFail = false
     $currentTestFail = false
-    # initialised stores for the input xlsx test data
+    # initialised stores for the input xlsx or csv test data
     $XlsxDoc = ''
+    $CsvDoc = ''
 
     begin
       # check if the test suite file name exists on the command line
@@ -52,7 +54,7 @@ module Main
       end
 
     # Get the test suite data
-    Utils.readTestSuiteData
+    Parser.readTestSuiteData
 
   # unable to read the test file then handle the error and terminate
   rescue StandardError => error
