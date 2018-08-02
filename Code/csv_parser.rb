@@ -177,7 +177,7 @@ module CsvParser
       end
 
       # if an error reading the test step data then re-raise the exception
-      rescue Exception
+      rescue StandardError => error
         raise
       end
     end

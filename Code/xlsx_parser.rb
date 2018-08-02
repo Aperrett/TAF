@@ -105,7 +105,10 @@ module XlsxParser
       end
 
       test
-    end
+     # if an error reading the test step data then re-raise the exception
+    rescue StandardError => error
+      raise
     end
   end
+end
 end
