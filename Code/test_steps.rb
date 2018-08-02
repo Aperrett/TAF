@@ -32,22 +32,6 @@ module TestSteps
       Report.testPassFail(testfunc, test_file_name, testStepIndex)
       Report.checkFailureThreshold(test_file_name)
 
-    when 'admin_portal_login'
-      # print the test step information
-      Report.printTestStepHeader(test_file_name, testStepIndex)
-      # call the appropriate method
-      testfunc = CustomFuncs.portal_admin_login if runtest == false
-      Report.testPassFail(testfunc, test_file_name, testStepIndex)
-      Report.checkFailureThreshold(test_file_name)
-
-    when 'sint_login'
-      # print the test step information
-      Report.printTestStepHeader(test_file_name, testStepIndex)
-      # call the appropriate method
-      testfunc = CustomFuncs.sint_login if runtest == false
-      Report.testPassFail(testfunc, test_file_name, testStepIndex)
-      Report.checkFailureThreshold(test_file_name)
-
     when 'ping_test'
       # one parameter: URL
       # print the test step information
