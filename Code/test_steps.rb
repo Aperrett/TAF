@@ -18,8 +18,9 @@ module TestSteps
     locate1 = $locate
     locate2 = $locate2
     runtest = $skipTestCase
+    teststepfunc = $testStepFunction
 
-    case $testStepFunction
+    case teststepfunc
     when 'open_url'
       # one parameter: URL
       # print the test step information
@@ -293,8 +294,8 @@ module TestSteps
       Report.checkFailureThreshold(test_file_name)
 
     else
-      $results_file.write("Unable to match function: #{$testStepFunction} \n")
-      print "Unable to match function: #{$testStepFunction}"
+      $results_file.write("Unable to match function: #{teststepfunc} \n")
+      print "Unable to match function: #{teststepfunc}"
       puts ''
     end
   end
