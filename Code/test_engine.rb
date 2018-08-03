@@ -69,8 +69,8 @@ module TestEngine
           # step through the test file
           # CSV test step data starts at row 8 of the file and iterates for the number of test steps
           if testFileType == 'CSV'
-            testStepIndex = 7
-            finalTestStepIndex = testStepIndex + $numberOfTestSteps
+            teststepindex = 7
+            finalteststepindex = teststepindex + $numberOfTestSteps
           else
             puts 'Not a valid CSV File Type'
           end
@@ -82,22 +82,22 @@ module TestEngine
           # initialise the test end time
           $test_case_end_time = Report.get_time
 
-          while testStepIndex < finalTestStepIndex
+          while teststepindex < finalteststepindex
             begin
-              Parser.parseTestStepData(testFileType, testStepIndex)
+              Parser.parseTestStepData(testFileType, teststepindex)
               # if an error then show the error and move onto the next test step
             rescue StandardError => error
               warn error
               $log.puts error
             else
               # process the test step data
-              TestSteps.processTestSteps(test_file_name, testStepIndex)
+              TestSteps.process_teststeps(test_file_name, teststepindex)
               # see if screenshot required
               Browser.checkSaveScreenShot(fullScDirName)
             end # of rescue block for parseTestStepData
 
             # increment loop counter to move onto next test step
-            testStepIndex += 1
+            teststepindex += 1
 
           end # while loop for test steps
         end # of rescue block for readTestData

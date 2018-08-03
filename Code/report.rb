@@ -110,7 +110,7 @@ module Report
     else
       $currentTestFail = false
       $testStepNotrun += 1
-      $results_file.write("Test #{$testStep} no checks performed, ")
+      $results_file.write("Test #{$testStep} no checks performed, \n")
       puts "Test #{$testStep} no checks performed ".blue
       skipstep = {
         'message' => 'SuiteID: ' + $testId.to_s + ' Test Step: ' + $testStep.to_s + ' No checks performed - Check logs',

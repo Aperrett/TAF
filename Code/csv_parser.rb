@@ -104,7 +104,7 @@ module CsvParser
   end
 
   # parseTestStepData
-  def self.parseTestStepData(testFileType, testStepIndex)
+  def self.parseTestStepData(testFileType, teststepindex)
     begin
       # each row in the input file is stored as an array of elements:
       # row0: header row containing the header title fields
@@ -119,7 +119,7 @@ module CsvParser
       # repeat of previous row with each test step data until...
       # nil, <endOfFile>
 
-      row = $CsvDoc[testStepIndex]
+      row = $CsvDoc[teststepindex]
 
       # read data
       $testStep         = row[0, 1][0]

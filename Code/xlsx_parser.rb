@@ -58,7 +58,7 @@ module XlsxParser
   end
 
   # parseTestStepData
-  def self.parseTestStepData(testFileType, testStepIndex)
+  def self.parseTestStepData(testFileType, teststepindex)
     begin
     worksheet = $xlsxDoc[0]
     worksheet[7..$numberOfTestSteps+7].map do |row|
@@ -106,8 +106,8 @@ module XlsxParser
 
       test
      # if an error reading the test step data then re-raise the exception
-    rescue StandardError => error
-      raise
+    # rescue
+      # raise
     end
   end
 end

@@ -6,15 +6,15 @@
 # Versions:
 # 1.0 - Baseline
 #
-# custom_functions.rb
+# custom_functions.rb - for Portal use only.
 # Please note these are custom functions.
 module CustomFuncs
   require './taf_config.rb'
 
-  # login function.
-  def self.portal_login
+  # Portal login function.
+  def self.login(value)
     url = ENV['URL']
-    user = ENV['USER_EMAIL']
+    user = ENV[value.to_s]
     pass = ENV['USER_PASS']
     Browser.open_browser
     $browser.goto(url)
@@ -27,7 +27,7 @@ module CustomFuncs
         $browser.button(value: 'Sign in').wait_until_present.click
         sleep 3
         if $browser.title.eql?('Memorable word')
-        mem_word()
+        portal_mem_word()
         elsif  $browser.title.eql?('Home')
           $results_file.write("User: #{user} has logged in successful. \n")
           return true
@@ -39,8 +39,8 @@ module CustomFuncs
     end
   end
 
-    # mem word function.
-    def self.mem_word
+    # Portal login with mem word function.
+    def self.portal_mem_word
       password = ENV['USER_MEM']
 
       if $browser.title.eql?('Memorable word')
@@ -87,8 +87,8 @@ module CustomFuncs
     # insert value from config function.
   end
 
-  # open_web_url from ENV variable.
-  def self.open_web_url(value)
+  # open_portal_url from ENV variable.
+  def self.open_portal_url(value)
     url = ENV[value.to_s]
     Browser.open_browser
     $browser.goto(url)
