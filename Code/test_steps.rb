@@ -30,12 +30,6 @@ module TestSteps
     when 'portal_login'
       testfunc = CustomFuncs.portal_login(value1) if runtest == false
 
-    when 'admin_portal_login'
-      testfunc = CustomFuncs.portal_admin_login if runtest == false
-
-    when 'sint_login'
-      testfunc = CustomFuncs.sint_login if runtest == false
-
     when 'ping_test'
       testfunc = WebFuncs.ping_test(value1) if runtest == false
 
