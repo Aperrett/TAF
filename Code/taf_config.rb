@@ -20,7 +20,6 @@ module TafConfig
   require 'time_difference'
   require 'colored'
   require 'rubyXL'
-  require 'csv'
 
   # list of all the required files
   require_relative 'test_steps.rb'
@@ -32,6 +31,5 @@ module TafConfig
   require_relative 'web_functions.rb'
   require_relative 'custom_funcs.rb'
   require_relative 'parser.rb'
-  require_relative 'csv_parser.rb'
   require_relative 'xlsx_parser.rb'
 end

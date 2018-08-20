@@ -16,7 +16,6 @@ module Main
     $commandLineXlsxFile = false
 
     $XlsxFileNameType = '.xlsx'
-    $CsvFileNameType = '.csv'
 
     # holds printable test report summary for all the executed tests
     $testStepReportSummary = []
@@ -31,9 +30,8 @@ module Main
     $consecutiveFailThreshold = 8
     $previousTestFail = false
     $currentTestFail = false
-    # initialised stores for the input xlsx or csv test data
+    # initialised stores for the input xlsx test data
     $XlsxDoc = ''
-    $CsvDoc = ''
 
     begin
       # check if the test suite file name exists on the command line
@@ -41,11 +39,11 @@ module Main
       # Testsuite File and Browser.
       if ARGV.length < 2
         $testSuiteFile = ARGV[0]
-        puts "Only one argument needed: TestSuite File"
+        puts 'Only one argument needed: TestSuite File'
       elsif ARGV.length < 3
         $testSuiteFile = ARGV[0]
         $browserType = ARGV[1]
-        puts "Only 2 arguments needed: {TestSuite File} {Browser}"
+        puts 'Only 2 arguments needed: {TestSuite File} {Browser}'
       else
         # unable to open file as not supplied as command-line parameter
         $testSuiteFile = 'unknown'

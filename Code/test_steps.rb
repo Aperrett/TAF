@@ -28,7 +28,7 @@ module TestSteps
       testfunc = WebFuncs.open_url(value1) if runtest == false
 
     when 'portal_login'
-      testfunc = CustomFuncs.portal_login(value1) if runtest == false
+      testfunc = CustomFuncs.login(value1) if runtest == false
 
     when 'ping_test'
       testfunc = WebFuncs.ping_test(value1) if runtest == false

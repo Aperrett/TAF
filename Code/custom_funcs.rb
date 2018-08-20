@@ -27,7 +27,7 @@ module CustomFuncs
         $browser.button(value: 'Sign in').wait_until_present.click
         sleep 3
         if $browser.title.eql?('Memorable word')
-        portal_mem_word()
+          login_mem_word()
         elsif  $browser.title.eql?('Home')
           $results_file.write("User: #{user} has logged in successful. \n")
           return true
@@ -40,7 +40,7 @@ module CustomFuncs
   end
 
     # Portal login with mem word function.
-    def self.portal_mem_word
+    def self.login_mem_word
       password = ENV['USER_MEM']
 
       if $browser.title.eql?('Memorable word')
