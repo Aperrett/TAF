@@ -39,7 +39,7 @@ module Main
       # Testsuite File and Browser.
       if ARGV.length < 2
         $testSuiteFile = ARGV[0]
-        puts 'Only one argument needed: TestSuite File'
+        puts 'Only one argument needed: {TestSuite File}'
       elsif ARGV.length < 3
         $testSuiteFile = ARGV[0]
         $browserType = ARGV[1]
@@ -61,8 +61,7 @@ module Main
     abort
   end
 
-    print 'There are ', $numberOfTestSpecs, ' test files to process'
-    puts ''
+    puts "There are: #{$numberOfTestSpecs} test files to process \n"
 
     # process the test files to execute the tests
     TestEngine.process_testfiles

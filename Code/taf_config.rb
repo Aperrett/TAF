@@ -33,6 +33,3 @@ require_relative 'web_functions'
 require_relative 'custom_funcs'
 require_relative 'parser'
 require_relative 'xlsx_parser'
-
-module TafConfig
-end

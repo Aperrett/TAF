@@ -11,9 +11,7 @@ module Parser
   def self.readTestSuiteData
     # check if the file list exists and is readable
     if (File.file?($testSuiteFile) & File.readable?($testSuiteFile))
-      puts ''
-      print 'Processing test suite file: ', $testSuiteFile
-      puts ''
+      puts "\nProcessing test suite file: #{$testSuiteFile}"
       # get the file type
       fileType = File.extname($testSuiteFile)
       # extract the test data from the test suite
@@ -59,9 +57,7 @@ module Parser
     # get the file type
     fileType = File.extname(testFileName)
     if (fileType.casecmp($XlsxFileNameType) == 0)
-      puts ''
-      print 'Processing test file: ', testFileName
-      puts ''
+      puts "Processing test file: #{testFileName}"
       puts "Browser Type: #{$browserType}"
       $xlsxDoc = RubyXL::Parser.parse(testFileName)
       XlsxParser.parseXlxsTestHeaderData

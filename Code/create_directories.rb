@@ -78,12 +78,9 @@ module CreateDirectories
     # the log file name will be under the test ID directory
     $logFileName = testid_dir + '/TestLogFile.txt'
 
-    print 'TestId: ', $testId
-    puts ''
-    print 'Screenshot directory: ', abs_path_screenshot_dir
-    puts ''
-    print 'Test result directory: ', abs_path_test_res_dir
-    puts ''
+    puts "TestId: #{$testId}"
+    puts "Screenshot directory: #{abs_path_screenshot_dir}"
+    puts "Test result directory: #{abs_path_test_res_dir}"
 
   # if any issues then set error message and re-raise the exception
   rescue Exception => error
