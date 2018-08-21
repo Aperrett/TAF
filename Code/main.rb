@@ -27,7 +27,7 @@ module Main
     $totalTestPasses    = 0
     $totalTestFailures  = 0
     $totalTestNotrun = 0
-    $consecutiveFailThreshold = 8
+    $consecutiveFailThreshold = 5
     $previousTestFail = false
     $currentTestFail = false
     # initialised stores for the input xlsx test data

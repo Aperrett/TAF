@@ -46,7 +46,7 @@ module CreateDirectories
     # create directories for each test spec
     # create a sub-directory named from the 'testId' (with any spaces taken out)
     # if it doesn't already exist plus the browser type
-    testid_dir = $runNoDir + '/' + $testId.delete(' ') + '_' + $browserType#.capitalize
+    testid_dir = $runNoDir + '/' + $testId.delete(' ') + '_' + $browserType.capitalize
     Dir.mkdir(testid_dir) unless File.directory? testid_dir
 
     # create a screenshot directory under the 'testId' directory - it will always need creating

@@ -27,7 +27,7 @@ module TestSteps
     when 'open_url'
       testfunc = WebFuncs.open_url(value1) if runtest == false
 
-    when 'portal_login'
+    when 'login'
       testfunc = CustomFuncs.login(value1) if runtest == false
 
     when 'ping_test'
@@ -115,14 +115,15 @@ module TestSteps
 
     when 'send_special_keys'
       testfunc = WebFuncs.send_special_keys(value1) if runtest == false
+
+    else
+      $results_file.write("Unable to match function: #{teststepfunc}\n")
+      puts "Unable to match function: #{teststepfunc}"
+      raise UnknownTestStep, "Unknown test step: #{teststepfunc}"
     end
 
     # print the test step result information
     Report.testPassFail(testfunc, test_file_name, teststepindex)
-    Report.checkFailureThreshold(test_file_name)
-  rescue StandardError
-    $results_file.write("Unable to match function: #{teststepfunc} \n")
-    print "Unable to match function: #{teststepfunc}"
-    puts ''
+    Report.checkFailureThreshold(test_file_name, teststepindex)
   end
 end

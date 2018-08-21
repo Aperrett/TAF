@@ -118,7 +118,7 @@ module Report
         'file' => test_file_name
       }
       # output to console to show test step failure
-      # puts failstep
+      # puts skipstep
 
       return unless test_file_name
       $skiptestStep_xml ||= {}
@@ -132,7 +132,7 @@ module Report
 
   # check if the test failure threshold has been reached for total failures or consecutive failures.
   # If a certain number of consecutive tests fail then throw an exception
-  def self.checkFailureThreshold(test_file_name)
+  def self.checkFailureThreshold(test_file_name, testStepIndex)
     if $previousTestFail && $currentTestFail
       $consecutiveTestFail += 1
     else
@@ -140,16 +140,14 @@ module Report
     end
 
     if $consecutiveTestFail >= $consecutiveFailThreshold
-      $results_file.puts ''
-      $results_file.write("Terminating the current test case as the test failure threshold (#{$consecutiveFailThreshold} ) has been reached \n")
+      $results_file.puts("\nTerminating the current test case as the test failure threshold (#{$consecutiveFailThreshold} ) has been reached")
 
       # write info to $stderr
-      warn ''
-      $stderr.print 'Terminating the current test case: ', test_file_name, ' as the test failure threshold (', $consecutiveFailThreshold, ') has been reached'
-      warn ''
-      $stderr.print '...continuing with the next test case (if there is one)'
-      warn ''
-      throw :failureThresholdReached
+      $stderr.puts "Terminating the current test case: #{test_file_name} as the test failure threshold (#{$consecutiveFailThreshold}) has been reached."
+      $stderr.puts '...continuing with the next test case (if there is one)'
+
+      raise FailureThresholdExceeded,
+            "#{$consecutiveFailThreshold} steps failed."
     end
   end # checkFailureThreshold
 
