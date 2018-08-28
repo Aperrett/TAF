@@ -25,105 +25,111 @@ module TestSteps
     case teststepfunc
     # call the appropriate methods
     when 'open_url'
-      testfunc = WebFuncs.open_url(value1) if runtest == false
+      func = MiscFunctions.open_url(value1) if runtest == false
 
     when 'login'
-      testfunc = CustomFuncs.login(value1) if runtest == false
+      func = LoginFunctions.login(value1) if runtest == false
 
     when 'ping_test'
-      testfunc = WebFuncs.ping_test(value1) if runtest == false
+      func = MiscFunctions.ping_test(value1) if runtest == false
 
     when 'check_url'
-      testfunc = WebFuncs.check_url(value1) if runtest == false
+      func = CheckFunctions.check_url(value1) if runtest == false
 
     when 'write_to_editor'
       if runtest == false
-        testfunc = WebFuncs.write_to_editor(value1, locate1, value2)
+        func = WriteTextFunctions.write_to_editor(value1, locate1, value2)
       end
 
     when 'capture_alert'
-      testfunc = WebFuncs.capture_alert if runtest == false
+      func = MiscFunctions.capture_alert if runtest == false
 
     when 'click_button'
-      testfunc = WebFuncs.click_button(value1, locate1) if runtest == false
+      func = ClickFunctions.click_button(value1, locate1) if runtest == false
 
     when 'select_dropdown'
       if runtest == false
-        testfunc = WebFuncs.select_dropdown(value1, value2, locate1, locate2)
+        func = ClickFunctions.select_dropdown(value1, value2, locate1, locate2)
       end
 
     when 'list_all_dropdown_values'
-      testfunc = WebFuncs.list_dropdowns(value1, locate1) if runtest == false
+      if runtest == false
+        func = CheckFunctions.list_dropdowns(value1, locate1)
+      end
 
     when 'write_box_data'
       if runtest == false
-        testfunc = WebFuncs.write_text(value1, value2, locate1)
+        func = WriteTextFunctions.write_text(value1, value2, locate1)
       end
 
     when 'check_box_data'
       if runtest == false
-        testfunc = WebFuncs.check_boxdata(value1, value2, locate1)
+        func = CheckFunctions.check_boxdata(value1, value2, locate1)
       end
 
     when 'check_screen_data'
-      testfunc = WebFuncs.check_screendata(value1) if runtest == false
+      func = CheckFunctions.check_screendata(value1) if runtest == false
 
     when 'check_browser_title'
-      testfunc = WebFuncs.check_title(value1) if runtest == false
+      func = CheckFunctions.check_title(value1) if runtest == false
 
     when 'check_log_file'
       if runtest == false
-        testfunc = WebFuncs.check_log_file(value1, value2, locate1)
+        func = CheckFunctions.check_logs(value1, value2, locate1)
       end
 
     when 'ipause'
-      testfunc = WebFuncs.ipause(value1) if runtest == false
+      func = MiscFunctions.ipause(value1) if runtest == false
 
     when 'execute_system_command'
-      testfunc = WebFuncs.sys_command(value1) if runtest == false
+      func = MiscFunctions.sys_command(value1) if runtest == false
 
     when 'check_box'
-      testfunc = WebFuncs.check_box(value1, locate1) if runtest == false
+      func = ClickFunctions.check_box(value1, locate1) if runtest == false
 
     when 'radio_button'
       if runtest == false
-        testfunc = WebFuncs.radio_button(value1, value2, locate1, locate2)
+        func = ClickFunctions.radio_button(value1, value2, locate1, locate2)
       end
 
     when 'browser_refresh'
-      testfunc = WebFuncs.browser_refresh if runtest == false
+      func = BrowserFunctions.browser_refresh if runtest == false
 
     when 'browser_back'
-      testfunc = WebFuncs.browser_back if runtest == false
+      func = BrowserFunctions.browser_back if runtest == false
 
     when 'browser_forward'
-      testfunc = WebFuncs.browser_forward if runtest == false
+      func = BrowserFunctions.browser_forward if runtest == false
 
     when 'browser_quit'
-      testfunc = WebFuncs.browser_quit if runtest == false
+      func = BrowserFunctions.browser_quit if runtest == false
 
     when 'insert_value_config'
       if runtest == false
-        testfunc = CustomFuncs.insert_value_config(value1, value2, locate1)
+        func = CustomMiscFunctions.insert_value_config(value1, value2, locate1)
       end
 
     when 'open_portal_url'
-      testfunc = CustomFuncs.open_portal_url(value1) if runtest == false
+      func = CustomMiscFunctions.open_portal_url(value1) if runtest == false
 
     when 'handle_browser_window'
-      testfunc = WebFuncs.handle_browser_window(value1) if runtest == false
+      if runtest == false
+        func = MiscFunctions.handle_browser_window(value1)
+      end
 
     when 'send_special_keys'
-      testfunc = WebFuncs.send_special_keys(value1) if runtest == false
+      if runtest == false
+        func = MiscFunctions.send_special_keys(value1)
+      end
 
     else
-      $results_file.write("Unable to match function: #{teststepfunc}\n")
+      Report.results.write("Unable to match function: #{teststepfunc}\n")
       puts "Unable to match function: #{teststepfunc}"
       raise UnknownTestStep, "Unknown test step: #{teststepfunc}"
     end
 
     # print the test step result information
-    Report.testPassFail(testfunc, test_file_name, teststepindex)
+    Report.testPassFail(func, test_file_name, teststepindex)
     Report.checkFailureThreshold(test_file_name, teststepindex)
   end
 end

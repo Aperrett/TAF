@@ -62,8 +62,8 @@ module TestEngine
 
         # create the project directories, returns the screenshot directory name
         begin # start of rescue block for construct_projectdirs
-          # create test spec directories - these need creating once per test spec
-          fullScDirName = CreateDirectories.construct_testspecdirs
+          # create test spec directories - these need creating once per testspec
+          full_sc_dirname = CreateDirectories.construct_testspecdirs
           # open the log file
           Report.open_logfile
           # if an error then show the error and terminate
@@ -84,7 +84,7 @@ module TestEngine
           puts 'Not a valid XLSX File Type'
         end
 
-        $results_file.puts("Number of test steps: #{$numberOfTestSteps}")
+        Report.results.puts("Number of test steps: #{$numberOfTestSteps}")
 
         # get the test case start time
         $test_case_start_time = Report.get_time
@@ -108,7 +108,7 @@ module TestEngine
             # process the test step data
             TestSteps.process_teststeps(test_file_name, index)
             # see if screenshot required
-            Browser.checkSaveScreenShot(fullScDirName)
+            Browser.check_save_screenshot(full_sc_dirname)
           end
         rescue TafError => error
           warn error
@@ -119,7 +119,7 @@ module TestEngine
         $test_case_end_time = Report.get_time
 
         # output the test results summary for the current test case,
-        # pass in the test file number to save the summary against it's test file
+        # pass in the test file number to save the summary against it's testfile
         Report.printTestStepSummary(test_file_name, test_file_name_index)
         Report.printTestStepSummaryXml(test_file_name, test_file_name_index)
 
@@ -130,7 +130,7 @@ module TestEngine
         Report.closeLogFile
 
         # close the browser if created
-        $browser&.close
+        Browser.b&.close
 
         # increment loop counter to move onto next test file
         test_file_name_index += 1

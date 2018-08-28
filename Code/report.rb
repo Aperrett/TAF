@@ -18,15 +18,20 @@ module Report
 
     # open test results file for writing if not already open
     if !File.exist?($testResultFileName) || $testResultFileName.closed?
-      $results_file = File.open($testResultFileName, 'w')
+      @results_file = File.open($testResultFileName, 'w')
     elsif $log.puts "test results file name: #{$testResultFileName} is already open"
     end
   end # open_testreport_file
 
   def self.close_testresults_file
     # if the file is open then close it
-    $results_file.close unless $results_file.closed?
+    Report.results.close unless Report.results.closed?
   end # close_testresults_file
+
+  # results file variable
+  def self.results
+    results_file = @results_file
+  end
 
   def self.open_logfile
     # open a new file for writing
@@ -45,11 +50,11 @@ module Report
 
   # print the main test header info to the test results file
   def self.printTestHeader
-    $results_file.write("Project Name: #{$projectName} Project ID: #{$projectId} Sprint: #{$sprint} \n")
-    $results_file.write("Test ID: #{$testId} Test Description: #{$testDes} \n")
-    $results_file.write("Executed with browser: #{$browserType} \n")
-    $results_file.write("Test suite: #{$testSuiteFile} \n")
-    $results_file.write("Tester: #{$tester}", "\n \n \n")
+    Report.results.write("Project Name: #{$projectName} Project ID: #{$projectId} Sprint: #{$sprint} \n")
+    Report.results.write("Test ID: #{$testId} Test Description: #{$testDes} \n")
+    Report.results.write("Executed with browser: #{$browserType} \n")
+    Report.results.write("Test suite: #{$testSuiteFile} \n")
+    Report.results.write("Tester: #{$tester}", "\n \n \n")
   end # printTestHeader
 
   # get the current time in the format Day - Month - Date - Time (HH:MM:SS)
@@ -61,8 +66,8 @@ module Report
 
   # print the test Step info to the test results file
   def self.printTestStepHeader(test_file_name, testStepIndex)
-    $results_file.write("\n" + "Test start time: #{f_time = get_time} \n")
-    $results_file.write("Test step: #{$testStep} : #{$testStepDes} \n")
+    Report.results.write("\n" + "Test start time: #{f_time = get_time} \n")
+    Report.results.write("Test step: #{$testStep} : #{$testStepDes} \n")
     puts "Test start time: #{f_time = get_time}   \n"
     puts "Test step: #{$testStep} : #{$testStepDes}  "
 
@@ -87,13 +92,13 @@ module Report
       $previousTestFail = $currentTestFail
       $currentTestFail = false
       $testStepPasses += 1
-      $results_file.write("Test #{$testStep} has Passed, \n")
+      Report.results.write("Test #{$testStep} has Passed, \n")
       puts "Test #{$testStep} has Passed ".green
     elsif passFail == false
       $previousTestFail = $currentTestFail
       $currentTestFail = true
       $testStepFailures += 1
-      $results_file.write("Test #{$testStep} has FAILED, \n")
+      Report.results.write("Test #{$testStep} has FAILED, \n")
       puts "Test #{$testStep} has FAILED ".red
       failstep = {
         'message' => 'SuiteID: ' + $testId.to_s + ' Test Step: ' + $testStep.to_s + ' Test has FAILED - Check logs',
@@ -110,7 +115,7 @@ module Report
     else
       $currentTestFail = false
       $testStepNotrun += 1
-      $results_file.write("Test #{$testStep} no checks performed, \n")
+      Report.results.write("Test #{$testStep} no checks performed, \n")
       puts "Test #{$testStep} no checks performed ".blue
       skipstep = {
         'message' => 'SuiteID: ' + $testId.to_s + ' Test Step: ' + $testStep.to_s + ' No checks performed - Check logs',
@@ -125,7 +130,7 @@ module Report
       $skiptestStep_xml[test_file_name] ||= []
       $skiptestStep_xml[test_file_name][testStepIndex] = skipstep
   end
-    $results_file.write("Test end time: #{f_time = get_time} \n")
+    Report.results.write("Test end time: #{f_time = get_time} \n")
     puts "Test end time: #{f_time = get_time}   \n"
     puts ''
   end # testPassFail
@@ -140,7 +145,7 @@ module Report
     end
 
     if $consecutiveTestFail >= $consecutiveFailThreshold
-      $results_file.puts("\nTerminating the current test case as the test failure threshold (#{$consecutiveFailThreshold} ) has been reached")
+      Report.results.puts("\nTerminating the current test case as the test failure threshold (#{$consecutiveFailThreshold} ) has been reached")
 
       # write info to $stderr
       $stderr.puts "Terminating the current test case: #{test_file_name} as the test failure threshold (#{$consecutiveFailThreshold}) has been reached."
@@ -156,7 +161,7 @@ module Report
     # construct the test step report summary
     $testStepReportSummary[testFileNumber] = "\n" 'Test file:', test_file_name,\
     "\n" 'Browser type:', $browserType, \
-    "\n" 'Browser version:', Browser.browserVersion.to_s, \
+    "\n" 'Browser version:', Browser.browser_version.to_s, \
     "\n" 'Environment:', $env_type, \
     "\n" 'Started at:', $test_case_start_time, \
     "\n" 'Finished at:', $test_case_end_time, \
@@ -165,9 +170,9 @@ module Report
     "\n" 'There are:', $testStepNotrun, 'Skipped Tests' "\n"
     # ... and save in a format that is printable
     $testStepReportSummary[testFileNumber] = $testStepReportSummary[testFileNumber].join(' ')
-    $results_file.puts ''
-    $results_file.write("Test Summary: #{$testStepReportSummary[testFileNumber]} \n")
-    $results_file.write("Test end time: #{$test_case_end_time} \n")
+    Report.results.puts ''
+    Report.results.write("Test Summary: #{$testStepReportSummary[testFileNumber]} \n")
+    Report.results.write("Test end time: #{$test_case_end_time} \n")
   end # printTestStepSummary
 
   # construct the test suite header for junit

@@ -74,9 +74,9 @@ module Main
     Report.testSummaryJunit
 
     # close browser after tests have completed
-    $browser&.quit
+    Browser.b&.quit
   rescue StandardError => e
-    $browser = 'No Browser Required'
+    Browser.b = 'No Browser Required'
     raise e
   end
 end

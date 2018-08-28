@@ -4,124 +4,138 @@
 # Versions:
 # 1.0 - Baseline
 #
-# Browser.rb - a browser functions
+# browser_setup.rb - a browser functions
 module Browser
   require './taf_config.rb'
-
-  def self.currentBrowserType
-      # begin
-      # check if browser already created and the correct type
-      if $browser.nil?
-        'no browser'
-      elsif $browser.driver.capabilities[:b_name].casecmp('internet explorer').zero?
-        'ie'
-      elsif $browser.driver.capabilities[:b_name].casecmp('chrome').zero?
-        'chrome'
-      elsif $browser.driver.capabilities[:b_name].casecmp('chrome-headless').zero?
-        'chrome-headless'
-      elsif $browser.driver.capabilities[:b_name].casecmp('firefox').zero?
-        'firefox'
-      elsif $browser.driver.capabilities[:b_name].casecmp('firefox-headless').zero?
-        'firefox-headless'
-      elsif $browser.driver.capabilities[:b_name].casecmp('safari').zero?
-        'safari'
-      else
-        'unknown'
-      end
+  # open_browser function
+  def self.open_browser
+    lc_browser_type = $browserType.downcase
+    case lc_browser_type
+    when 'chrome'
+      chrome
+    when 'chrome-Headless'
+      chrome_headless
+    when 'firefox'
+      firefox
+    when 'firefox-headless'
+      firefox_headless
+    when 'ie'
+      ie
+    when 'safari'
+      safari
+    else
+      puts "unable to open selected browser: #{lc_browser_type}"
+      raise BrowserFailedOpen
+    end
+  rescue BrowserFailedOpen => error
+    # construct the error message from custom text and the actual system error
+    # message (converted to a string)
+    error_text = "Unable to open"\
+                  "the requested browser: #{lc_browser_type} " + error.to_s
+    raise error_text
   end
 
-# open_browser function
-def self.open_browser
-  lcBrowserType = $browserType.downcase
-  # set up for any normal browser type
-  if lcBrowserType == 'chrome'
-    $browser = Watir::Browser.new :chrome, switches: %w[
-      --start-maximized --window-size=1920,1080
+  # chrome browser details
+  def self.chrome
+    @browser = Watir::Browser.new :chrome, switches: %w[
+      --acceptInsecureCerts-true --start-maximized --window-size=1920,1080
     ]
+    browser_version
+  end
 
-  elsif lcBrowserType == 'chrome-headless'
-    $browser = Watir::Browser.new :chrome, switches: %w[
+  # chrome headless browser details
+  def self.chrome_headless
+    @browser = Watir::Browser.new :chrome, switches: %w[
       --start-maximized --disable-gpu --headless --acceptInsecureCerts-true
       --no-sandbox --window-size=1920,1080
     ]
+    browser_version
+  end
 
-  elsif lcBrowserType == 'firefox'
+  # firefox browser details
+  def self.firefox
     caps = Selenium::WebDriver::Remote::Capabilities.firefox
     caps['acceptInsecureCerts'] = true
     driver = Selenium::WebDriver.for(:firefox, desired_capabilities: caps)
-    $browser = Watir::Browser.new(driver)
-    # makes the browser full screen.
-    screen_width = $browser.execute_script('return screen.width;')
-    screen_height = $browser.execute_script('return screen.height;')
-    $browser.driver.manage.window.resize_to(screen_width, screen_height)
-    $browser.driver.manage.window.move_to(0, 0)
+    @browser = Watir::Browser.new(driver)
+    browser_full_screen
+    browser_version
+  end
 
-  elsif lcBrowserType == 'firefox-headless'
+  # firefox headless browser details
+  def self.firefox_headless
     caps = Selenium::WebDriver::Remote::Capabilities.firefox
     options = Selenium::WebDriver::Firefox::Options.new(args: ['-headless'])
     caps['acceptInsecureCerts'] = true
-    driver = Selenium::WebDriver.for(:firefox, options: options, desired_capabilities: caps)
-    $browser = Watir::Browser.new(driver)
+    driver = Selenium::WebDriver.for(:firefox, options: options,
+                                    desired_capabilities: caps)
+    @browser = Watir::Browser.new(driver)
     # makes the browser full screen.
-    # screen_width = $browser.execute_script("return screen.width;")
-    # screen_height = $browser.execute_script("return screen.height;")
-    $browser.driver.manage.window.resize_to(1920, 1200)
-    $browser.driver.manage.window.move_to(0, 0)
-
-  elsif (lcBrowserType == 'ie') || (lcBrowserType == 'safari')
-    $browser = Watir::Browser.new :"#{lcBrowserType}"
-    # makes the browser full screen.
-    screen_width = $browser.execute_script('return screen.width;')
-    screen_height = $browser.execute_script('return screen.height;')
-    $browser.driver.manage.window.resize_to(screen_width, screen_height)
-    $browser.driver.manage.window.move_to(0, 0)
-
-    # unable to select the specified browser so throw an exception
-  else
-    puts "unable to open selected browser: #{$browserType}"
-    raise Exception
+    @browser.driver.manage.window.resize_to(1920, 1200)
+    @browser.driver.manage.window.move_to(0, 0)
+    browser_version
+    # browser
   end
 
-# if unable to open browser then set error message and re-raise the exception
-rescue Exception => error
-  # construct the error message from custom text and the actual system error message (converted to a string)
-  error_to_display = "Unable to open the requested browser: #{$browserType} " + error.to_s
-  raise error_to_display
-end
+  # ie browser details
+  def self.ie
+    @browser = Watir::Browser.new :ie
+    browser_full_screen(@browser)
+    browser_version
+  end
+
+  # sarfari headless browser details
+  def self.safari
+    @browser = Watir::Browser.new :safari
+    browser_full_screen(@browser)
+    browser_version
+  end
+
+  # makes the browser full screen.
+  def self.browser_full_screen(browser)
+    screen_width = @browser.execute_script('return screen.width;')
+    screen_height = @browser.execute_script('return screen.height;')
+    @browser.driver.manage.window.resize_to(screen_width, screen_height)
+    @browser.driver.manage.window.move_to(0, 0)
+  end
+
+  # define browser value
+  def self.b
+    browser = @browser
+  end
 
   # Check browser version
-  def self.browserVersion
-    $browserversion = $browser.driver.capabilities[:version]
+  def self.browser_version
+    browserversion = @browser.driver.capabilities[:version]
   rescue StandardError
-    $browserversion = 'No Browser version'
+    browserversion = 'No Browser version'
   end
 
   # create screenshot filename and save the screenshot if the test has failed or
   # if explictly required
-  def self.checkSaveScreenShot(fullScDirName)
-    begin
-      if ($currentTestFail || $screenShot)
-        time = Time.now.strftime('%H%M')
-        if ($currentTestFail)
-          scFileName = fullScDirName + "/Test_step-#{$testStep}_Failed_#{time}.png"
-        else
-          # file name will be teststep.png
-          scFileName = fullScDirName + "/Test_step-#{$testStep}_#{time}.png"
-        end
-
-       # Screenshot capture for websites
-       $browser.screenshot.save scFileName
-       $results_file.write("Screenshot saved to: #{scFileName} \n")
+  def self.check_save_screenshot(full_sc_dirname)
+    if ($currentTestFail || $screenShot)
+      time = Time.now.strftime('%H%M')
+      if ($currentTestFail)
+        scFileName = full_sc_dirname + "/Test_step-#{$testStep}_Failed_"\
+                                        "#{time}.png"
       else
-        $results_file.write 'No screenshot requested', "\n"
+        # file name will be teststep.png
+        scFileName = full_sc_dirname + "/Test_step-#{$testStep}_#{time}.png"
       end
 
-        # if any issues with saving the screenshot then log a warning
-        rescue Exception => error
-            # construct the error message from custom text and the actual system
-            # error message (converted to a string).
-            $log.write("Error saving the screenshot: #{scFileName}   #{error.to_s}")
-            $log.puts ''
-        end
-  end 
+      # Screenshot capture for websites
+      Browser.b.screenshot.save scFileName
+      Report.results.write("Screenshot saved to: #{scFileName} \n")
+      else
+        Report.results.write 'No screenshot requested', "\n"
+      end
+
+    # if any issues with saving the screenshot then log a warning
+    rescue StandardError => error
+    # construct the error message from custom text and the actual system
+    # error message (converted to a string).
+    $log.write("Error saving the screenshot: #{scFileName}   #{error.to_s}")
+    $log.puts ''
+  end
 end

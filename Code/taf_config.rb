@@ -2,8 +2,7 @@
 
 # Created on 20 Sept 2017
 # @author: Andy Perrett
-# MIT License
-# Copyright (c) 2017 Aperrett
+#
 # Versions:
 # 1.0 - Baseline
 #
@@ -29,7 +28,12 @@ require_relative 'create_directories'
 require_relative 'test_engine'
 require_relative 'exceptions'
 require_relative 'report'
-require_relative 'web_functions'
-require_relative 'custom_funcs'
 require_relative 'parser'
 require_relative 'xlsx_parser'
+require_relative 'Web_Functions/browser_functions'
+require_relative 'Web_Functions/check_functions'
+require_relative 'Web_Functions/click_functions'
+require_relative 'Web_Functions/misc_functions'
+require_relative 'Web_Functions/write_text_functions'
+require_relative 'Custom_Functions/login_functions'
+require_relative 'Custom_Functions/custom_misc_functions'
