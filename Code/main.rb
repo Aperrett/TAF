@@ -52,7 +52,7 @@ module Main
       end
 
     # Get the test suite data
-    Parser.readTestSuiteData
+    Parser.read_test_suite_data
 
   # unable to read the test file then handle the error and terminate
   rescue StandardError => error
@@ -67,16 +67,16 @@ module Main
     TestEngine.process_testfiles
 
     # get the overall test end time
-    $test_end_time = Report.get_time
+    $test_end_time = Report.current_time
 
     # output the overall test summary
-    Report.printOverallTestSummary
-    Report.testSummaryJunit
+    ReportSummary.print_overall_test_summary
+    JunitReport.test_summary_junit
 
     # close browser after tests have completed
-    Browser.b&.quit
-  rescue StandardError => e
-    Browser.b = 'No Browser Required'
-    raise e
+  #   Browser.b.quit
+  # rescue StandardError => e
+  #   Browser.b = 'No Browser Required'
+  #   raise e
   end
 end

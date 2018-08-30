@@ -13,10 +13,10 @@ module MiscFunctions
   def self.capture_alert
     Browser.b.div(class: 'alert').exist?
     alertmsg = Browser.b.div(class: 'alert').text
-    Report.results.write("Alert shown: #{alertmsg} \n")
+    Report.results.puts("Alert shown: #{alertmsg}")
     true
   rescue StandardError
-    Report.results.write('No Alert Found', "\n")
+    Report.results.puts('No Alert Found')
     false
   end
 
@@ -25,20 +25,20 @@ module MiscFunctions
     Browser.b.window(title: text_check.to_s).use
     sleep 3
     Browser.b.title.eql?(text_check.to_s)
-    Report.results.write("Window title: #{text_check} is correct \n")
+    Report.results.puts("Window title: #{text_check} is correct")
     true
   rescue StandardError
-    Report.results.write("Window not found: #{text_check} \n")
+    Report.results.puts("Window not found: #{text_check}")
     false
   end
 
   # Ipause function
   def self.ipause(wait_time)
     sleep(wait_time.to_i)
-    Report.results.write('Wait completed for seconds: ' + wait_time.to_s + "\n")
+    Report.results.puts('Wait completed for seconds: ' + wait_time.to_s)
     true
   rescue StandardError
-    Report.results.write('Wait failed for seconds: ' + wait_time.to_s + "\n")
+    Report.results.puts('Wait failed for seconds: ' + wait_time.to_s)
     false
   end
 
@@ -49,10 +49,10 @@ module MiscFunctions
     sleep 2
     url_nme = Browser.b.url
     if url_nme == url
-      Report.results.write("opened URL: #{url} \n")
+      Report.results.puts("opened URL: #{url}")
       return true
     else
-      Report.results.write("URL not open: #{url} - opened #{url_nme} instead\n")
+      Report.results.puts("URL not open: #{url} - opened #{url_nme} instead")
       return false
     end
   end
@@ -64,11 +64,11 @@ module MiscFunctions
       sleep 5
       if pingtest.ping? == true
         # website alive
-        Report.results.write("pinged #{url} \n")
+        Report.results.puts("pinged: #{url}")
         return true
       else
         # website not responding
-        Report.results.write("Failed to ping #{url} \n")
+        Report.results.puts("Failed to ping: #{url}")
         return false
       end
     end
@@ -77,10 +77,10 @@ module MiscFunctions
   def self.send_special_keys(special_key)
     Browser.b.send_keys :"#{special_key}"
     sleep 1
-    Report.results.write("Browser Sent key: :#{special_key} successfully \n")
+    Report.results.puts("Browser Sent key: :#{special_key} successfully")
     true
   rescue StandardError
-    Report.results.write("Browser Failed to Send key: :#{special_key} \n")
+    Report.results.puts("Browser Failed to Send key: :#{special_key}")
     false
   end
 
@@ -88,10 +88,10 @@ module MiscFunctions
   def self.sys_command(syst_cmd)
     b_result = system syst_cmd
     if b_result == true
-      Report.results.write("Cmd has been executed sucessfully #{syst_cmd} \n")
+      Report.results.puts("Cmd has been executed sucessfully #{syst_cmd}")
       return true
     else
-      Report.results.write("Theres a problem executing command #{syst_cmd} \n")
+      Report.results.puts("Theres a problem executing command #{syst_cmd}")
       return false
     end
   end

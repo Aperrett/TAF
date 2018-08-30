@@ -13,10 +13,10 @@ module ClickFunctions
   # Checkbox function.
   def self.check_box(checkbox, locate)
     Browser.b.checkbox(:"#{locate}" => checkbox).wait_until_present.click
-    Report.results.write("Check box: #{checkbox} has been selected \n")
+    Report.results.puts("Check box: #{checkbox} has been selected")
     true
   rescue StandardError
-    Report.results.write("Check box: #{checkbox} does not exist \n")
+    Report.results.puts("Check box: #{checkbox} does not exist")
     false
   end
 
@@ -33,21 +33,31 @@ module ClickFunctions
     return unless index
 
     case index
-    when 0 then Browser.b.button(:"#{locate}" => button).wait_until_present.click
-    when 1 then Browser.b.span(:"#{locate}" => button).wait_until_present.click
-    when 2 then Browser.b.a(:"#{locate}" => button).wait_until_present.click
-    when 3 then Browser.b.div(:"#{locate}" => button).wait_until_present.click
-    when 4 then Browser.b.link(:"#{locate}" => button).wait_until_present.click
-    when 5 then Browser.b.image(:"#{locate}" => button).wait_until_present.click
-    when 6 then Browser.b.h1(:"#{locate}" => button).wait_until_present.click
-    when 7 then Browser.b.h2(:"#{locate}" => button).wait_until_present.click
-    when 8 then Browser.b.h3(:"#{locate}" => button).wait_until_present.click
-    when 9 then Browser.b.h4(:"#{locate}" => button).wait_until_present.click
+    when 0
+      Browser.b.button(:"#{locate}" => button).wait_until_present.click
+    when 1
+      Browser.b.span(:"#{locate}" => button).wait_until_present.click
+    when 2
+      Browser.b.a(:"#{locate}" => button).wait_until_present.click
+    when 3
+      Browser.b.div(:"#{locate}" => button).wait_until_present.click
+    when 4
+      Browser.b.link(:"#{locate}" => button).wait_until_present.click
+    when 5
+      Browser.b.image(:"#{locate}" => button).wait_until_present.click
+    when 6
+      Browser.b.h1(:"#{locate}" => button).wait_until_present.click
+    when 7
+      Browser.b.h2(:"#{locate}" => button).wait_until_present.click
+    when 8
+      Browser.b.h3(:"#{locate}" => button).wait_until_present.click
+    when 9
+      Browser.b.h4(:"#{locate}" => button).wait_until_present.click
     end
-    Report.results.write("Button: #{button} has been selected \n")
+    Report.results.puts("Button: #{button} has been selected")
     true
   rescue StandardError
-    Report.results.write("Button: #{button} does not exist \n")
+    Report.results.puts("Button: #{button} does not exist")
     false
   end
 
@@ -55,10 +65,10 @@ module ClickFunctions
   def self.radio_button(radio, value2, locate, locate2)
     Browser.b.radio(:"#{locate}" => radio).wait_until_present
     Browser.b.radio(:"#{locate}" => radio, :"#{locate2}" => "#{value2}").set
-    Report.results.write("Radio button: #{radio} has been selected \n")
+    Report.results.puts("Radio button: #{radio} has been selected")
     true
   rescue StandardError
-    Report.results.write("Radio button: #{radio} does not exist \n")
+    Report.results.puts("Radio button: #{radio} does not exist")
     false
   end
 
@@ -67,13 +77,13 @@ module ClickFunctions
     # two parameters: dropdown, value
     Browser.b.select_list(:"#{locate}" => dropdown).wait_until_present
     Browser.b.select_list(:"#{locate}" => dropdown).option(:"#{locate2}" => "#{value}").select
-    Report.results.write("Dropdown item: #{value} has been selected \n")
+    Report.results.puts("Dropdown item: #{value} has been selected")
     true
   rescue StandardError
-    Report.results.write("Dropdown item: #{value} has NOT been selected \n")
+    Report.results.puts("Dropdown item: #{value} has NOT been selected")
     false
   rescue StandardError
-    Report.results.write("the dropdown: #{dropdown} does not exist \n")
+    Report.results.puts("the dropdown: #{dropdown} does not exist")
     false
   end
 end

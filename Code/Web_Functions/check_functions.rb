@@ -28,13 +28,13 @@ module CheckFunctions
       Browser.b.text_field(:"#{locate}" => box).wait_until_present
       (Browser.b.text_field(:"#{locate}" => box).value == value)
     end
-    Report.results.write("Textbox: #{box} has the correct value: #{value} \n")
+    Report.results.puts("Textbox: #{box} has the correct value: #{value}")
     true
   rescue StandardError
-    Report.results.write("Textbox: #{box} has the incorrect value: #{value} \n")
+    Report.results.puts("Textbox: #{box} has the incorrect value: #{value}")
     false
   rescue StandardError
-    Report.results.write("Textbox: #{box} does not exist \n")
+    Report.results.puts("Textbox: #{box} does not exist")
     false
   end
 
@@ -42,10 +42,10 @@ module CheckFunctions
   def self.check_logs(text, file, output)
     blog_result = system 'egrep -i ' + text + ' ' + file + ' > ' + output
     if blog_result == true
-      Report.results.write("Data has matched: #{text} in LogFile: #{file} \n")
+      Report.results.puts("Data has matched: #{text} in LogFile: #{file}")
       return true
     else
-      Report.results.write("Problem finding: #{text} in LogFile: #{file} \n")
+      Report.results.puts("Problem finding: #{text} in LogFile: #{file}")
       return false
     end
   end
@@ -55,10 +55,10 @@ module CheckFunctions
     # one parameter: text value to check if text is displayed on page.
     sleep 5
     if Browser.b.text.include?(text_check)
-      Report.results.write("found text: #{text_check} \n")
+      Report.results.puts("Found text: #{text_check}")
       return true
     else
-      Report.results.write("NOT found: #{text_check} \n")
+      Report.results.puts("NOT found text: #{text_check}")
       return false
     end
   end
@@ -68,10 +68,10 @@ module CheckFunctions
     sleep 2
     # one parameter: text value to check if browser title is correct.
     if Browser.b.title.eql?(text_check)
-      Report.results.write("Browser title: #{text_check} \n")
+      Report.results.puts("Browser title: #{text_check}")
       return true
     else
-      Report.results.write("Title not found: #{text_check} \n")
+      Report.results.puts("Title not found: #{text_check}")
       return false
     end
   end
@@ -79,10 +79,10 @@ module CheckFunctions
   # Check URL function.
   def self.check_url(url)
     if Browser.b.url == url
-      Report.results.write("URL: #{url} is correct \n")
+      Report.results.puts("URL: #{url} is correct")
       true
     else
-      Report.results.write("URL: #{url} is incorrect \n")
+      Report.results.puts("URL: #{url} is incorrect")
       false
     end
   end
@@ -92,11 +92,11 @@ module CheckFunctions
     # print out the available dropdown selections
     Browser.b.element(:"#{locate}" => dropdown).wait_until_present
     Browser.b.select_list(:"#{locate}" => dropdown).options.each do |i|
-      Report.results.write("List of dropdown for #{dropdown} are: #{i.text} \n")
+      Report.results.puts("List of dropdown for #{dropdown} are: #{i.text}")
       return true
     end
   rescue StandardError
-    Report.results.write("the dropdown: #{dropdown} does not exist \n")
+    Report.results.puts("List dropdown: #{dropdown} does not exist")
     false
   end
 end

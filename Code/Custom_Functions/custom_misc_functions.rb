@@ -15,13 +15,13 @@ module CustomMiscFunctions
     value = ENV[value.to_s]
     Browser.b.text_field(:"#{locate}" => box).wait_until_present.set value
     (Browser.b.text_field(:"#{locate}" => box).value == value)
-    Report.results.write("Textbox: #{box} has correct value: #{value} \n")
+    Report.results.puts("Textbox: #{box} has correct value: #{value}")
     true
   rescue StandardError
-    Report.results.write("Textbox: #{box} has the incorrect value: #{value} \n")
+    Report.results.puts("Textbox: #{box} has the incorrect value: #{value}")
     false
   rescue StandardError
-    Report.results.write("Textbox: #{box} does not exist \n")
+    Report.results.puts("Textbox: #{box} does not exist")
     false
   end
 
@@ -32,10 +32,10 @@ module CustomMiscFunctions
     Browser.b.goto(url)
     url_nme = Browser.b.url
     if url_nme == url
-      Report.results.write("opened URL: #{url} \n")
+      Report.results.puts("opened URL: #{url}")
       return true
     else
-      Report.results.write("URL not open: #{url} - opened #{url_nme} instead\n")
+      Report.results.puts("URL not open: #{url} - opened #{url_nme} instead")
       return false
     end
   end
@@ -44,7 +44,7 @@ module CustomMiscFunctions
   def self.portal_mem_word
     password = ENV['PORTAL_MEM']
 
-    if Browser.b.title.eql?('Memorable word')
+    if Browser.b.title.eql?('Memorable word - UKCloud Portal')
       nums = (1..256).to_a
       found_mem_nums = nums.each_with_object([]) do |num_val, mem_word|
         elm_id = "user_memorable_parts_#{num_val}"
@@ -62,11 +62,11 @@ module CustomMiscFunctions
 
       Browser.b.button(value: 'Sign in').wait_until_present.click
       return true
-      if Browser.b.title.eql?('Home')
-        Report.results.write("User: #{user} has logged in successful. \n")
+      if Browser.b.title.eql?('Home - UKCloud Portal')
+        Report.results.puts("User: #{user} has logged in successful.")
         return true
       else
-        Report.results.write("User: #{user} has failed to log in. \n")
+        Report.results.puts("User: #{user} has failed to log in.")
         return false
       end
     end

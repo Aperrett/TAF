@@ -12,7 +12,7 @@ module TestSteps
 
   # process the test step data by matching the test step functions and
   # processing the associated data accordingly
-  def self.process_teststeps(test_file_name, teststepindex)
+  def self.process_test_steps(test_file_name, teststepindex)
     value1 = $test_value
     value2 = $test_value2
     locate1 = $locate
@@ -21,7 +21,7 @@ module TestSteps
     teststepfunc = $testStepFunction
 
     # print the test step information
-    Report.printTestStepHeader(test_file_name, teststepindex)
+    Report.print_test_step_header(test_file_name, teststepindex)
     case teststepfunc
     # call the appropriate methods
     when 'open_url'
@@ -123,13 +123,13 @@ module TestSteps
       end
 
     else
-      Report.results.write("Unable to match function: #{teststepfunc}\n")
+      Report.results.puts("Unable to match function: #{teststepfunc}")
       puts "Unable to match function: #{teststepfunc}"
       raise UnknownTestStep, "Unknown test step: #{teststepfunc}"
     end
 
     # print the test step result information
-    Report.testPassFail(func, test_file_name, teststepindex)
-    Report.checkFailureThreshold(test_file_name, teststepindex)
+    Report.test_pass_fail(func, test_file_name, teststepindex)
+    Report.check_failure_threshold(test_file_name, teststepindex)
   end
 end

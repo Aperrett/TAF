@@ -12,40 +12,40 @@ module BrowserFunctions
   # Browser Back function.
   def self.browser_back
     Browser.b.back
-    Report.results.write('Browser navigated back', "\n")
+    Report.results.puts('Browser navigated back')
     true
   rescue StandardError
-    Report.results.write('Browser failed to navigate back', "\n")
+    Report.results.puts('Browser failed to navigate back')
     false
   end
 
   # Browser Forward function.
   def self.browser_forward
     Browser.b.forward
-    Report.results.write('Browser navigated forward', "\n")
+    Report.results.puts('Browser navigated forward')
     true
   rescue StandardError
-    Report.results.write('Browser failed to navigate forward', "\n")
+    Report.results.puts('Browser failed to navigate forward')
     false
   end
 
   # Browser Quit function.
   def self.browser_quit
     Browser.b.quit
-    Report.results.write('Browser has closed successfully', "\n")
+    Report.results.puts('Browser has closed successfully')
     true
   rescue StandardError
-    Report.results.write('Browser has failed to close', "\n")
+    Report.results.puts('Browser has failed to close')
     false
   end
 
   # Browser Refresh function.
   def self.browser_refresh
     Browser.b.refresh
-    Report.results.write('The Browser has been refreshed', "\n")
+    Report.results.puts('The Browser has been refreshed')
     true
   rescue StandardError
-    Report.results.write('The Browser failed to refresh', "\n")
+    Report.results.puts('The Browser failed to refresh')
     false
   end
 end

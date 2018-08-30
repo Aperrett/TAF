@@ -80,19 +80,19 @@ module Browser
   # ie browser details
   def self.ie
     @browser = Watir::Browser.new :ie
-    browser_full_screen(@browser)
+    browser_full_screen
     browser_version
   end
 
   # sarfari headless browser details
   def self.safari
     @browser = Watir::Browser.new :safari
-    browser_full_screen(@browser)
+    browser_full_screen
     browser_version
   end
 
   # makes the browser full screen.
-  def self.browser_full_screen(browser)
+  def self.browser_full_screen
     screen_width = @browser.execute_script('return screen.width;')
     screen_height = @browser.execute_script('return screen.height;')
     @browser.driver.manage.window.resize_to(screen_width, screen_height)
@@ -126,16 +126,15 @@ module Browser
 
       # Screenshot capture for websites
       Browser.b.screenshot.save scFileName
-      Report.results.write("Screenshot saved to: #{scFileName} \n")
+      Report.results.puts("Screenshot saved to: #{scFileName}")
       else
-        Report.results.write 'No screenshot requested', "\n"
+        Report.results.puts 'No screenshot requested'
       end
 
     # if any issues with saving the screenshot then log a warning
     rescue StandardError => error
     # construct the error message from custom text and the actual system
     # error message (converted to a string).
-    $log.write("Error saving the screenshot: #{scFileName}   #{error.to_s}")
-    $log.puts ''
+    $log.puts("Error saving the screenshot: #{scFileName}   #{error.to_s}")
   end
 end

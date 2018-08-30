@@ -27,13 +27,13 @@ module WriteTextFunctions
       Browser.b.text_field(:"#{locate}" => box).wait_until_present.set value
       (Browser.b.text_field(:"#{locate}" => box).value == value)
     end
-    Report.results.write("Textbox: #{box} has correct value: #{value} \n")
+    Report.results.puts("Textbox: #{box} has correct value: #{value}")
     true
   rescue StandardError
-    Report.results.write("Textbox: #{box} has the incorrect value: #{value} \n")
+    Report.results.puts("Textbox: #{box} has the incorrect value: #{value}")
     false
   rescue StandardError
-    Report.results.write("Textbox: #{box} does not exist \n")
+    Report.results.puts("Textbox: #{box} does not exist")
     false
   end
 
@@ -41,13 +41,13 @@ module WriteTextFunctions
   def self.write_to_editor(iframe, locate, value)
     Browser.b.iframe(:"#{locate}" => iframe).wait_until_present
     Browser.b.iframe(:"#{locate}" => iframe).send_keys value
-    Report.results.write("Editor box: #{iframe} has correct value: #{value} \n")
+    Report.results.puts("Editor box: #{iframe} has correct value: #{value}")
     true
   rescue StandardError
-    Report.results.write("Editor box: #{iframe} has wrong value: #{value} \n")
+    Report.results.puts("Editor box: #{iframe} has wrong value: #{value}")
     false
   rescue StandardError
-    Report.results.write("Editor box: #{iframe} does not exist \n")
+    Report.results.puts("Editor box: #{iframe} does not exist")
     false
   end
 end

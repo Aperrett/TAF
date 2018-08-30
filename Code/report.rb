@@ -10,65 +10,62 @@
 module Report
   require './taf_config.rb'
   # setup the test results output file
-  def self.open_testreport_file
+  def self.open_test_report_file
     # open a new file for writing
-    $log.write("Opening Test Result file: #{$testResultFileName}")
-    $log.puts ''
-    $log.puts ''
+    $log.puts("Opening Test Result file: #{$testResultFileName} \n")
 
     # open test results file for writing if not already open
     if !File.exist?($testResultFileName) || $testResultFileName.closed?
       @results_file = File.open($testResultFileName, 'w')
     elsif $log.puts "test results file name: #{$testResultFileName} is already open"
     end
-  end # open_testreport_file
+  end
 
-  def self.close_testresults_file
+  # close_testresults_file
+  def self.close_test_results_file
     # if the file is open then close it
     Report.results.close unless Report.results.closed?
-  end # close_testresults_file
+  end
 
   # results file variable
   def self.results
     results_file = @results_file
   end
 
-  def self.open_logfile
+  def self.open_log_file
     # open a new file for writing
-    $stdout.print "Opening log file: #{$logFileName}"
-    $stdout.puts ''
-    $stdout.puts ''
+    $stdout.puts "Opening log file: #{$logFileName} \n"
 
     # create a new log file and set the mode as 'append'
     $log = File.open($logFileName, 'w+')
-  end # open_logfile
+  end
 
-  def self.closeLogFile
+  def self.close_log_file
     # if the file is open then close it
     $log.close unless $log.closed?
-  end # closeLogFile
+  end
 
   # print the main test header info to the test results file
-  def self.printTestHeader
-    Report.results.write("Project Name: #{$projectName} Project ID: #{$projectId} Sprint: #{$sprint} \n")
-    Report.results.write("Test ID: #{$testId} Test Description: #{$testDes} \n")
-    Report.results.write("Executed with browser: #{$browserType} \n")
-    Report.results.write("Test suite: #{$testSuiteFile} \n")
-    Report.results.write("Tester: #{$tester}", "\n \n \n")
-  end # printTestHeader
+  def self.print_test_header
+    Report.results.puts("Project Name: #{$projectName} Project ID: #{$projectId} Sprint: #{$sprint}")
+    Report.results.puts("Test ID: #{$testId} Test Description: #{$testDes}")
+    Report.results.puts("Executed with browser: #{$browserType}")
+    Report.results.puts("Test suite: #{$testSuiteFile}")
+    Report.results.puts("Tester: #{$tester}", "\n \n")
+  end
 
   # get the current time in the format Day - Month - Date - Time (HH:MM:SS)
-  def self.get_time
+  def self.current_time
     time = Time.new
     f_time = time.strftime('%a %b %d %H:%M:%S %Z')
     f_time
   end
 
   # print the test Step info to the test results file
-  def self.printTestStepHeader(test_file_name, testStepIndex)
-    Report.results.write("\n" + "Test start time: #{f_time = get_time} \n")
-    Report.results.write("Test step: #{$testStep} : #{$testStepDes} \n")
-    puts "Test start time: #{f_time = get_time}   \n"
+  def self.print_test_step_header(test_file_name, testStepIndex)
+    Report.results.puts("\n" + "Test start time: #{f_time = current_time}")
+    Report.results.puts("Test step: #{$testStep} : #{$testStepDes} \n")
+    puts "\nTest start time: #{f_time = current_time}   \n"
     puts "Test step: #{$testStep} : #{$testStepDes}  "
 
     step = {
@@ -84,21 +81,21 @@ module Report
     $testStep_xml ||= {}
     $testStep_xml[test_file_name] ||= {}
     $testStep_xml[test_file_name][testStepIndex] = step
-  end # printTestStepHeader
+  end
 
   # print the Pass / Fail status of a test to the test results file
-  def self.testPassFail(passFail, test_file_name, testStepIndex)
+  def self.test_pass_fail(passFail, test_file_name, testStepIndex)
     if passFail == true
       $previousTestFail = $currentTestFail
       $currentTestFail = false
       $testStepPasses += 1
-      Report.results.write("Test #{$testStep} has Passed, \n")
+      Report.results.puts("Test #{$testStep} has Passed")
       puts "Test #{$testStep} has Passed ".green
     elsif passFail == false
       $previousTestFail = $currentTestFail
       $currentTestFail = true
       $testStepFailures += 1
-      Report.results.write("Test #{$testStep} has FAILED, \n")
+      Report.results.puts("Test #{$testStep} has FAILED")
       puts "Test #{$testStep} has FAILED ".red
       failstep = {
         'message' => 'SuiteID: ' + $testId.to_s + ' Test Step: ' + $testStep.to_s + ' Test has FAILED - Check logs',
@@ -115,7 +112,7 @@ module Report
     else
       $currentTestFail = false
       $testStepNotrun += 1
-      Report.results.write("Test #{$testStep} no checks performed, \n")
+      Report.results.puts("Test #{$testStep} no checks performed")
       puts "Test #{$testStep} no checks performed ".blue
       skipstep = {
         'message' => 'SuiteID: ' + $testId.to_s + ' Test Step: ' + $testStep.to_s + ' No checks performed - Check logs',
@@ -130,14 +127,13 @@ module Report
       $skiptestStep_xml[test_file_name] ||= []
       $skiptestStep_xml[test_file_name][testStepIndex] = skipstep
   end
-    Report.results.write("Test end time: #{f_time = get_time} \n")
-    puts "Test end time: #{f_time = get_time}   \n"
-    puts ''
-  end # testPassFail
+    Report.results.puts("Test end time: #{f_time = current_time}\n")
+    puts "Test end time: #{f_time = current_time} \n"
+  end
 
   # check if the test failure threshold has been reached for total failures or consecutive failures.
   # If a certain number of consecutive tests fail then throw an exception
-  def self.checkFailureThreshold(test_file_name, testStepIndex)
+  def self.check_failure_threshold(test_file_name, testStepIndex)
     if $previousTestFail && $currentTestFail
       $consecutiveTestFail += 1
     else
@@ -154,145 +150,5 @@ module Report
       raise FailureThresholdExceeded,
             "#{$consecutiveFailThreshold} steps failed."
     end
-  end # checkFailureThreshold
-
-  # output the test results summary for the current test case
-  def self.printTestStepSummary(test_file_name, testFileNumber)
-    # construct the test step report summary
-    $testStepReportSummary[testFileNumber] = "\n" 'Test file:', test_file_name,\
-    "\n" 'Browser type:', $browserType, \
-    "\n" 'Browser version:', Browser.browser_version.to_s, \
-    "\n" 'Environment:', $env_type, \
-    "\n" 'Started at:', $test_case_start_time, \
-    "\n" 'Finished at:', $test_case_end_time, \
-    "\n" 'There are:', $testStepPasses, 'Passes' \
-    "\n" 'There are:', $testStepFailures, 'Failures' \
-    "\n" 'There are:', $testStepNotrun, 'Skipped Tests' "\n"
-    # ... and save in a format that is printable
-    $testStepReportSummary[testFileNumber] = $testStepReportSummary[testFileNumber].join(' ')
-    Report.results.puts ''
-    Report.results.write("Test Summary: #{$testStepReportSummary[testFileNumber]} \n")
-    Report.results.write("Test end time: #{$test_case_end_time} \n")
-  end # printTestStepSummary
-
-  # construct the test suite header for junit
-  def self.printTestStepSummaryXml(test_file_name, testFileNumber)
-    $testStepReportSummary2[testFileNumber] = {
-      'classname' => test_file_name,
-      'name' => test_file_name,
-      'assertions' => $numberOfTestSteps,
-      'failures' => $testStepFailures,
-      'tests' => $testStepPasses,
-      'skipped' => $testStepNotrun,
-      'time' => TimeDifference.between($test_case_end_time, $test_case_start_time).in_seconds
-    }
-  end # printTestStepSummaryXml
-
-  # output the overall test results summary
-  def self.printOverallTestSummary
-    # output to the console
-    puts ''
-    puts "Finished processing all test files - executed via test suite: #{$testSuiteFile} by tester: #{$tester}"
-    puts ''
-    puts 'Overall Test Summary:'
-    $testStepReportSummary.each do |testStepReportSummary|
-      puts testStepReportSummary
-    end
-    puts ''
-    print "Total Tests started at: #{$test_start_time}"
-    puts ''
-    print "Total Tests finished at: #{$test_end_time}"
-    puts ''
-    print ('Total Tests duration: ' + TimeDifference.between($test_end_time, $test_start_time).humanize)
-    puts ''
-    print "Total Tests Passed: #{$totalTestPasses}".green
-    puts ''
-    print "Total Tests Failed: #{$totalTestFailures}".red
-    puts ''
-    print "Total Tests Skipped: #{$totalTestNotrun}".blue
-    puts ''
-    $totalTests = [$totalTestPasses, $totalTestFailures, $totalTestNotrun].sum
-    print "Total Tests: #{$totalTests}"
-    puts ''
-
-    # output to the suite summary file
-
-    # open the suite summary file for writing if not already open
-    if !File.exist?($testSuiteSummaryFileName) || $testSuiteSummaryFileName.closed?
-      $testSuiteSummaryFile = File.open($testSuiteSummaryFileName, 'w')
-      puts ''
-      puts 'Test Suite Summary file located at:'
-      puts $testSuiteSummaryFileName.to_s
-      puts ''
-    elsif $log.puts "test suite summary file name: #{$testSuiteSummarylFileName} is already open"
-    end
-
-    $testSuiteSummaryFile.puts ''
-    $testSuiteSummaryFile.puts "Finished processing all test files - executed via test suite: #{$testSuiteFile} by tester: #{$tester}"
-    $testSuiteSummaryFile.puts ''
-    $testSuiteSummaryFile.puts 'Overall Test Summary:'
-    $testStepReportSummary.each do |testStepReportSummary|
-      $testSuiteSummaryFile.puts testStepReportSummary
-    end
-    $testSuiteSummaryFile.puts ''
-    $testSuiteSummaryFile.write("Total Tests started at: #{$test_start_time}")
-    $testSuiteSummaryFile.puts ''
-    $testSuiteSummaryFile.write("Total Tests finished at: #{$test_end_time}")
-    $testSuiteSummaryFile.puts ''
-    $testSuiteSummaryFile.write('Total Tests duration: ' + TimeDifference.between($test_end_time, $test_start_time).humanize)
-    $testSuiteSummaryFile.puts ''
-    $testSuiteSummaryFile.write("Total Tests Passed: #{$totalTestPasses}")
-    $testSuiteSummaryFile.puts ''
-    $testSuiteSummaryFile.write("Total Tests Failed: #{$totalTestFailures}")
-    $testSuiteSummaryFile.puts ''
-    $testSuiteSummaryFile.write("Total Tests Skipped: #{$totalTestNotrun}")
-    $testSuiteSummaryFile.puts ''
-    $testSuiteSummaryFile.write("Total Tests: #{$totalTests}")
-    $testSuiteSummaryFile.puts ''
-
-    # if the file is open then close it
-    $testSuiteSummaryFile.close unless $testSuiteSummaryFile.closed?
-  end # printOverallTestSummary
-
-  def self.testSummaryJunit
-    # output to XML file format for Junit for CI.
-    builder = Nokogiri::XML::Builder.new(encoding: 'UTF-8') do |xml|
-      testsuite_attrs = {
-        'classname' => $testSuiteFile.to_s,
-        'name' => $testSuiteFile.to_s,
-        'tests' => $totalTests.to_s,
-        'failures' => $totalTestFailures.to_s,
-        'timestamp' => $test_start_time.to_s,
-        'skipped' => $totalTestNotrun.to_s,
-        'time' => TimeDifference.between($test_end_time, $test_start_time).in_seconds
-      }
-      xml.testsuites(testsuite_attrs) do |testsuites|
-        $testStepReportSummary2.each do |testStepReportSummary2|
-          testsuites.testsuite(testStepReportSummary2) do |testsuite|
-            $testStep_xml[testStepReportSummary2['name']].each do |testStepIndex, testStep_xml|
-              testsuite.testcase(testStep_xml) do |testcase|
-                failure = $failtestStep_xml&.[](testStepReportSummary2['name'])&.[](testStepIndex)
-                skipped = $skiptestStep_xml&.[](testStepReportSummary2['name'])&.[](testStepIndex)
-                testcase.failure(failure) if failure
-                testcase.skipped(skipped) if skipped
-              end
-            end
-          end
-        end
-      end
-    end
-
-    # output XML content to console for debug
-    # puts builder.to_xml
-
-    # open the suite summary file for writing if not already open
-    if !File.exist?($TestSuiteSummaryXML) || $TestSuiteSummaryXML.closed?
-      $testSuiteSummaryFile_xml = File.open($TestSuiteSummaryXML, 'w+')
-      $testSuiteSummaryFile_xml.write builder.to_xml
-    elsif $log.puts "test suite summary file xml name: #{$TestSuiteSummaryXML} is already open"
-    end
-
-    # if the file is open then close it
-    $testSuiteSummaryFile_xml.close unless $testSuiteSummaryFile_xml.closed?
   end
-end # Report module
+end
