@@ -30,9 +30,9 @@ To run a Test Suite:
 
 There are 2 ways to execute the TAF.
 
-Execute "ruby main.rb [Testsuite.csv]" in cmd line.
+Execute "ruby main.rb [Testsuite.xlsx]" in cmd line.
 
-Execute "ruby main.rb [Testsuite.csv] [Browser i.e. Firefox]" in cmd line.
+Execute "ruby main.rb [Testsuite.xlsx] [Browser i.e. Firefox]" in cmd line.
 
 Note: To exit the TAF container type: 'exit' then type: 'docker-compose down' to shutdown Selenium grid. 
 
