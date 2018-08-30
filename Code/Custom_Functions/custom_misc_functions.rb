@@ -7,7 +7,7 @@
 # 1.0 - Baseline
 #
 # custom_misc_functions.rb - insert insert value from ENV variable.
-# Please note these are custom functions for Portal use only.
+# Please note these are custom functions for login use only.
 module CustomMiscFunctions
   require './taf_config.rb'
   # insert insert value from ENV variable.
@@ -42,9 +42,9 @@ module CustomMiscFunctions
 
   # Mem word for login
   def self.portal_mem_word
-    password = ENV['PORTAL_MEM']
+    password = ENV['MEM_WORD']
 
-    if Browser.b.title.eql?('Memorable word - UKCloud Portal')
+    if Browser.b.title.eql?('Memorable word')
       nums = (1..256).to_a
       found_mem_nums = nums.each_with_object([]) do |num_val, mem_word|
         elm_id = "user_memorable_parts_#{num_val}"
@@ -62,7 +62,7 @@ module CustomMiscFunctions
 
       Browser.b.button(value: 'Sign in').wait_until_present.click
       return true
-      if Browser.b.title.eql?('Home - UKCloud Portal')
+      if Browser.b.title.eql?('Home')
         Report.results.puts("User: #{user} has logged in successful.")
         return true
       else
