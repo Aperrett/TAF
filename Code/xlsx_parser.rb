@@ -7,7 +7,7 @@
 # xlsx_parser.rb - xlsx parser functions
 module XlsxParser
   require './taf_config.rb'
-  def self.parseXlxsTestSuiteHeaderData
+  def self.parse_xlxs_test_suite_header_data
     begin
       # get the number of test specifications in the file (number of
       # occurences of "Test_Specification"
@@ -24,7 +24,7 @@ module XlsxParser
     end
  end
 
-  def self.parseXlxsTestSuiteData(testSpecIndex)
+  def self.parse_xlxs_test_suite_data(testSpecIndex)
     worksheet = $XlsxSuiteDoc[0]
 
     worksheet[7..$numberOfTestSpecs+7].map do |row|
@@ -46,7 +46,7 @@ module XlsxParser
     end
   end
 
-  def self.parseXlxsTestHeaderData
+  def self.parse_xlxs_test_header_data
     # get the number of test steps in the file
     $numberOfTestSteps = ($xlsxDoc[0].sheet_data.size) - 7
     worksheet = $xlsxDoc[0]
@@ -58,7 +58,7 @@ module XlsxParser
   end
 
   # parseTestStepData
-  def self.parseTestStepData(testFileType)
+  def self.parse_test_step_data(testFileType)
     begin
     worksheet = $xlsxDoc[0]
     worksheet[7..$numberOfTestSteps+7].map do |row|

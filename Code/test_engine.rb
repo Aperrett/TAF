@@ -98,18 +98,21 @@ module TestEngine
           test_steps.each_with_index do |test_step, index|
             $testStep         = test_step[:testStep]
             $testStepDes      = test_step[:testdesc]
-            $testStepFunction = test_step[:testFunction]
-            $test_value       = test_step[:testvalue]
-            $locate           = test_step[:locate]
-            $test_value2      = test_step[:testvalue2]
-            $locate2          = test_step[:locate2]
-            $screenShot       = test_step[:screenShotData]
-            $skipTestCase     = test_step[:skipTestCase]
+            test_step_function = test_step[:testFunction]
+            test_value       = test_step[:testvalue]
+            locate           = test_step[:locate]
+            test_value2      = test_step[:testvalue2]
+            locate2          = test_step[:locate2]
+            screen_shot       = test_step[:screenShotData]
+            skip_test_case     = test_step[:skipTestCase]
 
             # process the test step data
-            TestSteps.process_test_steps(test_file_name, index)
+            TestSteps.process_test_steps(test_file_name, index,
+                                          test_step_function, test_value,
+                                          locate, test_value2, locate2,
+                                          skip_test_case)
             # see if screenshot required
-            Browser.check_save_screenshot(full_sc_dirname)
+            Browser.check_save_screenshot(full_sc_dirname, screen_shot)
           end
         rescue TafError => error
           warn error

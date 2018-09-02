@@ -113,8 +113,8 @@ module Browser
 
   # create screenshot filename and save the screenshot if the test has failed or
   # if explictly required
-  def self.check_save_screenshot(full_sc_dirname)
-    if ($currentTestFail || $screenShot)
+  def self.check_save_screenshot(full_sc_dirname, screen_shot)
+    if ($currentTestFail || screen_shot)
       time = Time.now.strftime('%H%M')
       if ($currentTestFail)
         scFileName = full_sc_dirname + "/Test_step-#{$testStep}_Failed_"\

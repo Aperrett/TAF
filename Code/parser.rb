@@ -78,23 +78,6 @@ module Parser
 
   # parseTestStepData
   def self.parse_test_step_data(testFileType)
-    # clear the global test step data
-    Parser.clear_test_step_data
     XlsxParser.parse_test_step_data(testFileType)
-  end
-
-  # clear_test_step_data
-  def self.clear_test_step_data
-    # clear the global test step data so the value from the previous test,
-    # doesn't persist if the read data fails for the current test step
-    $testStep         = 0
-    $testStepDes      = ''
-    $testStepFunction = ''
-    $test_value       = ''
-    $locate           = ''
-    $test_value2      = ''
-    $locate2          = ''
-    $screenShot       = ''
-    $skipTestCase     = ''
   end
 end

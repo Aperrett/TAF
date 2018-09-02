@@ -12,13 +12,17 @@ module TestSteps
 
   # process the test step data by matching the test step functions and
   # processing the associated data accordingly
-  def self.process_test_steps(test_file_name, teststepindex)
-    value1 = $test_value
-    value2 = $test_value2
-    locate1 = $locate
-    locate2 = $locate2
-    runtest = $skipTestCase
-    teststepfunc = $testStepFunction
+  # def self.process_test_steps(test_file_name, teststepindex)
+  def self.process_test_steps(test_file_name, teststepindex,
+                              test_step_function, test_value, locate,
+                              test_value2, locate2, skip_test_case)
+
+    value1 = test_value
+    value2 = test_value2
+    locate1 = locate
+    locate2 = locate2
+    runtest = skip_test_case
+    teststepfunc = test_step_function
 
     # print the test step information
     Report.print_test_step_header(test_file_name, teststepindex)
@@ -27,8 +31,8 @@ module TestSteps
     when 'open_url'
       func = MiscFunctions.open_url(value1) if runtest == false
 
-    when 'login'
-      func = LoginFunctions.login(value1) if runtest == false
+    when 'portal_login'
+      func = Logins.login(value1) if runtest == false
 
     when 'ping_test'
       func = MiscFunctions.ping_test(value1) if runtest == false
