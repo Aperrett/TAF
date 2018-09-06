@@ -8,7 +8,7 @@ Please see the Wiki for more details: https://github.com/Aperrett/TAF/wiki
 <h2>TAF script help </h2>
 To use the TAF Script, Navigate to the Code/ Folder.
 Run the following script: 
-```./taf.sh help```
+./taf.sh help
 
 <h2>Security Audit of Ruby Gems used </h2>
 Run the following script: 
