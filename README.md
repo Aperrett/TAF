@@ -41,8 +41,9 @@ To access the Selenium Grid navigate to your browser: http://localhost:4444/grid
 
 <h2>TAF Native</h2>
 <h3>Pre-Requirements</h3>
-Ruby 2.5.1 has been installed on the system.
-run bundle install
+Ruby 2.5.1 has to be installed on the system.
+
+run bundle install - to install the required gems
 
 <h2>To run a Test Suite using the TAF:</h2>
 ./taf.sh run {filename} [{browser}] - note: (browser is optional)
