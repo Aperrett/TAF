@@ -134,21 +134,22 @@ module Report
   # check if the test failure threshold has been reached for total failures or consecutive failures.
   # If a certain number of consecutive tests fail then throw an exception
   def self.check_failure_threshold(test_file_name, testStepIndex)
+    consecutiveFailThreshold = 5
     if $previousTestFail && $currentTestFail
-      $consecutiveTestFail += 1
+      @consecutiveTestFail += 1
     else
-      $consecutiveTestFail = 0
+      @consecutiveTestFail = 0
     end
 
-    if $consecutiveTestFail >= $consecutiveFailThreshold
-      Report.results.puts("\nTerminating the current test case as the test failure threshold (#{$consecutiveFailThreshold} ) has been reached")
+    if @consecutiveTestFail >= consecutiveFailThreshold
+      Report.results.puts("\nTerminating the current test case as the test failure threshold (#{consecutiveFailThreshold} ) has been reached")
 
       # write info to $stderr
-      $stderr.puts "Terminating the current test case: #{test_file_name} as the test failure threshold (#{$consecutiveFailThreshold}) has been reached."
+      $stderr.puts "Terminating the current test case: #{test_file_name} as the test failure threshold (#{consecutiveFailThreshold}) has been reached."
       $stderr.puts '...continuing with the next test case (if there is one)'
 
       raise FailureThresholdExceeded,
-            "#{$consecutiveFailThreshold} steps failed."
+            "#{consecutiveFailThreshold} Test Steps Failed."
     end
   end
 end

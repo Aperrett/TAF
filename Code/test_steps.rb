@@ -31,7 +31,7 @@ module TestSteps
     when 'open_url'
       func = MiscFunctions.open_url(value1) if runtest == false
 
-    when 'portal_login'
+    when 'login'
       func = Logins.login(value1) if runtest == false
 
     when 'ping_test'

@@ -13,13 +13,7 @@ module Main
   begin
     # holds list of test file names read from the input file
     test_file_names = []
-    $commandLineXlsxFile = false
 
-    $XlsxFileNameType = '.xlsx'
-
-    # holds printable test report summary for all the executed tests
-    $testStepReportSummary = []
-    $testStepReportSummary2 = []
     # variables to manage the failure reporting
     $testStepPasses     = 0
     $testStepFailures   = 0
@@ -27,7 +21,6 @@ module Main
     $totalTestPasses    = 0
     $totalTestFailures  = 0
     $totalTestNotrun = 0
-    $consecutiveFailThreshold = 5
     $previousTestFail = false
     $currentTestFail = false
     # initialised stores for the input xlsx test data
@@ -72,11 +65,5 @@ module Main
     # output the overall test summary
     ReportSummary.print_overall_test_summary
     JunitReport.test_summary_junit
-
-    # close browser after tests have completed
-  #   Browser.b.quit
-  # rescue StandardError => e
-  #   Browser.b = 'No Browser Required'
-  #   raise e
   end
 end

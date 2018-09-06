@@ -52,7 +52,7 @@ module LoginFunctions
 
   # Check memorable word for login
   def self.mem_word_check(user, b_title_sucess)
-    if Browser.b.title.eql?('Memorable word')
+    if Browser.b.title.eql?('Memorable word - UKCloud Portal')
       CustomMiscFunctions.portal_mem_word
     elsif Browser.b.title.eql?(b_title_sucess)
       Report.results.puts("User: #{user} has logged in successful.")

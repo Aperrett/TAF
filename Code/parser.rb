@@ -7,6 +7,9 @@
 # parser.rb - basic parser functions
 module Parser
   require './taf_config.rb'
+  # variables:
+  @XlsxFileNameType = '.xlsx'
+
  # read in the data from the test suite file
   def self.read_test_suite_data
     # check if the file list exists and is readable
@@ -15,7 +18,7 @@ module Parser
       # get the file type
       fileType = File.extname($testSuiteFile)
       # extract the test data from the test suite
-      if (fileType.casecmp($XlsxFileNameType) == 0)
+      if (fileType.casecmp(@XlsxFileNameType) == 0)
         # process as xlsx...
         $XlsxSuiteDoc = RubyXL::Parser.parse($testSuiteFile)
         # ...and parse...
@@ -40,7 +43,7 @@ module Parser
       # get the file type
       fileType = File.extname($testSuiteFile)
 
-      if (fileType.casecmp($XlsxFileNameType) == 0)
+      if (fileType.casecmp(@XlsxFileNameType) == 0)
         XlsxParser.parse_xlxs_test_suite_data(testSpecIndex)
       else
         # the file type is not that expected so create a
@@ -56,7 +59,7 @@ module Parser
   def self.read_test_data(testFileName)
     # get the file type
     fileType = File.extname(testFileName)
-    if (fileType.casecmp($XlsxFileNameType) == 0)
+    if (fileType.casecmp(@XlsxFileNameType) == 0)
       puts "Processing test file: #{testFileName}"
       puts "Browser Type: #{$browserType}"
       $xlsxDoc = RubyXL::Parser.parse(testFileName)

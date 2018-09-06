@@ -4,37 +4,48 @@ Created in Ruby and using Watir to allow a user to Automate a website using an E
 
 Please see the Wiki for more details: https://github.com/Aperrett/TAF/wiki
 
+
+<h2>TAF script help </h2>
+To use the TAF Script, Navigate to the Code/ Folder.
+Run the following script: 
+./taf.sh help
+
 <h2>Security Audit of Ruby Gems used </h2>
-Run the following script: ./run_security_audit.sh
+Run the following script: 
+./taf.sh security_audit
 
-<h2>To use the Docker container images</h2>
-To build the TAF Docker container navigate to the Code/ Folder:
+<h2>To build the TAF Docker container image</h2>
+Run the following script: 
+./taf.sh build_taf_image
 
-To build the TAF to use in a Docker conatainer use the following script in terminal:
-
-./Start_TAF_Only.sh
+<h2>To use the TAF Docker container image</h2>
+To run the TAF to use in a Docker conatainer use the following script in terminal:
+./taf.sh run_container {filename} [{browser}] - note: (browser is optional)
 
 This will also start the TAF container for you.
 
+<h2>To build the Selenium Grid Docker container image</h2>
+Run the following script: 
+./taf.sh build_selenium_grid
+
+<h2>To use the TAF Docker container image with Selenium Grid</h2>
 To build the TAF to use in a Docker conatainer and to use Selenium grid Docker use the following script in terminal:
 
-./Start_TAF_With_Selenium_Grid.sh
+<h3>Pre-Requirements</h3>
+Make sure the TAF image has been built before running the script below:
+./taf.sh run_selenium_grid {filename}
 
 This will also start the TAF container and selenium Grid container with the following browsers: Firefox and Chrome.
 
-Also to note that this will link the TAF to the Selenium Grid Container via internal selenium grid docker network.
-
 To access the Selenium Grid navigate to your browser: http://localhost:4444/grid/console
 
-To run a Test Suite:
+<h2>TAF Native</h2>
+<h3>Pre-Requirements</h3>
+Ruby 2.5.1 has been installed on the system.
+run bundle install
 
-There are 2 ways to execute the TAF.
-
-Execute "ruby main.rb [Testsuite.xlsx]" in cmd line.
-
-Execute "ruby main.rb [Testsuite.xlsx] [Browser i.e. Firefox]" in cmd line.
-
-Note: To exit the TAF container type: 'exit' then type: 'docker-compose down' to shutdown Selenium grid. 
+<h2>To run a Test Suite using the TAF:</h2>
+./taf.sh run {filename} [{browser}] - note: (browser is optional)
 
 <h2>Contributing</h2>
 

@@ -12,9 +12,9 @@ module Logins
   require './taf_config.rb'
   # Portal login function.
   def self.login(value)
-    url = ENV['PORTAL_URL']
+    url = ENV['APP_URL']
     user = ENV[value.to_s]
-    pass = ENV['PORTAL_USER_PASS']
+    pass = ENV['APP_USER_PASS']
     b_title = 'Log in'
     b_title_sucess = 'Home'
     user_elm = 'user_email'

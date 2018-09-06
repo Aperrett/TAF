@@ -11,6 +11,7 @@ RUN apk --update --upgrade add --no-cache \
     curl \
     unzip \
     ca-certificates \
+    git \
     libexif \
     libffi-dev \
     firefox \
@@ -29,13 +30,9 @@ RUN wget --no-verbose --no-check-certificate -O geckodriver.tar.gz https://githu
   && mv geckodriver /usr/bin/geckodriver \
   && chmod 755 /usr/bin/geckodriver  
 
-ENV PORTAL_URL=blank \
-    ADMINL_URL=blank \
-    PORTAL_USER_EMAIL=blank \
-    PORTAL_USER_PASS=blank \ 
-    ADMIN_USER=blank \
-    ADMIN_USER_PASS=blank \
-    PORTAL_USER_CHANGE_PASS=blank
+ENV URL=blank \
+    APP_USER_EMAIL=blank \
+    APP_USER_PASS=blank \ 
     
 WORKDIR /app
 COPY Gemfile Gemfile.lock /app/

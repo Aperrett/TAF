@@ -9,9 +9,11 @@
 # junit_report.rb - methods for writing to the summary xml junit report.
 module JunitReport
   require './taf_config.rb'
+  # holds printable test report summary for all the executed tests
+  @testStepReportSummary2 = []
   # construct the test suite header for junit
   def self.test_step_summary_xml(test_file_name, test_file_name_index)
-    $testStepReportSummary2[test_file_name_index] = {
+    @testStepReportSummary2[test_file_name_index] = {
       'classname' => test_file_name,
       'name' => test_file_name,
       'assertions' => $numberOfTestSteps,
@@ -35,7 +37,7 @@ module JunitReport
         'time' => TimeDifference.between($test_end_time, $test_start_time).in_seconds
       }
       xml.testsuites(testsuite_attrs) do |testsuites|
-        $testStepReportSummary2.each do |testStepReportSummary2|
+        @testStepReportSummary2.each do |testStepReportSummary2|
           testsuites.testsuite(testStepReportSummary2) do |testsuite|
             $testStep_xml[testStepReportSummary2['name']].each do |testStepIndex, testStep_xml|
               testsuite.testcase(testStep_xml) do |testcase|
