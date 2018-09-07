@@ -35,6 +35,15 @@ build_taf_image() {
   docker build -t taf -f Dockerfile .
 }
 
+check_ruby_version() {
+  echo "Checking Ruby Version installed:"
+  if [[ "$(ruby --version)" == *"ruby 2.5.1"* ]]; then
+    echo "Ruby 2.5.1 installed already."
+  else
+    echo "TAF Requires Ruby 2.5.1. Please install Ruby 2.5.1"
+  fi
+}
+
 delete_results() {
   echo "Deleted all previous test results."
   rm -rf Results
@@ -93,6 +102,8 @@ security_audit() {
 }
 
 help () {
+  check_ruby_version
+  echo ""
   echo "usage: taf <command>"
   echo ""
   echo "Build Commands:"
