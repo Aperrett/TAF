@@ -31,6 +31,7 @@ abs_dirname() {
 #
 
 build_taf_image() {
+  delete_taf_image
   echo "Building TAF docker container."
   docker build -t taf -f Dockerfile .
 }
