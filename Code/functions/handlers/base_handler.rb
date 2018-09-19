@@ -58,7 +58,7 @@ module TestSteps
         end
       end
 
-      def self.portal_mem_word(user, b_title_sucess)
+      def portal_mem_word(user, b_title_sucess)
         password = ENV['PORTAL_MEM']
         nums = (1..256).to_a
         found_mem_nums = nums.each_with_object([]) do |num_val, mem_word|
