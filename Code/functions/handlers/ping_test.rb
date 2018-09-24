@@ -9,10 +9,10 @@ module TestSteps
       def perform(step_attributes)
         url = step_attributes[:testvalue]
 
-        while pingtest == Net::Ping::HTTP.new(url)
-          pingtest.ping?
+        while check = Net::Ping::HTTP.new(url)
+          check.ping?
           sleep 5
-          if pingtest.ping? == true
+          if check.ping? == true
             # website alive
             Report.results.puts("pinged: #{url}")
             return true

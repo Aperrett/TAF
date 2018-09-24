@@ -23,16 +23,20 @@ RUN apk --update --upgrade add --no-cache \
 #============
 # GeckoDriver
 #============
-ARG GECKODRIVER_VERSION=0.20.0
+ARG GECKODRIVER_VERSION=0.22.0
 RUN wget --no-verbose --no-check-certificate -O geckodriver.tar.gz https://github.com/mozilla/geckodriver/releases/download/v$GECKODRIVER_VERSION/geckodriver-v$GECKODRIVER_VERSION-linux64.tar.gz \
   && tar -zxf geckodriver.tar.gz \
   && rm geckodriver.tar.gz \
   && mv geckodriver /usr/bin/geckodriver \
   && chmod 755 /usr/bin/geckodriver  
 
-ENV URL=blank \
-    APP_USER_EMAIL=blank \
-    APP_USER_PASS=blank \ 
+ENV PORTAL_URL=blank \
+    ADMINL_URL=blank \
+    PORTAL_USER_EMAIL=blank \
+    PORTAL_USER_PASS=blank \ 
+    ADMIN_USER=blank \
+    ADMIN_USER_PASS=blank \
+    PORTAL_USER_CHANGE_PASS=blank
     
 WORKDIR /app
 COPY Gemfile Gemfile.lock /app/
