@@ -13,7 +13,7 @@ module Browser
     case lc_browser_type
     when 'chrome'
       chrome
-    when 'chrome-Headless'
+    when 'chrome-headless'
       chrome_headless
     when 'firefox'
       firefox

@@ -11,6 +11,7 @@ RUN apk --update --upgrade add --no-cache \
     curl \
     unzip \
     ca-certificates \
+    expat=2.2.5-r0 \
     git \
     libexif \
     libffi-dev \
