@@ -1,9 +1,5 @@
-
-![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)![GitHub release](https://img.shields.io/github/release/qubyte/rubidium.svg) 
-![Github All Releases](https://img.shields.io/github/downloads/atom/atom/total.svg)
-
-
-
+# [Test Automation Framework (TAF)](https://github.com/Aperrett/TAF)
+[![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://opensource.org/licenses/MIT)
 
 This is the Test Automation Framework (TAF)
 
