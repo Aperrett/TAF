@@ -1,3 +1,10 @@
+
+![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)![GitHub release](https://img.shields.io/github/release/qubyte/rubidium.svg) 
+![Github All Releases](https://img.shields.io/github/downloads/atom/atom/total.svg)
+
+
+
+
 This is the Test Automation Framework (TAF)
 
 Created in Ruby and using Watir to allow a user to Automate a website using an Excel file type.
