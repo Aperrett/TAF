@@ -40,4 +40,4 @@ end
 
 # Require all test step handlers, which register themselves with
 # TestStep.handlers when the files are required.
-require_relative 'functions/handlers'
+#require_relative './functions/handlers'

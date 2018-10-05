@@ -21,13 +21,17 @@ require 'colored'
 require 'rubyXL'
 
 # list of all the required files
-require_relative 'test_steps'
-require_relative 'report'
-require_relative 'browser'
-require_relative 'create_directories'
-require_relative 'test_engine'
-require_relative 'exceptions'
-require_relative 'junit_report'
-require_relative 'report_summary'
-require_relative 'parser'
-require_relative 'xlsx_parser'
+require_relative './utils/test_steps'
+require_relative './report/report'
+require_relative './utils/browser'
+require_relative './utils/create_directories'
+require_relative './utils/test_engine'
+require_relative './utils/exceptions'
+require_relative './report/junit_report'
+require_relative './report/report_summary'
+require_relative './parser/parser'
+require_relative './parser/xlsx_parser'
+
+# Require all test step handlers, which register themselves with
+# TestStep.handlers when the files are required.
+require_relative './functions/handlers'
