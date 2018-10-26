@@ -1,5 +1,5 @@
 module TestSteps
-  require './taf_config.rb'
+  require_relative '../../taf_config.rb'
   module Handlers
     class Base
       def self.register(name)
@@ -47,7 +47,7 @@ module TestSteps
       end
 
       def mem_word_check(user, b_title_sucess)
-        if Browser.b.title.eql?('Memorable word')
+        if Browser.b.title.eql?('Memorable word - UKCloud Portal')
           portal_mem_word(user, b_title_sucess)
         elsif Browser.b.title.eql?(b_title_sucess)
           Report.results.puts("User: #{user} has logged in successful.")

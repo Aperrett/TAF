@@ -8,7 +8,7 @@
 #
 # main.rb - Framework Driver Script
 module Main
-  require './taf_config.rb'
+  require_relative './taf_config.rb'
 
   begin
     # holds list of test file names read from the input file

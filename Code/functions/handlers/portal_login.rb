@@ -1,5 +1,4 @@
 require_relative 'base_handler'
-require './taf_config.rb'
 
 module TestSteps
   module Handlers
@@ -12,8 +11,8 @@ module TestSteps
         url = ENV['PORTAL_URL']
         user = ENV[value.to_s]
         pass = ENV['PORTAL_USER_PASS']
-        b_title = 'Log in'
-        b_title_sucess = 'Home'
+        b_title = 'Log in - UKCloud Portal'
+        b_title_sucess = 'Home - UKCloud Portal'
         user_elm = 'user_email'
         pass_elm = 'user_password'
         

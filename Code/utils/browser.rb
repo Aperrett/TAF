@@ -6,7 +6,7 @@
 #
 # browser_setup.rb - a browser functions
 module Browser
-  require './taf_config.rb'
+  require_relative '../taf_config.rb'
   # open_browser function
   def self.open_browser
     lc_browser_type = $browserType.downcase

@@ -8,7 +8,7 @@
 #
 # report_summary.rb - methods for writing to the test summary report file
 module ReportSummary
-  require './taf_config.rb'
+  require_relative '../taf_config.rb'
   # holds printable test report summary for all the executed tests
   @testStepReportSummary = []
   # output the test results summary for the current test case

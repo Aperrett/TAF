@@ -8,7 +8,7 @@
 #
 # test_steps.rb - process the required test step functions
 module TestSteps
-  require './taf_config.rb'
+  require_relative '../taf_config.rb'
   
   def self.handlers
     @handlers ||= {}
@@ -37,7 +37,3 @@ module TestSteps
     end
   end
 end
-
-# Require all test step handlers, which register themselves with
-# TestStep.handlers when the files are required.
-#require_relative './functions/handlers'

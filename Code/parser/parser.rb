@@ -6,7 +6,7 @@
 #
 # parser.rb - basic parser functions
 module Parser
-  require './taf_config.rb'
+  require_relative '../taf_config.rb'
   # variables:
   @XlsxFileNameType = '.xlsx'
 

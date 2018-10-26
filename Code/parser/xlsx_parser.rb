@@ -6,7 +6,7 @@
 #
 # xlsx_parser.rb - xlsx parser functions
 module XlsxParser
-  require './taf_config.rb'
+  require_relative '../taf_config.rb'
   def self.parse_xlxs_test_suite_header_data
     begin
       # get the number of test specifications in the file (number of

@@ -8,7 +8,7 @@
 #
 # test_engine.rb - controls the iteration through the test suite and specs
 module TestEngine
-  require './taf_config.rb'
+  require_relative '../taf_config.rb'
 
   # process the test files to execute the tests
   def self.process_testfiles

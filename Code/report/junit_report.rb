@@ -8,7 +8,7 @@
 #
 # junit_report.rb - methods for writing to the summary xml junit report.
 module JunitReport
-  require './taf_config.rb'
+  require_relative '../taf_config.rb'
   # holds printable test report summary for all the executed tests
   @testStepReportSummary2 = []
   # construct the test suite header for junit

@@ -8,7 +8,7 @@
 #
 # report.rb - methods for accessing and writing to the test report file(s)
 module Report
-  require './taf_config.rb'
+  require_relative '../taf_config.rb'
   # setup the test results output file
   def self.open_test_report_file
     # open a new file for writing

@@ -1,5 +1,4 @@
 require_relative 'base_handler'
-require './taf_config.rb'
 
 module TestSteps
   module Handlers
