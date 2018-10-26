@@ -8,11 +8,11 @@ module TestSteps
       def perform(step_attributes)
         value = step_attributes[:testvalue]
 
-        url = ENV['PORTAL_URL']
+        url = ENV['URL']
         user = ENV[value.to_s]
-        pass = ENV['PORTAL_USER_PASS']
-        b_title = 'Log in - UKCloud Portal'
-        b_title_sucess = 'Home - UKCloud Portal'
+        pass = ENV['USER_PASS']
+        b_title = 'Log in'
+        b_title_sucess = 'Home'
         user_elm = 'user_email'
         pass_elm = 'user_password'
         
