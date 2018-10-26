@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require 'version.rb'
+require 'main.rb'
