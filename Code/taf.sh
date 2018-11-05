@@ -45,6 +45,49 @@ check_ruby_version() {
   fi
 }
 
+copy_taf_gem_files(){
+  cp -R lib temp/
+  cp -R bin temp/
+  cp -R taf.gemspec temp/
+  cp -R main.rb temp/lib/
+  cp -R taf_config.rb temp/lib/
+  cp -R report temp/lib/
+  cp -R parser temp/lib/
+  cp -R utils temp/lib/
+  cp -R functions temp/lib/
+}
+
+build_taf_gem() {
+  releaseflag="$1"
+  versionflag="$2"
+  echo "Building Ruby Gem TAF for: $releaseflag use, with version: $versionflag."
+  rm -rf temp
+  mkdir temp
+  if [ $releaseflag = "external" ]; then
+    copy_taf_gem_files
+    rm temp/lib/functions/handlers/sso_login.rb
+    rm temp/lib/functions/handlers/sint_login.rb
+    rm temp/lib/functions/handlers/admin_portal_login.rb
+    sed -i -e "s/- UKCloud Portal//g" temp/lib/functions/handlers/portal_login.rb
+    rm temp/lib/functions/handlers/portal_login.rb-e
+    sed -i -e "s/0.0.0/$versionflag/g" temp/lib/version.rb
+    rm temp/lib/version.rb-e
+  elif [ $releaseflag = "internal" ]; then
+    copy_taf_gem_files
+    sed -i -e "s/0.0.0/$versionflag/g" temp/lib/version.rb
+    rm temp/lib/version.rb-e
+  else
+    echo "Not a valid release flag set."
+  fi
+cd temp/
+gem build taf.gemspec    
+cp -R taf-$versionflag.gem ../     
+cd ..
+rm -rf temp
+echo ''
+echo "Built TAF Ruby Gem for: $releaseflag use, with version: $versionflag."
+}
+
 delete_results() {
   echo "Deleted all previous test results."
   rm -rf Results
@@ -108,8 +151,12 @@ help () {
   echo "usage: taf <command>"
   echo ""
   echo "Build Commands:"
-  echo "  build_selenium_grid  - Builds Latest Selenium Grid Docker Image."
-  echo "  build_taf_image      - Builds Latest TAF Docker Image."
+  echo "  build_selenium_grid       - Builds Latest Selenium Grid Docker Image."
+  echo "  build_taf_image                     - Builds Latest TAF Docker Image."
+  echo "  build_taf_gem <release> <version>   - Builds Latest TAF Ruby Gem."
+  echo "                                        - <release> internal use or" 
+  echo "                                                    or external use."
+  echo "                                        - <version> e.g. 0.0.1."
   echo ""
   echo "Delete Commands:"
   echo "  delete_results    - Delete all the previous test results."
@@ -138,6 +185,9 @@ main () {
       ;;
     build_taf_image)
       build_taf_image
+      ;;
+    build_taf_gem)
+      build_taf_gem "$2" "$3"
       ;;
     security_audit)
       security_audit

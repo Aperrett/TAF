@@ -3,7 +3,7 @@
 module Taf
   # This module holds the TAF version information.
   module Version
-    STRING = '0.1.1'.freeze
+    STRING = '0.0.0'.freeze
 
     MSG = '%<version>s (using Parser %<parser_version>s, running on ' \
           '%<ruby_engine>s %<ruby_version>s %<ruby_platform>s)'.freeze
