@@ -14,7 +14,7 @@ GEM
     colored (1.2)
     concurrent-ruby (1.0.5)
     ffi (1.9.25)
-    i18n (1.1.0)
+    i18n (1.1.1)
       concurrent-ruby (~> 1.0)
     logger (1.2.8)
     mini_portile2 (2.3.0)
@@ -25,11 +25,12 @@ GEM
     rubyXL (3.3.30)
       nokogiri (>= 1.4.4)
       rubyzip (>= 1.1.6)
-    rubygems-update (2.7.7)
+    rubygems-update (2.7.8)
     rubyzip (1.2.2)
-    selenium-webdriver (3.14.1)
+    selenium-webdriver (3.141.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.2, >= 1.2.2)
+    taf (0.1.1)
     thor (0.20.0)
     thread_safe (0.3.6)
     time_difference (0.7.0)
@@ -52,6 +53,7 @@ DEPENDENCIES
   rubyXL!
   rubygems-update!
   selenium-webdriver!
+  taf!
   time_difference!
   watir!
 

@@ -11,6 +11,7 @@ source 'https://rubygems.org' do
   gem 'rubygems-update'
   gem 'rubyXL'
   gem 'selenium-webdriver'
+  gem 'taf'
   gem 'time_difference'
   gem 'watir'
 end
