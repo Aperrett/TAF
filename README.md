@@ -1,6 +1,5 @@
 # [Test Automation Framework (TAF)](https://github.com/Aperrett/TAF)
-[![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://opensource.org/licenses/MIT)\
-[![Gem Version](https://img.shields.io/gem/v/:package.svg)](https://rubygems.org/gems/taf/versions/0.1.1)
+[![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://opensource.org/licenses/MIT)
 
 This is the Test Automation Framework (TAF)
 
