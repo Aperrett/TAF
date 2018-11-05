@@ -21,6 +21,10 @@ Run the following script:
 Run the following script: 
 ./taf.sh build_taf_image
 
+<h2>To build the TAF Ruby Gem</h2>
+Run the following script: 
+./taf.sh build_taf_gem {internal} or {external {version i.e. 0.1.2}
+
 <h2>To use the TAF Docker container image</h2>
 To run the TAF to use in a Docker conatainer use the following script in terminal:
 ./taf.sh run_container {filename} [{browser}] - note: (browser is optional)
