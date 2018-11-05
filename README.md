@@ -1,6 +1,8 @@
 # [Test Automation Framework (TAF)](https://github.com/Aperrett/TAF)
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://opensource.org/licenses/MIT)
 
+[![Gem](https://img.shields.io/gem/v/:package.svg)](https://rubygems.org/gems/taf)
+
 This is the Test Automation Framework (TAF)
 
 Created in Ruby and using Watir to allow a user to Automate a website using an Excel file type.
