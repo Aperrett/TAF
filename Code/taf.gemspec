@@ -8,12 +8,11 @@ require './lib/version.rb'
 Gem::Specification.new do |taf|
   taf.name        = 'taf'
   taf.version     = Taf::Version::STRING
-  taf.date        = '2018-10-24'
+  taf.date        = '2018-11-05'
   taf.summary     = 'Test Automation Framework to allow simple web automation.'
   taf.description = "Test Automation Framework (TAF) for more details go to: \
                       https://github.com/Aperrett/TAF"
   taf.authors     = ['Andy Perrett']
-  taf.email       = 'aperrett27@live.co.uk'
   taf.require_paths = ['lib']
   taf.files       = Dir['lib/*.rb'] + Dir['lib/**/*.rb'] + Dir['bin/*']
   taf.executables = ['taf']
