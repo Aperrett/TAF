@@ -6,13 +6,13 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repos
     && echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories \
     && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 
-RUN apk --update --upgrade add --no-cache \
+RUN apk --update add --no-cache \
     build-base \
     curl \
     unzip \
     ca-certificates \
     expat=2.2.5-r0 \
-    ssl_client=1.27.2-r11 \
+    #ssl_client=1.27.2-r11 \
     git \
     libexif \
     libffi-dev \
@@ -21,6 +21,8 @@ RUN apk --update --upgrade add --no-cache \
     #chromium \
     #chromium-chromedriver \
     && rm -rf /var/cache/apk/*
+
+RUN apk upgrade
 
 #============
 # GeckoDriver
