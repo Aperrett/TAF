@@ -12,6 +12,7 @@ RUN apk --update --upgrade add --no-cache \
     unzip \
     ca-certificates \
     expat=2.2.5-r0 \
+    ssl_client=1.27.2-r11 \
     git \
     libexif \
     libffi-dev \
@@ -24,7 +25,7 @@ RUN apk --update --upgrade add --no-cache \
 #============
 # GeckoDriver
 #============
-ARG GECKODRIVER_VERSION=0.20.0
+ARG GECKODRIVER_VERSION=0.23.0
 RUN wget --no-verbose --no-check-certificate -O geckodriver.tar.gz https://github.com/mozilla/geckodriver/releases/download/v$GECKODRIVER_VERSION/geckodriver-v$GECKODRIVER_VERSION-linux64.tar.gz \
   && tar -zxf geckodriver.tar.gz \
   && rm geckodriver.tar.gz \
