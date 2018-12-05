@@ -9,7 +9,7 @@ module TestSteps
         dropdown = step_attributes[:testvalue]
         locate = step_attributes[:locate]
 
-        Browser.b.element(:"#{locate}" => dropdown).wait_until_present
+        Browser.b.element(:"#{locate}" => dropdown).wait_until
         Browser.b.select_list(:"#{locate}" => dropdown).options.each do |i|
         Report.results.puts("List of dropdown for #{dropdown} are: #{i.text}")
         return true

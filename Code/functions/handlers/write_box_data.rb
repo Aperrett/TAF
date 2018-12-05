@@ -19,10 +19,10 @@ module TestSteps
         index = found_box.index(true)
         return unless index
         if index.zero?
-          Browser.b.textarea(:"#{locate}" => box).wait_until_present.set value
+          Browser.b.textarea(:"#{locate}" => box).wait_until.set value
           (Browser.b.textarea(:"#{locate}" => box).value == value)
         elsif index == 1
-          Browser.b.text_field(:"#{locate}" => box).wait_until_present.set value
+          Browser.b.text_field(:"#{locate}" => box).wait_until.set value
           (Browser.b.text_field(:"#{locate}" => box).value == value)
         end
         Report.results.puts("Textbox: #{box} has correct value: #{value}")

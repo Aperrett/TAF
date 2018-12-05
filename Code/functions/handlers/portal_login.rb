@@ -8,9 +8,9 @@ module TestSteps
       def perform(step_attributes)
         value = step_attributes[:testvalue]
 
-        url = ENV['URL']
+        url = ENV['PORTAL_URL']
         user = ENV[value.to_s]
-        pass = ENV['USER_PASS']
+        pass = ENV['PORTAL_USER_PASS']
         b_title = 'Log in'
         b_title_sucess = 'Home'
         user_elm = 'user_email'

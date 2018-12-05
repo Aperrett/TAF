@@ -11,7 +11,7 @@ module TestSteps
         value = step_attributes[:testvalue2]
         value = ENV[value.to_s]
 
-        Browser.b.text_field(:"#{locate}" => box).wait_until_present.set value
+        Browser.b.text_field(:"#{locate}" => box).wait_until.set value
         (Browser.b.text_field(:"#{locate}" => box).value == value)
         Report.results.puts("Textbox: #{box} has correct value: #{value}")
         true

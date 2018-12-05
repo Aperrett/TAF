@@ -10,7 +10,7 @@ module TestSteps
         value = step_attributes[:testvalue2]
         locate = step_attributes[:locate]
 
-        Browser.b.iframe(:"#{locate}" => iframe).wait_until_present
+        Browser.b.iframe(:"#{locate}" => iframe).wait_until
         Browser.b.iframe(:"#{locate}" => iframe).send_keys value
         Report.results.puts("Editor box: #{iframe} has correct value: #{value}")
         true

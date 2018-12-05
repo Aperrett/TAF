@@ -9,7 +9,7 @@ module TestSteps
         checkbox = step_attributes[:testvalue]
         locate = step_attributes[:locate]
 
-        Browser.b.checkbox(:"#{locate}" => checkbox).wait_until_present.click
+        Browser.b.checkbox(:"#{locate}" => checkbox).wait_until.click
         Report.results.puts("Check box: #{checkbox} has been selected")
         true
       rescue StandardError

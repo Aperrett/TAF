@@ -11,7 +11,7 @@ module TestSteps
         locate = step_attributes[:locate]
         locate2 = step_attributes[:locate2]
 
-        Browser.b.radio(:"#{locate}" => radio).wait_until_present
+        Browser.b.radio(:"#{locate}" => radio).wait_until
         Browser.b.radio(:"#{locate}" => radio, :"#{locate2}" => "#{value2}").set
         Report.results.puts("Radio button: #{radio} has been selected")
         true
