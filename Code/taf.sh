@@ -72,10 +72,14 @@ build_taf_gem() {
     rm temp/lib/functions/handlers/portal_login.rb-e
     sed -i -e "s/0.0.0/$versionflag/g" temp/lib/version.rb
     rm temp/lib/version.rb-e
+    sed -i -e "s/releaseflag/$releaseflag/g" temp/taf.gemspec
+    rm temp/taf.gemspec-e
   elif [ $releaseflag = "internal" ]; then
     copy_taf_gem_files
     sed -i -e "s/0.0.0/$versionflag/g" temp/lib/version.rb
     rm temp/lib/version.rb-e
+    sed -i -e "s/releaseflag/$releaseflag/g" temp/taf.gemspec
+    rm temp/taf.gemspec-e
   else
     echo "Not a valid release flag set."
   fi
