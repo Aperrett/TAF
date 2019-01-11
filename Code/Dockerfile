@@ -1,4 +1,4 @@
-FROM ruby:2.5.1-alpine3.7
+FROM ruby:2.5.3-alpine3.8
 
 LABEL author="Andy Perrett"
 
@@ -10,7 +10,10 @@ RUN apk --update add --no-cache \
     build-base \
     curl \
     unzip \
-    ca-certificates \
+    libuuid=2.32-r0 \
+    libmount=2.32-r0 \
+    libblkid=2.32-r0 \
+    #ca-certificates \
     expat=2.2.5-r0 \
     #ssl_client=1.27.2-r11 \
     git \
@@ -22,7 +25,7 @@ RUN apk --update add --no-cache \
     #chromium-chromedriver \
     && rm -rf /var/cache/apk/*
 
-RUN apk upgrade
+#RUN apk upgrade
 
 #============
 # GeckoDriver
@@ -34,13 +37,6 @@ RUN wget --no-verbose --no-check-certificate -O geckodriver.tar.gz https://githu
   && mv geckodriver /usr/bin/geckodriver \
   && chmod 755 /usr/bin/geckodriver  
 
-ENV PORTAL_URL=blank \
-    ADMINL_URL=blank \
-    PORTAL_USER_EMAIL=blank \
-    PORTAL_USER_PASS=blank \ 
-    ADMIN_USER=blank \
-    ADMIN_USER_PASS=blank \
-    PORTAL_USER_CHANGE_PASS=blank
     
 WORKDIR /app
 COPY Gemfile Gemfile.lock /app/
