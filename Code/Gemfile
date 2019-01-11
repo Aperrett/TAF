@@ -1,18 +1,6 @@
 # frozen_string_literal: true
 
 # Gem file for TAF
-
 source 'https://rubygems.org' do
-  gem 'bundler'
-  gem 'bundler-audit'
-  gem 'colored'
-  gem 'logger'
-  gem 'net-ping'
-  gem 'nokogiri'
-  gem 'rubygems-update'
-  gem 'rubyXL'
-  gem 'selenium-webdriver'
-  gem 'time_difference'
-  gem 'watir'
-  gem 'taf' 
+  gem 'taf'
 end
