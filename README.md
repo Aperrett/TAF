@@ -29,11 +29,16 @@ Run the following script:
 
 <h1>TAF Runner - Docker</h1>
 <h3>To run the TAF in Docker Container</h3>
-Run following script in terminal: \
-docker run --rm --shm-size 2g \
---env URL="http://url_blah.com" \
---env USER="emailblah.com" \
+Run following script in terminal:
+
+docker run --rm --shm-size 2g
+
+--env URL="http://url_blah.com"
+
+--env USER="emailblah.com"
+
 -v "$(pwd)"/target:/app/Results:cached taf taf {filename} [{browser}] - note: (browser is optional)
+
 
 Please note the --env will need to be changed.
 
