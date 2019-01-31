@@ -19,7 +19,7 @@ Run the following script:
 
 <h1>TAF Builder</h1>
 
-<h2>To build the TAF Docker container image</h2>
+<h2>To build the TAF Docker image</h2>
 Run the following script: 
 ./taf.sh build_taf_image
 
@@ -28,11 +28,14 @@ Run the following script:
 ./taf.sh build_taf_gem {internal} or {external} {version} (i.e. 0.1.2)
 
 <h1>TAF Runner - Docker</h1>
-<h2>To use the TAF Docker container image</h2>
-To run the TAF to use in a Docker conatainer use the following script in terminal:
-./taf.sh run_container {filename} [{browser}] - note: (browser is optional)
+<h3>To run the TAF in Docker Container</h3>
+Run following script in terminal: \
+docker run --rm --shm-size 2g \
+--env URL="http://url_blah.com" \
+--env USER="emailblah.com" \
+-v "$(pwd)"/target:/app/Results:cached taf taf {filename} [{browser}] - note: (browser is optional)
 
-This will also start the TAF container for you.
+Please note the --env will need to be changed.
 
 <h1>TAF Runner - Native</h1>
 <h3>Pre-Requirements</h3>
