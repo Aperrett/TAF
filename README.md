@@ -17,6 +17,8 @@ Run the following script:
 Run the following script: 
 ./taf.sh security_audit
 
+<h2>TAF Build </h2>
+
 <h2>To build the TAF Docker container image</h2>
 Run the following script: 
 ./taf.sh build_taf_image
@@ -31,22 +33,7 @@ To run the TAF to use in a Docker conatainer use the following script in termina
 
 This will also start the TAF container for you.
 
-<h2>To build the Selenium Grid Docker container image</h2>
-Run the following script: 
-./taf.sh build_selenium_grid
-
-<h2>To use the TAF Docker container image with Selenium Grid</h2>
-To build the TAF to use in a Docker conatainer and to use Selenium grid Docker use the following script in terminal:
-
-<h3>Pre-Requirements</h3>
-Make sure the TAF image has been built before running the script below:
-./taf.sh run_selenium_grid {filename}
-
-This will also start the TAF container and selenium Grid container with the following browsers: Firefox and Chrome.
-
-To access the Selenium Grid navigate to your browser: http://localhost:4444/grid/console
-
-<h2>TAF Native</h2>
+<h2>TAF Runner</h2>
 <h3>Pre-Requirements</h3>
 Ruby 2.5.1 has to be installed on the system.
 
@@ -71,6 +58,6 @@ https://github.com/Aperrett
 
 <h2>Copyright and License</h2>
 
-Copyright 2018 Aperrett
+Copyright 2019 Aperrett
 
 Code released under the MIT License.

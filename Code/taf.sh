@@ -108,16 +108,6 @@ delete_taf_image() {
   fi
 }
 
-build_selenium_grid() {
-  echo "Starting Selenium Grid in Docker with the following browsers:"
-  echo "Firefox and Chrome"
-
-  docker-compose up -d
-  echo -e $(docker-compose up -d)
-  echo ""
-  echo 'Open a browser to Selenium grid: http://localhost:4444/grid/console'
-}
-
 run() {
   echo "Launching the TAF natively in the local shell:"
   echo "Using the following options:" "$1" "$2"
@@ -130,14 +120,6 @@ run_container() {
   docker run --rm -it --name taf -v "$(pwd)"/target:/app/Results:cached taf \
          ruby main.rb "$1" "$2"
 }
-
-run_selenium_grid() {
-  echo "Launching the TAF container into the container shell"
-  echo "Using the following options:" "$1"
-  docker run --rm --network taf_selenium_grid_internal --link selenium_hub:hub \
-         -it --name taf -v "$(pwd)"/target:/app/Results:cached taf \
-         ruby main.rb "$1"
-} 
 
 security_audit() {
     echo "Building TAF docker container."
@@ -155,7 +137,6 @@ help () {
   echo "usage: taf <command>"
   echo ""
   echo "Build Commands:"
-  echo "  build_selenium_grid       - Builds Latest Selenium Grid Docker Image."
   echo "  build_taf_image                     - Builds Latest TAF Docker Image."
   echo "  build_taf_gem <release> <version>   - Builds Latest TAF Ruby Gem."
   echo "                                        - <release> internal use or" 
@@ -177,16 +158,10 @@ help () {
   echo "                                      shell."
   echo "                                      - <file> TestSuite to run."
   echo "                                      - <browser> overide (optional)."
-  echo "  run_selenium_grid <file>          - Run the TAF in the container"
-  echo "                                      linked to Selenium Grid."
-  echo "                                      - <file> TestSuite to run."
 }
 
 main () {
   case "$1" in
-    build_selenium_grid)
-      build_selenium_grid
-      ;;
     build_taf_image)
       build_taf_image
       ;;
@@ -207,9 +182,6 @@ main () {
       ;;
     run_container)
       run_container "$2" "$3"
-      ;;
-    run_selenium_grid)
-      run_selenium_grid "$2" "$3"
       ;;
     *)
       help 1>&2
