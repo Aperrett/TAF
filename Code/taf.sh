@@ -32,7 +32,7 @@ abs_dirname() {
 
 build_taf_image() {
   delete_taf_image
-  echo "Building TAF docker container."
+  echo "Building TAF docker image."
   docker build -t taf -f Dockerfile .
 }
 
@@ -99,7 +99,7 @@ delete_results() {
 
 delete_taf_image() {
   echo "Checking if TAF Container exists"
-  if [ -n "$(sudo docker images -q taf 2>/dev/null)" ]; then
+  if [ -n "$(docker images -q taf 2>/dev/null)" ]; then
     echo "TAF Container exists"
     docker rmi taf
     echo "Removed TAF Container"
@@ -112,13 +112,6 @@ run() {
   echo "Launching the TAF natively in the local shell:"
   echo "Using the following options:" "$1" "$2"
   ruby main.rb "$1" "$2"
-}
-
-run_container() {
-  echo "Launching the TAF container into the container shell"
-  echo "Using the following options:" "$1" "$2"
-  docker run --rm -it --name taf -v "$(pwd)"/target:/app/Results:cached taf \
-         ruby main.rb "$1" "$2"
 }
 
 security_audit() {
@@ -154,10 +147,6 @@ help () {
   echo "  run <file> [<browser>]            - Run the TAF natively in shell."
   echo "                                      - <file> TestSuite to run."
   echo "                                      - <browser> overide (optional)."
-  echo "  run_container <file> [<browser>]  - Run the TAF in the container"
-  echo "                                      shell."
-  echo "                                      - <file> TestSuite to run."
-  echo "                                      - <browser> overide (optional)."
 }
 
 main () {
@@ -179,9 +168,6 @@ main () {
       ;;  
     run)
       run "$2" "$3"
-      ;;
-    run_container)
-      run_container "$2" "$3"
       ;;
     *)
       help 1>&2
