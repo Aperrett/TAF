@@ -17,7 +17,7 @@ Run the following script:
 Run the following script: 
 ./taf.sh security_audit
 
-<h2>TAF Build </h2>
+<h1>TAF Builder</h1>
 
 <h2>To build the TAF Docker container image</h2>
 Run the following script: 
@@ -27,13 +27,14 @@ Run the following script:
 Run the following script: 
 ./taf.sh build_taf_gem {internal} or {external} {version} (i.e. 0.1.2)
 
+<h1>TAF Runner - Docker</h1>
 <h2>To use the TAF Docker container image</h2>
 To run the TAF to use in a Docker conatainer use the following script in terminal:
 ./taf.sh run_container {filename} [{browser}] - note: (browser is optional)
 
 This will also start the TAF container for you.
 
-<h2>TAF Runner</h2>
+<h1>TAF Runner - Native</h1>
 <h3>Pre-Requirements</h3>
 Ruby 2.5.1 has to be installed on the system.
 
