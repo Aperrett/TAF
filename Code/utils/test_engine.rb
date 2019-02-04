@@ -36,13 +36,10 @@ module TestEngine
 
         if ARGV.length < 2
           $browserType = test_suite[:browser]
-          puts ''
-          puts "Will use the following browser from Test Suite: #{$browserType}"
-          puts ''
+          MyLog.log.info "Will use the following browser from Test Suite: #{$browserType}"
         elsif ARGV.length < 3
           $browserType = ARGV[1]
-          puts "\nWill use the following browser from CMD line: " + ARGV[1]
-          puts ''
+          MyLog.log.info "Will use the following browser from CMD line: " + ARGV[1]
         else
           raise IOError, 'Unable to open browser'  
         end
@@ -56,36 +53,26 @@ module TestEngine
           # if unable to read the test data, show the error and move onto the
           # next file (if there is one)
         rescue StandardError => error
-          $stderr.puts "Terminating the current test case: " \
+          MyLog.log.warn "Terminating the current test case: " \
                        "#{test_file_name} #{error}"
-          $stderr.puts '...continuing with the next test case (if there is one)'
+          MyLog.log.info '...continuing with the next test case (if there is one)'
         end # of rescue block for readTestData
 
         # create the project directories, returns the screenshot directory name
         begin # start of rescue block for construct_projectdirs
           # create test spec directories - these need creating once per testspec
           full_sc_dirname = CreateDirectories.construct_testspecdirs
-          # open the log file
-          Report.open_log_file
           # if an error then show the error and terminate
         rescue StandardError => error
           warn error
-          $stdout.puts error
+          MyLog.log.warn error
           abort
         end
-
-        # open the test results output file
-        Report.open_test_report_file
-
-        # print the main test header
-        Report.print_test_header
 
         # loop through the test file
         if testFileType != 'XLSX'
           puts 'Not a valid XLSX File Type'
         end
-
-        Report.results.puts("Number of test steps: #{$numberOfTestSteps}")
 
         # get the test case start time
         $test_case_start_time = Report.current_time
@@ -117,12 +104,6 @@ module TestEngine
         # pass in the test file number to save the summary against it's testfile
         ReportSummary.test_step_summary(test_file_name, test_file_name_index)
         JunitReport.test_step_summary_xml(test_file_name, test_file_name_index)
-
-        # close the test results file for the current test case
-        Report.close_test_results_file
-
-        # close the log file
-        Report.close_log_file
 
         # close the browser if created
         Browser.b.quit

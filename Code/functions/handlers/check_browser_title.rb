@@ -10,10 +10,10 @@ module TestSteps
 
         sleep 2
         if Browser.b.title.eql?(text_check)
-          Report.results.puts("Browser title: #{text_check}")
+          MyLog.log.info("Browser title: #{text_check}")
           return true
         else
-          Report.results.puts("Title not found: #{text_check}")
+          MyLog.log.warn("Title not found: #{text_check}")
           return false
         end
       end

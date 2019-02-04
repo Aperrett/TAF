@@ -13,11 +13,11 @@ module TestSteps
           sleep 5
           if check.ping? == true
             # website alive
-            Report.results.puts("pinged: #{url}")
+            MyLog.log.info("pinged: #{url}")
             return true
           else
             # website not responding
-            Report.results.puts("Failed to ping: #{url}")
+            MyLog.log.warn("Failed to ping: #{url}")
             return false
           end
         end

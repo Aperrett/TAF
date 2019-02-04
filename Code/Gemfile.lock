@@ -1,5 +1,6 @@
 GEM
   remote: https://rubygems.org/
+  remote: http://rubygems.internal.local/
   specs:
     activesupport (5.2.2)
       concurrent-ruby (~> 1.0, >= 1.0.2)
@@ -31,7 +32,7 @@ GEM
     selenium-webdriver (3.141.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.2, >= 1.2.2)
-    taf (0.1.5)
+    taf (0.1.6)
       bundler-audit (~> 0.6)
       colored (~> 1.2)
       logger (~> 1.2)

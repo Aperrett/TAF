@@ -10,10 +10,10 @@ module TestSteps
 
         Browser.b.send_keys :"#{special_key}"
         sleep 1
-        Report.results.puts("Browser Sent key: :#{special_key} successfully")
+        MyLog.log.info("Browser Sent key: :#{special_key} successfully")
         true
       rescue StandardError
-        Report.results.puts("Browser Failed to Send key: :#{special_key}")
+        MyLog.log.warn("Browser Failed to Send key: :#{special_key}")
         false
       end
     end

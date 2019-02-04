@@ -11,11 +11,11 @@ module TestSteps
 
         Browser.b.element(:"#{locate}" => dropdown).wait_until
         Browser.b.select_list(:"#{locate}" => dropdown).options.each do |i|
-        Report.results.puts("List of dropdown for #{dropdown} are: #{i.text}")
+          MyLog.log.info("List of dropdown for #{dropdown} are: #{i.text}")
         return true
         end
       rescue StandardError
-        Report.results.puts("List dropdown: #{dropdown} does not exist")
+        MyLog.log.warn("List dropdown: #{dropdown} does not exist")
         false
       end
     end

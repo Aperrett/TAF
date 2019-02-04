@@ -52,8 +52,8 @@ module XlsxParser
     worksheet = $xlsxDoc[0]
     # get the remaining test data
     $testDes      = worksheet.sheet_data[4][1].value
-    puts "Number of test steps: #{$numberOfTestSteps}"
-    puts "Test Description: #{$testDes}"
+    MyLog.log.info "Number of test steps: #{$numberOfTestSteps}"
+    MyLog.log.info "Test Description: #{$testDes}"
     
   end
 

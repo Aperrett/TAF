@@ -10,10 +10,10 @@ module TestSteps
         locate = step_attributes[:locate]
 
         Browser.b.checkbox(:"#{locate}" => checkbox).wait_until.click
-        Report.results.puts("Check box: #{checkbox} has been selected")
+        MyLog.log.info("Check box: #{checkbox} has been selected")
         true
       rescue StandardError
-        Report.results.puts("Check box: #{checkbox} does not exist")
+        MyLog.log.warn("Check box: #{checkbox} does not exist")
         false
       end
     end

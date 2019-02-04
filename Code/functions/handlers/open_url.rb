@@ -13,10 +13,10 @@ module TestSteps
         sleep 2
         url_nme = Browser.b.url
         if url_nme == url
-          Report.results.puts("opened URL: #{url}")
+          MyLog.log.info("Opened URL: #{url}")
           return true
         else
-          Report.results.puts("URL not open: #{url} - opened #{url_nme} instead")
+          MyLog.log.warn("URL not open: #{url} - opened #{url_nme} instead")
           return false
         end
       end

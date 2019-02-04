@@ -14,7 +14,7 @@ module Parser
   def self.read_test_suite_data
     # check if the file list exists and is readable
     if (File.file?($testSuiteFile) & File.readable?($testSuiteFile))
-      puts "\nProcessing test suite file: #{$testSuiteFile}"
+      MyLog.log.info "Processing test suite file: #{$testSuiteFile}"
       # get the file type
       fileType = File.extname($testSuiteFile)
       # extract the test data from the test suite
@@ -60,8 +60,8 @@ module Parser
     # get the file type
     fileType = File.extname(testFileName)
     if (fileType.casecmp(@XlsxFileNameType) == 0)
-      puts "Processing test file: #{testFileName}"
-      puts "Browser Type: #{$browserType}"
+      MyLog.log.info "Processing test file: #{testFileName}"
+      MyLog.log.info "Browser Type: #{$browserType}"
       $xlsxDoc = RubyXL::Parser.parse(testFileName)
       XlsxParser.parse_xlxs_test_header_data
       return 'XLSX'

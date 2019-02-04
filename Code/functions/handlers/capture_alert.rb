@@ -8,10 +8,10 @@ module TestSteps
       def perform(step_attributes)
         Browser.b.div(class: 'alert').exist?
         alertmsg = Browser.b.div(class: 'alert').text
-        Report.results.puts("Alert shown: #{alertmsg}")
+        MyLog.log.info("Alert shown: #{alertmsg}")
         true
       rescue StandardError
-        Report.results.puts('No Alert Found')
+        MyLog.log.warn('No Alert Found')
         false
       end
     end

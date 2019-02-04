@@ -12,13 +12,13 @@ module TestSteps
 
         Browser.b.iframe(:"#{locate}" => iframe).wait_until
         Browser.b.iframe(:"#{locate}" => iframe).send_keys value
-        Report.results.puts("Editor box: #{iframe} has correct value: #{value}")
+        MyLog.log.info("Editor box: #{iframe} has correct value: #{value}")
         true
       rescue StandardError
-        Report.results.puts("Editor box: #{iframe} has wrong value: #{value}")
+        MyLog.log.warn("Editor box: #{iframe} has wrong value: #{value}")
         false
       rescue StandardError
-        Report.results.puts("Editor box: #{iframe} does not exist")
+        MyLog.log.warn("Editor box: #{iframe} does not exist")
         false
       end
     end

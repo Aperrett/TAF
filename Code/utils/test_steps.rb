@@ -30,8 +30,7 @@ module TestSteps
       Report.check_failure_threshold(test_file_name, teststepindex)
       return true
     else
-      Report.results.puts("\nUnable to match function: #{step_function}")
-      puts "\nUnable to match function: #{step_function}"
+      MyLog.log.warn "\nUnable to match function: #{step_function}"
       raise UnknownTestStep, "Unknown test step: #{step_function}"
       return false
     end

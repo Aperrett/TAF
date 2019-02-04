@@ -11,10 +11,10 @@ module TestSteps
         Browser.b.window(title: text_check.to_s).use
         sleep 3
         Browser.b.title.eql?(text_check.to_s)
-        Report.results.puts("Window title: #{text_check} is correct")
+        MyLog.log.info("Window title: #{text_check} is correct")
         true
       rescue StandardError
-        Report.results.puts("Window not found: #{text_check}")
+        MyLog.log.warn("Window not found: #{text_check}")
         false
       end
     end

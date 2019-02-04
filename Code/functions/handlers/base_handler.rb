@@ -22,7 +22,7 @@ module TestSteps
           login_button
           sleep 3
         else
-          Report.results.puts("User: #{user} has failed to log in.")
+          MyLog.log.warn("User: #{user} has failed to log in.")
         end
       end
 
@@ -32,16 +32,16 @@ module TestSteps
         elsif Browser.b.button(value: 'Log in').exist?
           Browser.b.button(value: 'Log in').wait_until.click
         else
-          Report.results.puts("User: #{user} has failed to log in.")
+          MyLog.log.warn("User: #{user} has failed to log in.")
         end
       end
 
       def login_check(b_title_sucess, user)
         if Browser.b.title.eql?(b_title_sucess)
-          Report.results.puts("User: #{user} has logged in successful.")
+          MyLog.log.info("User: #{user} has logged in successful.")
           true
         else
-          Report.results.puts("User: #{user} has failed to log in.")
+          MyLog.log.warn("User: #{user} has failed to log in.")
           false
         end
       end
@@ -50,10 +50,10 @@ module TestSteps
         if Browser.b.title.eql?('Memorable word - UKCloud Portal')
           portal_mem_word(user, b_title_sucess)
         elsif Browser.b.title.eql?(b_title_sucess)
-          Report.results.puts("User: #{user} has logged in successful.")
+          MyLog.log.info("User: #{user} has logged in successful.")
           true
         else
-          Report.results.puts("User: #{user} has failed to log in.")
+          MyLog.log.warn("User: #{user} has failed to log in.")
           false
         end
       end
@@ -77,10 +77,10 @@ module TestSteps
 
         Browser.b.button(value: 'Sign in').wait_until.click
         if Browser.b.title.eql?(b_title_sucess)
-          Report.results.puts("User: #{user} has logged in successful.")
+          MyLog.log.info("User: #{user} has logged in successful.")
           return true
         else
-          Report.results.puts("User: #{user} has failed to log in.")
+          MyLog.log.warn("User: #{user} has failed to log in.")
           return false
         end
       end

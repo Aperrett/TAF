@@ -13,13 +13,13 @@ module TestSteps
 
         Browser.b.text_field(:"#{locate}" => box).wait_until.set value
         (Browser.b.text_field(:"#{locate}" => box).value == value)
-        Report.results.puts("Textbox: #{box} has correct value: #{value}")
+        MyLog.log.info("Textbox: #{box} has correct value: #{value}")
         true
       rescue StandardError
-        Report.results.puts("Textbox: #{box} has the incorrect value: #{value}")
+        MyLog.log.warn("Textbox: #{box} has the incorrect value: #{value}")
         false
       rescue StandardError
-        Report.results.puts("Textbox: #{box} does not exist")
+        MyLog.log.warn("Textbox: #{box} does not exist")
         false
       end
     end

@@ -10,10 +10,10 @@ module TestSteps
 
         b_result = system syst_cmd
         if b_result == true
-          Report.results.puts("Cmd has been executed sucessfully #{syst_cmd}")
+          MyLog.log.info("Cmd has been executed sucessfully #{syst_cmd}")
           return true
         else
-          Report.results.puts("Theres a problem executing command #{syst_cmd}")
+          MyLog.log.warn("Theres a problem executing command #{syst_cmd}")
           return false
         end
       end

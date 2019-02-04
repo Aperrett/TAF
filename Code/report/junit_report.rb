@@ -59,7 +59,7 @@ module JunitReport
     if !File.exist?($TestSuiteSummaryXML) || $TestSuiteSummaryXML.closed?
       $testSuiteSummaryFile_xml = File.open($TestSuiteSummaryXML, 'w+')
       $testSuiteSummaryFile_xml.write builder.to_xml
-    elsif $log.puts "test suite summary file xml name: #{$TestSuiteSummaryXML} is already open"
+    elsif MyLog.log.warn "test suite summary file xml name: #{$TestSuiteSummaryXML} is already open"
     end
 
     # if the file is open then close it

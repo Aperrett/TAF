@@ -13,10 +13,10 @@ module TestSteps
 
         Browser.b.radio(:"#{locate}" => radio).wait_until
         Browser.b.radio(:"#{locate}" => radio, :"#{locate2}" => "#{value2}").set
-        Report.results.puts("Radio button: #{radio} has been selected")
+        MyLog.log.info("Radio button: #{radio} has been selected")
         true
       rescue StandardError
-        Report.results.puts("Radio button: #{radio} does not exist")
+        MyLog.log.warn("Radio button: #{radio} does not exist")
         false
       end
     end

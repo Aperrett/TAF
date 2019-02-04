@@ -10,10 +10,10 @@ module TestSteps
 
         sleep 5
         if Browser.b.text.include?(text_check)
-          Report.results.puts("Found text: #{text_check}")
+          MyLog.log.info("Found text: #{text_check}")
           return true
         else
-          Report.results.puts("NOT found text: #{text_check}")
+          MyLog.log.warn("NOT found text: #{text_check}")
           return false
         end
       end

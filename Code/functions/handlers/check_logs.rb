@@ -11,10 +11,10 @@ module TestSteps
 
         blog_result = system 'egrep -i ' + text + ' ' + file + ' > ' + output
         if blog_result == true
-          Report.results.puts("Data has matched: #{text} in LogFile: #{file}")
+          MyLog.log.info("Data has matched: #{text} in LogFile: #{file}")
           return true
         else
-          Report.results.puts("Problem finding: #{text} in LogFile: #{file}")
+          MyLog.log.warn("Problem finding: #{text} in LogFile: #{file}")
           return false
         end
       end

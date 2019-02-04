@@ -9,10 +9,10 @@ module TestSteps
         url = step_attributes[:testvalue]
 
         if Browser.b.url == url
-          Report.results.puts("URL: #{url} is correct")
+          MyLog.log.info("URL: #{url} is correct")
           true
         else
-          Report.results.puts("URL: #{url} is incorrect")
+          MyLog.log.warn("URL: #{url} is incorrect")
           false
         end
       end

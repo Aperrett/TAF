@@ -7,10 +7,10 @@ module TestSteps
 
       def perform(step_attributes)
         Browser.b.forward
-        Report.results.puts('Browser navigated forward')
+        MyLog.log.info('Browser navigated forward')
         true
       rescue StandardError
-        Report.results.puts('Browser failed to navigate forward')
+        MyLog.log.warn('Browser failed to navigate forward')
         false
       end
     end

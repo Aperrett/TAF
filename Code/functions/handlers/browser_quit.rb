@@ -7,10 +7,10 @@ module TestSteps
 
       def perform(step_attributes)
         Browser.b.quit
-        Report.results.puts('Browser has closed successfully')
+        MyLog.log.info('Browser has closed successfully')
         true
       rescue StandardError
-        Report.results.puts('Browser has failed to close')
+        MyLog.log.warn('Browser has failed to close')
         false
       end
     end

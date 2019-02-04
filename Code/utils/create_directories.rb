@@ -20,8 +20,6 @@ module CreateDirectories
   #
   # ---------->directory named after test_id (with browser type identified)
   #
-  # ------------->directory named 'Test_Results'
-  #
   # ------------->directory named 'Screenshots'
 
   def self.construct_projectdirs
@@ -53,17 +51,9 @@ module CreateDirectories
     screenshot_dir = testid_dir + '/' + 'Screenshots' + '/'
     Dir.mkdir(screenshot_dir)
 
-    # create a test results directory under the 'test run' directory - it will always need creating
-    test_res_dir = testid_dir + '/' + 'Test_Results' + '/'
-    Dir.mkdir(test_res_dir)
-
     # create absolute paths to the screenshots, test results and test suite summary directories
     abs_path_screenshot_dir = File.absolute_path(screenshot_dir)
-    abs_path_test_res_dir    = File.absolute_path(test_res_dir)
     abs_path_run_no_dir      = File.absolute_path($runNoDir)
-
-    # the test results file name will be 'testId'_Res.txt
-    $testResultFileName = abs_path_test_res_dir + '/' + $testId + '_Res.txt'
 
     # the test suite summary file name will be 'suite_summary.txt'
     $testSuiteSummaryFileName = abs_path_run_no_dir + '/suite_summary.txt'
@@ -76,11 +66,9 @@ module CreateDirectories
     $TestSuiteSummaryXML = 'Results/' + $projectId + '/' + f_date + '_' + f_time + '_test_result.xml'
 
     # the log file name will be under the test ID directory
-    $logFileName = testid_dir + '/TestLogFile.txt'
 
-    puts "TestId: #{$testId}"
-    puts "Screenshot directory: #{abs_path_screenshot_dir}"
-    puts "Test result directory: #{abs_path_test_res_dir}"
+    MyLog.log.info "TestId: #{$testId}"
+    MyLog.log.info "Screenshot directory: #{abs_path_screenshot_dir} \n"
 
   # if any issues then set error message and re-raise the exception
   rescue Exception => error

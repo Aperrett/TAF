@@ -41,10 +41,10 @@ module TestSteps
         when 9
           Browser.b.h4(:"#{locate}" => button).wait_until.click
         end
-        Report.results.puts("Button: #{button} has been selected")
+        MyLog.log.info("Button: #{button} has been selected")
         true
       rescue StandardError
-        Report.results.puts("Button: #{button} does not exist")
+        MyLog.log.warn("Button: #{button} does not exist")
         false
       end
     end

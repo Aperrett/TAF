@@ -32,11 +32,11 @@ module Main
       # Testsuite File and Browser.
       if ARGV.length < 2
         $testSuiteFile = ARGV[0]
-        puts 'Only one argument needed: {TestSuite File}'
+        MyLog.log.info 'Only one argument needed: {TestSuite File}'
       elsif ARGV.length < 3
         $testSuiteFile = ARGV[0]
         $browserType = ARGV[1]
-        puts 'Only 2 arguments needed: {TestSuite File} {Browser}'
+        MyLog.log.info 'Only 2 arguments needed: {TestSuite File} {Browser}'
       else
         # unable to open file as not supplied as command-line parameter
         $testSuiteFile = 'unknown'
@@ -50,11 +50,11 @@ module Main
   # unable to read the test file then handle the error and terminate
   rescue StandardError => error
     warn error
-    $stdout.puts error
+    MyLog.log.warn error
     abort
   end
 
-    puts "There are: #{$numberOfTestSpecs} test files to process \n"
+    MyLog.log.info "There are: #{$numberOfTestSpecs} test files to process \n"
 
     # process the test files to execute the tests
     TestEngine.process_testfiles

@@ -24,7 +24,7 @@ module Browser
     when 'safari'
       safari
     else
-      puts "unable to open selected browser: #{lc_browser_type}"
+      MyLog.log.error "unable to open selected browser: #{lc_browser_type}"
       raise BrowserFailedOpen
     end
   rescue BrowserFailedOpen => error
@@ -126,15 +126,15 @@ module Browser
 
       # Screenshot capture for websites
       Browser.b.screenshot.save scFileName
-      Report.results.puts("Screenshot saved to: #{scFileName}")
+      MyLog.log.info("Screenshot saved to: #{scFileName} \n")
       else
-        Report.results.puts 'No screenshot requested'
+        MyLog.log.debug "No screenshot requested \n"
       end
 
     # if any issues with saving the screenshot then log a warning
     rescue StandardError => error
     # construct the error message from custom text and the actual system
     # error message (converted to a string).
-    $log.puts("Error saving the screenshot: #{scFileName}   #{error.to_s}")
+    MyLog.log.warn("Error saving the screenshot: #{scFileName}   #{error.to_s}")
   end
 end

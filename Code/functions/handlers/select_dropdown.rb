@@ -13,13 +13,13 @@ module TestSteps
 
         Browser.b.select_list(:"#{locate}" => dropdown).wait_until
         Browser.b.select_list(:"#{locate}" => dropdown).option(:"#{locate2}" => "#{value2}").select
-        Report.results.puts("Dropdown item: #{value2} has been selected")
+        MyLog.log.info("Dropdown item: #{value2} has been selected")
         true
       rescue StandardError
-        Report.results.puts("Dropdown item: #{value2} has NOT been selected")
+        MyLog.log.warn("Dropdown item: #{value2} has NOT been selected")
         false
       rescue StandardError
-        Report.results.puts("the dropdown: #{dropdown} does not exist")
+        MyLog.log.warn("the dropdown: #{dropdown} does not exist")
         false
       end
     end

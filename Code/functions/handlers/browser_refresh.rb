@@ -7,10 +7,10 @@ module TestSteps
 
       def perform(step_attributes)
         Browser.b.refresh
-        Report.results.puts('The Browser has been refreshed')
+        MyLog.log.info('The Browser has been refreshed')
         true
       rescue StandardError
-        Report.results.puts('The Browser failed to refresh')
+        MyLog.log.warn('The Browser failed to refresh')
         false
       end
     end

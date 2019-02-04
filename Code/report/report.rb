@@ -6,52 +6,13 @@
 # Versions:
 # 1.0 - Baseline
 #
-# report.rb - methods for accessing and writing to the test report file(s)
+# report.rb - methods for outputting console.
 module Report
   require_relative '../taf_config.rb'
   # setup the test results output file
-  def self.open_test_report_file
-    # open a new file for writing
-    $log.puts("Opening Test Result file: #{$testResultFileName} \n")
-
-    # open test results file for writing if not already open
-    if !File.exist?($testResultFileName) || $testResultFileName.closed?
-      @results_file = File.open($testResultFileName, 'w')
-    elsif $log.puts "test results file name: #{$testResultFileName} is already open"
-    end
-  end
-
-  # close_testresults_file
-  def self.close_test_results_file
-    # if the file is open then close it
-    Report.results.close unless Report.results.closed?
-  end
-
   # results file variable
   def self.results
     results_file = @results_file
-  end
-
-  def self.open_log_file
-    # open a new file for writing
-    $stdout.puts "Opening log file: #{$logFileName} \n"
-
-    # create a new log file and set the mode as 'append'
-    $log = File.open($logFileName, 'w+')
-  end
-
-  def self.close_log_file
-    # if the file is open then close it
-    $log.close unless $log.closed?
-  end
-
-  # print the main test header info to the test results file
-  def self.print_test_header
-    Report.results.puts("Project Name: #{$projectName} Project ID: #{$projectId} Sprint: #{$sprint}")
-    Report.results.puts("Test ID: #{$testId} Test Description: #{$testDes}")
-    Report.results.puts("Executed with browser: #{$browserType}")
-    Report.results.puts("Test suite: #{$testSuiteFile}")
-    Report.results.puts("Tester: #{$tester}", "\n \n")
   end
 
   # get the current time in the format Day - Month - Date - Time (HH:MM:SS)
@@ -63,10 +24,8 @@ module Report
 
   # print the test Step info to the test results file
   def self.print_test_step_header(test_file_name, testStepIndex)
-    Report.results.puts("\n" + "Test start time: #{f_time = current_time}")
-    Report.results.puts("Test step: #{$testStep} : #{$testStepDes} \n")
-    puts "\nTest start time: #{f_time = current_time}   \n"
-    puts "Test step: #{$testStep} : #{$testStepDes}  "
+    MyLog.log.info "Test start time: #{f_time = current_time}"
+    MyLog.log.info "Test step: #{$testStep} : #{$testStepDes}"
 
     step = {
       'id' => $testStep,
@@ -89,14 +48,12 @@ module Report
       $previousTestFail = $currentTestFail
       $currentTestFail = false
       $testStepPasses += 1
-      Report.results.puts("Test #{$testStep} has Passed")
-      puts "Test #{$testStep} has Passed ".green
+      MyLog.log.info "Test #{$testStep} has Passed ".green
     elsif passFail == false
       $previousTestFail = $currentTestFail
       $currentTestFail = true
       $testStepFailures += 1
-      Report.results.puts("Test #{$testStep} has FAILED")
-      puts "Test #{$testStep} has FAILED ".red
+      MyLog.log.info "Test #{$testStep} has FAILED ".red
       failstep = {
         'message' => 'SuiteID: ' + $testId.to_s + ' Test Step: ' + $testStep.to_s + ' Test has FAILED - Check logs',
         'type' => 'FAILURE',
@@ -112,8 +69,7 @@ module Report
     else
       $currentTestFail = false
       $testStepNotrun += 1
-      Report.results.puts("Test #{$testStep} no checks performed")
-      puts "Test #{$testStep} no checks performed ".blue
+      MyLog.log.info "Test #{$testStep} no checks performed ".blue
       skipstep = {
         'message' => 'SuiteID: ' + $testId.to_s + ' Test Step: ' + $testStep.to_s + ' No checks performed - Check logs',
         'type' => 'SKIPPED',
@@ -127,8 +83,7 @@ module Report
       $skiptestStep_xml[test_file_name] ||= []
       $skiptestStep_xml[test_file_name][testStepIndex] = skipstep
   end
-    Report.results.puts("Test end time: #{f_time = current_time}\n")
-    puts "Test end time: #{f_time = current_time} \n"
+    MyLog.log.info "Test end time: #{f_time = current_time}"
   end
 
   # check if the test failure threshold has been reached for total failures or consecutive failures.
@@ -142,11 +97,9 @@ module Report
     end
 
     if @consecutiveTestFail >= consecutiveFailThreshold
-      Report.results.puts("\nTerminating the current test case as the test failure threshold (#{consecutiveFailThreshold} ) has been reached")
-
-      # write info to $stderr
-      $stderr.puts "Terminating the current test case: #{test_file_name} as the test failure threshold (#{consecutiveFailThreshold}) has been reached."
-      $stderr.puts '...continuing with the next test case (if there is one)'
+      # write info to stdout
+      MyLog.log.warn "Terminating the current test case: #{test_file_name} as the test failure threshold (#{consecutiveFailThreshold}) has been reached."
+      MyLog.log.warn '...continuing with the next test case (if there is one)'
 
       raise FailureThresholdExceeded,
             "#{consecutiveFailThreshold} Test Steps Failed."
