@@ -108,14 +108,27 @@ delete_taf_image() {
   fi
 }
 
+# run() {
+#   echo "Launching the TAF natively in the local shell:"
+#   echo "Using the following options:" "$1" "$2"
+#   ruby main.rb "$1" "$2"
+# }
+
 run() {
-  echo "Launching the TAF natively in the local shell:"
-  echo "Using the following options:" "$1" "$2"
-  ruby main.rb "$1" "$2"
+  local file="$1"
+
+  docker run --rm --shm-size 2g \
+    -e URL="$URL" \
+    -e USER_1="$USER_1" \
+    -e USER_PASS="$USER_PASS" \
+    -e USER_MEM="$USER_MEM" \
+    -e USER_CHANGE_PASS="$USER_CHANGE_PASS" \
+    -v "$(pwd)"/target:/app/Results:cached taf taf "$file" firefox-headless
+    return $?
 }
 
 security_audit() {
-    echo "Building TAF docker container."
+    echo "Building TAF docker container."./
     docker build -t taf -f Dockerfile .
 
     RUNNER_IMAGE=$(docker build -t taf -f Dockerfile -q .)
@@ -150,12 +163,15 @@ help () {
 }
 
 main () {
-  case "$1" in
+  local command="$1"
+  shift 1
+
+  case "$command" in
     build_taf_image)
       build_taf_image
       ;;
     build_taf_gem)
-      build_taf_gem "$2" "$3"
+      build_taf_gem "$1" "$2"
       ;;
     security_audit)
       security_audit
@@ -167,7 +183,8 @@ main () {
       delete_taf_image
       ;;  
     run)
-      run "$2" "$3"
+      run "$1" "$2"
+      exit $?
       ;;
     *)
       help 1>&2
