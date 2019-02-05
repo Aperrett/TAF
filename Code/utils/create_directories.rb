@@ -51,12 +51,9 @@ module CreateDirectories
     screenshot_dir = testid_dir + '/' + 'Screenshots' + '/'
     Dir.mkdir(screenshot_dir)
 
-    # create absolute paths to the screenshots, test results and test suite summary directories
+    # create absolute paths to the screenshots and test suite summary directories
     abs_path_screenshot_dir = File.absolute_path(screenshot_dir)
     abs_path_run_no_dir      = File.absolute_path($runNoDir)
-
-    # the test suite summary file name will be 'suite_summary.txt'
-    $testSuiteSummaryFileName = abs_path_run_no_dir + '/suite_summary.txt'
 
     # the test suite summary is a XML report generated will be called 'suite_summary.xml'
     time = Time.new
