@@ -65,5 +65,8 @@ module Main
     # output the overall test summary
     ReportSummary.print_overall_test_summary
     JunitReport.test_summary_junit
+
+    # Exit status code.
+    Process.exit($totalTestFailures.zero? ? 0 : 1 )
   end
 end
