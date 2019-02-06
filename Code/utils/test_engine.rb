@@ -71,7 +71,7 @@ module TestEngine
 
         # loop through the test file
         if testFileType != 'XLSX'
-          puts 'Not a valid XLSX File Type'
+          MyLog.log.info 'Not a valid XLSX File Type'
         end
 
         # get the test case start time
@@ -94,7 +94,7 @@ module TestEngine
           end
         rescue TafError => error
           warn error
-          $log.puts error
+          MyLog.log.warn error
         end
 
         # get the test case end time
