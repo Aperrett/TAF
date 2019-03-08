@@ -6,16 +6,14 @@ module TestSteps
       register :check_browser_title
 
       def perform(step_attributes)
-        text_check = step_attributes[:testvalue]
+        b_title = step_attributes[:testvalue]
 
-        sleep 2
-        if Browser.b.title.eql?(text_check)
-          MyLog.log.info("Browser title: #{text_check}")
-          return true
-        else
-          MyLog.log.warn("Title not found: #{text_check}")
-          return false
-        end
+        Browser.b.wait_until { Browser.b.title.eql? (b_title)}
+        MyLog.log.info("Browser title: #{b_title}")
+        true
+      rescue StandardError
+        MyLog.log.warn("Title not found: #{b_title}")
+        false
       end
     end
   end

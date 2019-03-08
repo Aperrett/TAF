@@ -36,3 +36,6 @@ require_relative './parser/xlsx_parser'
 # Require all test step handlers, which register themselves with
 # TestStep.handlers when the files are required.
 require_relative './functions/handlers'
+
+# Watir config. set wait:
+Watir.default_timeout = 60

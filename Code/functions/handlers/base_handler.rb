@@ -17,10 +17,10 @@ module TestSteps
 
       def login_process(b_title, user_elm, pass_elm, user, pass)
         if Browser.b.title.eql?(b_title)
-          Browser.b.text_field(id: user_elm).wait_until.set user
-          Browser.b.text_field(id: pass_elm).wait_until.set pass
+          Browser.b.text_field(id: user_elm).wait_until(&:exists?).set user
+          Browser.b.text_field(id: pass_elm).wait_until(&:exists?).set pass
           login_button
-          sleep 3
+          sleep 1
         else
           MyLog.log.warn("User: #{user} has failed to log in.")
         end
@@ -28,9 +28,9 @@ module TestSteps
 
       def login_button
         if Browser.b.button(value: 'Sign in').exist?
-          Browser.b.button(value: 'Sign in').wait_until.click
+          Browser.b.button(value: 'Sign in').wait_until(&:exists?).click
         elsif Browser.b.button(value: 'Log in').exist?
-          Browser.b.button(value: 'Log in').wait_until.click
+          Browser.b.button(value: 'Log in').wait_until(&:exists?).click
         else
           MyLog.log.warn("User: #{user} has failed to log in.")
         end
@@ -75,7 +75,7 @@ module TestSteps
         Browser.b.select_list(:id => elm_id).option(:value => "#{char}").select
         }
 
-        Browser.b.button(value: 'Sign in').wait_until.click
+        Browser.b.button(value: 'Sign in').wait_until(&:exists?).click
         if Browser.b.title.eql?(b_title_sucess)
           MyLog.log.info("User: #{user} has logged in successful.")
           return true

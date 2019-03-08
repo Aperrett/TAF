@@ -6,16 +6,14 @@ module TestSteps
       register :check_screen_data
 
       def perform(step_attributes)
-        text_check = step_attributes[:testvalue]
+        check_text = step_attributes[:testvalue]
 
-        sleep 5
-        if Browser.b.text.include?(text_check)
-          MyLog.log.info("Found text: #{text_check}")
-          return true
-        else
-          MyLog.log.warn("NOT found text: #{text_check}")
-          return false
-        end
+        Browser.b.wait_until { Browser.b.element.text.include? (check_text)}
+        MyLog.log.info("Text found: #{check_text}")
+        true
+      rescue StandardError
+        MyLog.log.warn("Text not found: #{check_text}")
+        false
       end
     end
   end
