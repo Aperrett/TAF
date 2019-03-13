@@ -7,53 +7,18 @@
 # xlsx_parser.rb - xlsx parser functions
 module XlsxParser
   require_relative '../taf_config.rb'
-  def self.parse_xlxs_test_suite_header_data
-    begin
-      # get the number of test specifications in the file (number of
-      # occurences of "Test_Specification"
-      $numberOfTestSpecs = $XlsxSuiteDoc[0].sheet_data.size - 7
-
-      worksheet = $XlsxSuiteDoc[0]
-      $projectName = worksheet.sheet_data[1][0].value
-      $projectId = worksheet.sheet_data[1][1].value
-      $sprint = worksheet.sheet_data[1][2].value
-
-      $testSuiteId = worksheet.sheet_data[4][0].value
-      $testSuiteDes = worksheet.sheet_data[4][1].value
-      $tester  = worksheet.sheet_data[4][2].value
-    end
- end
-
-  def self.parse_xlxs_test_suite_data(testSpecIndex)
-    worksheet = $XlsxSuiteDoc[0]
-
-    worksheet[7..$numberOfTestSpecs+7].map do |row|
-      suite = {
-        id: row[0].value,
-        specdesc: row[1].value,
-        env: row[3].value,
-      }
-
-      if ARGV.length < 2
-        suite[:browser] = row[2].value
-      elsif ARGV.length < 3
-        suite[:browser] = ARGV[1]
-      else
-        raise IOError, 'Unable to open browser'  
-      end
-
-      suite
-    end
-  end
 
   def self.parse_xlxs_test_header_data
     # get the number of test steps in the file
-    $numberOfTestSteps = ($xlsxDoc[0].sheet_data.size) - 7
+    $numberOfTestSteps = ($xlsxDoc[0].sheet_data.size) - 4
     worksheet = $xlsxDoc[0]
     # get the remaining test data
-    $testDes      = worksheet.sheet_data[4][1].value
+    $testId    = worksheet.sheet_data[1][0].value
+    $projectId    = worksheet.sheet_data[1][1].value
+    $testDes      = worksheet.sheet_data[1][2].value
     MyLog.log.info "Number of test steps: #{$numberOfTestSteps}"
     MyLog.log.info "Test Description: #{$testDes}"
+    MyLog.log.info "TestID: #{$testId} \n"
     
   end
 
@@ -61,7 +26,7 @@ module XlsxParser
   def self.parse_test_step_data(testFileType)
     begin
     worksheet = $xlsxDoc[0]
-    worksheet[7..$numberOfTestSteps+7].map do |row|
+    worksheet[4..$numberOfTestSteps+4].map do |row|
       test = {
         testStep: row[0].value,
         testdesc: row[1].value,

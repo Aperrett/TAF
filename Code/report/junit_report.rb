@@ -28,8 +28,8 @@ module JunitReport
     # output to XML file format for Junit for CI.
     builder = Nokogiri::XML::Builder.new(encoding: 'UTF-8') do |xml|
       testsuite_attrs = {
-        'classname' => $testSuiteFile.to_s,
-        'name' => $testSuiteFile.to_s,
+        'classname' => $testcasesFolder.to_s,
+        'name' => $testcasesFolder.to_s,
         'tests' => $totalTests.to_s,
         'failures' => $totalTestFailures.to_s,
         'timestamp' => $test_start_time.to_s,

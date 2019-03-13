@@ -118,11 +118,15 @@ run() {
   local file="$1"
 
   docker run --rm --shm-size 2g \
-    -e URL="$URL" \
-    -e USER_1="$USER_1" \
-    -e USER_PASS="$USER_PASS" \
-    -e USER_MEM="$USER_MEM" \
-    -e USER_CHANGE_PASS="$USER_CHANGE_PASS" \
+    -e PORTAL_URL="$PORTAL_URL" \
+    -e ADMINL_URL="$ADMINL_URL" \
+    -e PORTAL_USER_1="$PORTAL_USER_1" \
+    -e PORTAL_USER_2="$PORTAL_USER_2" \
+    -e PORTAL_USER_PASS="$PORTAL_USER_PASS" \
+    -e PORTAL_MEM="$PORTAL_MEM" \
+    -e PORTAL_USER_CHANGE_PASS="$PORTAL_USER_CHANGE_PASS" \
+    -e ADMIN_USER="$ADMIN_USER" \
+    -e ADMIN_USER_PASS="$ADMIN_USER_PASS" \
     -v "$(pwd)"/target:/app/Results:cached taf taf "$file" firefox-headless
     return $?
 }
@@ -157,9 +161,9 @@ help () {
   echo "  security_audit  - Run Security Audit of Ruby Gems used for the TAF."
   echo ""
   echo "Run TAF Commands:"
-  echo "  run <file> [<browser>]            - Run the TAF natively in shell."
+  echo "  run <file> <browser>              - Run the TAF natively in shell."
   echo "                                      - <file> TestSuite to run."
-  echo "                                      - <browser> overide (optional)."
+  echo "                                      - <browser> to use."
 }
 
 main () {

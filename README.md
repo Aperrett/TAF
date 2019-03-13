@@ -7,6 +7,11 @@ Created in Ruby and using Watir to allow a user to Automate a website using an E
 
 Please see the Wiki for more details: https://github.com/Aperrett/TAF/wiki
 
+<h2>TAF Supported Browsers </h2>
+chrome
+chrome-headless
+firefox
+firefox-headless
 
 <h2>TAF script help </h2>
 To use the TAF Script, Navigate to the Code/ Folder.
@@ -37,7 +42,7 @@ docker run --rm --shm-size 2g
 
 --env USER="emailblah.com"
 
--v "$(pwd)"/target:/app/Results:cached taf taf {filename} [{browser}] - note: (browser is optional)
+-v "$(pwd)"/target:/app/Results:cached taf taf {filename} {browser}
 
 
 Please note the --env will need to be changed.
@@ -49,10 +54,10 @@ Ruby 2.5.1 has to be installed on the system.
 run bundle install - to install the required gems including the TAF Gem
 
 <h2>To run a Test Suite using the TAF Gem:</h2>
-taf {filename} [{browser}] - note: (browser is optional)
+taf {filename} {browser}
 
 <h2>To run a Test Suite using the TAF Script:</h2>
-./taf.sh run {filename} [{browser}] - note: (browser is optional)
+./taf.sh run {filename} {browser}
 
 <h2>Contributing</h2>
 

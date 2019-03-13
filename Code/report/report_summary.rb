@@ -14,10 +14,9 @@ module ReportSummary
   # output the test results summary for the current test case
   def self.test_step_summary(test_file_name, test_file_name_index)
     @testStepReportSummary[test_file_name_index] = <<~TEXT
-      Test file: #{test_file_name}
-      Browser type: #{$browserType}
+      Test file executed: #{test_file_name}
+      Browser type used: #{$browserType}
       Browser version: #{Browser.browser_version}
-      Environment: #{$env_type}
       Started at: #{$test_case_start_time}
       Finished at: #{$test_case_end_time}
       There are: #{$testStepPasses} Passes
@@ -30,7 +29,7 @@ module ReportSummary
   def self.print_overall_test_summary
     # output to the console
 
-    MyLog.log.info "Finished processing all test files - executed via test suite: #{$testSuiteFile} by tester: #{$tester}"
+    MyLog.log.info "Finished processing all test files - executed via test suite: #{$testcasesFolder}"
     MyLog.log.info "Overall Test Summary:"
     @testStepReportSummary.each do |testStepReportSummary|
       testStepReportSummary.each_line do |line|

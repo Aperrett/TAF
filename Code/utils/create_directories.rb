@@ -29,18 +29,25 @@ module CreateDirectories
 
     # create the 'Project' directory if it doesn't already exist
     project_id = $projectId.delete(' ')
-    project_iddir = result_home + '/' + project_id
-    Dir.mkdir(project_iddir) unless File.directory? project_iddir
+    $project_iddir = result_home + '/' + project_id
+    Dir.mkdir($project_iddir) unless File.directory? $project_iddir
 
-    # Creates a folder Ran_on_Time with the time as of now.
+    # the test suite summary is a XML report generated will be called 'suite_summary.xml'
     time = Time.new
     f_date = time.strftime('%d-%b-%Y')
     f_time = time.strftime('%H_%M_%S')
-    $runNoDir = project_iddir + '/' + 'Ran_on_' + f_date + '_' + f_time
-    Dir.mkdir($runNoDir)
+
+    $TestSuiteSummaryXML = 'Results/' + $projectId + '/' + f_date + '_' + f_time + '_test_result.xml'
   end
 
   def self.construct_testspecdirs
+
+    time = Time.new
+    f_date = time.strftime('%d-%b-%Y')
+    f_time = time.strftime('%H_%M_%S')
+    $runNoDir = $project_iddir + '/' + 'Ran_on_' + f_date + '_' + f_time
+    Dir.mkdir($runNoDir)
+
     # create directories for each test spec
     # create a sub-directory named from the 'testId' (with any spaces taken out)
     # if it doesn't already exist plus the browser type
@@ -54,18 +61,6 @@ module CreateDirectories
     # create absolute paths to the screenshots and test suite summary directories
     abs_path_screenshot_dir = File.absolute_path(screenshot_dir)
     abs_path_run_no_dir      = File.absolute_path($runNoDir)
-
-    # the test suite summary is a XML report generated will be called 'suite_summary.xml'
-    time = Time.new
-    f_date = time.strftime('%d-%b-%Y')
-    f_time = time.strftime('%H_%M_%S')
-
-    $TestSuiteSummaryXML = 'Results/' + $projectId + '/' + f_date + '_' + f_time + '_test_result.xml'
-
-    # the log file name will be under the test ID directory
-
-    MyLog.log.info "TestId: #{$testId}"
-    MyLog.log.info "Screenshot directory: #{abs_path_screenshot_dir} \n"
 
   # if any issues then set error message and re-raise the exception
   rescue Exception => error

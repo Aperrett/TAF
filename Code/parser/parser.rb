@@ -10,49 +10,10 @@ module Parser
   # variables:
   @XlsxFileNameType = '.xlsx'
 
- # read in the data from the test suite file
-  def self.read_test_suite_data
-    # check if the file list exists and is readable
-    if (File.file?($testSuiteFile) & File.readable?($testSuiteFile))
-      MyLog.log.info "Processing test suite file: #{$testSuiteFile}"
-      # get the file type
-      fileType = File.extname($testSuiteFile)
-      # extract the test data from the test suite
-      if (fileType.casecmp(@XlsxFileNameType) == 0)
-        # process as xlsx...
-        $XlsxSuiteDoc = RubyXL::Parser.parse($testSuiteFile)
-        # ...and parse...
-        XlsxParser.parse_xlxs_test_suite_header_data
-      else
-        # the file type is not that expected so create
-        # a error message and raise an exception
-        error_to_display = "Test Suite file: '#{$testSuiteFile}' "\
-                           "type not recognised (must be .xlsx)"
-        raise IOError, error_to_display
-      end
-        # if unable to read the test file list then construct
-        # a custom error message and raise an exception
-    elsif error_to_display = "Test Suite file: '#{$testSuiteFile}' "\
-                             "does not exist or is unreadable"
-        raise IOError, error_to_display
-    end
-  end
-
-  def self.parse_test_suite_data(testSpecIndex)
-    begin
-      # get the file type
-      fileType = File.extname($testSuiteFile)
-
-      if (fileType.casecmp(@XlsxFileNameType) == 0)
-        XlsxParser.parse_xlxs_test_suite_data(testSpecIndex)
-      else
-        # the file type is not that expected so create a
-        # error message and raise an exception
-        error_to_display = "Test Suite file: '#{$testSuiteFile}' "\
-                           "type not recognised (must be .xlsx)"
-        raise IOError, error_to_display
-      end
-    end
+  def self.test_files
+    @test_files ||= Dir.glob("#{$testcasesFolder}/*.xlsx").reject do |file|
+      File.basename(file).start_with?('~$')
+    end.sort
   end
 
   # readTestData

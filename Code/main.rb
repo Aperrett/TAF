@@ -28,25 +28,20 @@ module Main
 
     begin
       # check if the test suite file name exists on the command line
-      # allow a user to input 1 or 2 arguments in to CMD line the 2 values are:
-      # Testsuite File and Browser.
-      if ARGV.length < 2
-        $testSuiteFile = ARGV[0]
-        MyLog.log.info 'Only one argument needed: {TestSuite File}'
-      elsif ARGV.length < 3
-        $testSuiteFile = ARGV[0]
+      # allow a user to input 2 arguments in to CMD line the 2 values are:
+      # Testcase Folder and Browser.
+      if ARGV.length < 3
+        $testcasesFolder = ARGV[0]
         $browserType = ARGV[1]
-        MyLog.log.info 'Only 2 arguments needed: {TestSuite File} {Browser}'
+        MyLog.log.info '2 arguments are required: {Testcase folder} {Browser}'
       else
         # unable to open file as not supplied as command-line parameter
-        $testSuiteFile = 'unknown'
-        error_to_display = 'Test File has not been supplied as a command-line parameter as expected'
+        $testcasesFolder = 'unknown'
+        error_to_display = 'Test case location has not been supplied as a command-line parameter as expected'
+        $browserType = 'unknown'
+        error_to_display = 'Browser has not been supplied as a command-line parameter as expected'
         raise IOError, error_to_display  
       end
-
-    # Get the test suite data
-    Parser.read_test_suite_data
-
   # unable to read the test file then handle the error and terminate
   rescue StandardError => error
     warn error
@@ -54,7 +49,7 @@ module Main
     abort
   end
 
-    MyLog.log.info "There are: #{$numberOfTestSpecs} test files to process \n"
+    MyLog.log.info "There are: #{Parser.test_files.size} test files to process \n"
 
     # process the test files to execute the tests
     TestEngine.process_testfiles
