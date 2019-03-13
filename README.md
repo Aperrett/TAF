@@ -42,7 +42,7 @@ docker run --rm --shm-size 2g
 
 --env USER="emailblah.com"
 
--v "$(pwd)"/target:/app/Results:cached taf taf {filename} {browser}
+-v "$(pwd)"/target:/app/Results:cached taf taf {test folder location} {browser}
 
 
 Please note the --env will need to be changed.
@@ -54,10 +54,10 @@ Ruby 2.5.1 has to be installed on the system.
 run bundle install - to install the required gems including the TAF Gem
 
 <h2>To run a Test Suite using the TAF Gem:</h2>
-taf {filename} {browser}
+taf {test folder location} {browser}
 
 <h2>To run a Test Suite using the TAF Script:</h2>
-./taf.sh run {filename} {browser}
+./taf.sh run {test folder location} {browser}
 
 <h2>Contributing</h2>
 
