@@ -8,7 +8,7 @@
 module Parser
   require_relative '../taf_config.rb'
   # variables:
-  @XlsxFileNameType = '.xlsx'
+  @xlsx_file_name_type = '.xlsx'
 
   def self.test_files
     @test_files ||= Dir.glob("#{$testcasesFolder}/*.xlsx").reject do |file|
@@ -17,20 +17,20 @@ module Parser
   end
 
   # readTestData
-  def self.read_test_data(testFileName)
+  def self.read_test_data(test_file_name)
     # get the file type
-    fileType = File.extname(testFileName)
-    if (fileType.casecmp(@XlsxFileNameType) == 0)
-      MyLog.log.info "Processing test file: #{testFileName}"
+    file_type = File.extname(test_file_name)
+    if file_type.casecmp(@xlsx_file_name_type).zero?
+      MyLog.log.info "Processing test file: #{test_file_name}"
       MyLog.log.info "Browser Type: #{$browserType}"
-      $xlsxDoc = RubyXL::Parser.parse(testFileName)
+      $xlsxDoc = RubyXL::Parser.parse(test_file_name)
       XlsxParser.parse_xlxs_test_header_data
       return 'XLSX'
     else
       # if unable to read the test file list then construct a custom error
       # message and raise an exception.
-      error_to_display = "Test File Name: '#{testFileName}' " \
-                         "type not recognised (must be .xslx)"
+      error_to_display = "Test File Name: '#{test_file_name}' " \
+                         'type not recognised (must be .xslx)'
       raise IOError, error_to_display
     end
 
@@ -41,7 +41,7 @@ module Parser
   end
 
   # parseTestStepData
-  def self.parse_test_step_data(testFileType)
-    XlsxParser.parse_test_step_data(testFileType)
+  def self.parse_test_step_data(test_file_type)
+    XlsxParser.parse_test_step_data(test_file_type)
   end
 end

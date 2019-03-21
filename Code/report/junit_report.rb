@@ -39,10 +39,10 @@ module JunitReport
       xml.testsuites(testsuite_attrs) do |testsuites|
         @testStepReportSummary2.each do |testStepReportSummary2|
           testsuites.testsuite(testStepReportSummary2) do |testsuite|
-            $testStep_xml[testStepReportSummary2['name']].each do |testStepIndex, testStep_xml|
+            $testStep_xml[testStepReportSummary2['name']].each do |test_step_index, testStep_xml|
               testsuite.testcase(testStep_xml) do |testcase|
-                failure = $failtestStep_xml&.[](testStepReportSummary2['name'])&.[](testStepIndex)
-                skipped = $skiptestStep_xml&.[](testStepReportSummary2['name'])&.[](testStepIndex)
+                failure = $failtestStep_xml&.[](testStepReportSummary2['name'])&.[](test_step_index)
+                skipped = $skiptestStep_xml&.[](testStepReportSummary2['name'])&.[](test_step_index)
                 testcase.failure(failure) if failure
                 testcase.skipped(skipped) if skipped
               end

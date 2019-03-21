@@ -12,7 +12,7 @@ module TestSteps
         locate2 = step_attributes[:locate2]
 
         Browser.b.select_list(:"#{locate}" => dropdown).wait_until(&:exists?)
-        Browser.b.select_list(:"#{locate}" => dropdown).option(:"#{locate2}" => "#{value2}").select
+        Browser.b.select_list(:"#{locate}" => dropdown).option(:"#{locate2}" => value2.to_s).select
         MyLog.log.info("Dropdown item: #{value2} has been selected")
         true
       rescue StandardError

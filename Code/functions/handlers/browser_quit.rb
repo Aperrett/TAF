@@ -5,7 +5,7 @@ module TestSteps
     class BrowserQuit < Base
       register :browser_quit
 
-      def perform(step_attributes)
+      def perform(_step_attributes)
         Browser.b.quit
         MyLog.log.info('Browser has closed successfully')
         true

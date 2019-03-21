@@ -30,7 +30,7 @@ module ReportSummary
     # output to the console
 
     MyLog.log.info "Finished processing all test files - executed via test suite: #{$testcasesFolder}"
-    MyLog.log.info "Overall Test Summary:"
+    MyLog.log.info "Overall Test Summary: \n"
     @testStepReportSummary.each do |testStepReportSummary|
       testStepReportSummary.each_line do |line|
         MyLog.log.info(line.strip)

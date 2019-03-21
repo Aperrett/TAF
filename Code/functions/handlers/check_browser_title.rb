@@ -8,7 +8,7 @@ module TestSteps
       def perform(step_attributes)
         b_title = step_attributes[:testvalue]
 
-        Browser.b.wait_until { Browser.b.title.eql? (b_title)}
+        Browser.b.wait_until { Browser.b.title.eql? b_title }
         MyLog.log.info("Browser title: #{b_title}")
         true
       rescue StandardError

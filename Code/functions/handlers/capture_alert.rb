@@ -5,7 +5,7 @@ module TestSteps
     class CaptureAlert < Base
       register :capture_alert
 
-      def perform(step_attributes)
+      def perform(_step_attributes)
         Browser.b.div(class: 'alert').exist?
         alertmsg = Browser.b.div(class: 'alert').text
         MyLog.log.info("Alert shown: #{alertmsg}")

@@ -41,7 +41,6 @@ module CreateDirectories
   end
 
   def self.construct_testspecdirs
-
     time = Time.new
     f_date = time.strftime('%d-%b-%Y')
     f_time = time.strftime('%H_%M_%S')
@@ -60,10 +59,9 @@ module CreateDirectories
 
     # create absolute paths to the screenshots and test suite summary directories
     abs_path_screenshot_dir = File.absolute_path(screenshot_dir)
-    abs_path_run_no_dir      = File.absolute_path($runNoDir)
 
   # if any issues then set error message and re-raise the exception
-  rescue Exception => error
+  rescue StandardError => error
     # construct the error message from custom text and the actual system error message (converted to a string)
     error_to_display = 'Error creating the test directory structure or opening the test results file : ' + error.to_s
     raise error_to_display

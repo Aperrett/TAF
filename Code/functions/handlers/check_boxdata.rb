@@ -14,10 +14,12 @@ module TestSteps
           Browser.b.textarea(:"#{locate}" => box).exist?,
           Browser.b.text_field(:"#{locate}" => box).exist?
         ]
-    
+
         raise 'Multiple matches' if found_box.select { |i| i }.empty?
+
         index = found_box.index(true)
         return unless index
+
         if index.zero?
           Browser.b.textarea(:"#{locate}" => box).wait_until(&:exists?)
           (Browser.b.textarea(:"#{locate}" => box).value == value)

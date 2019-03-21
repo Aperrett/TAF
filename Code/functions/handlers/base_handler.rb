@@ -62,18 +62,18 @@ module TestSteps
         password = ENV['PORTAL_MEM']
         nums = (1..256).to_a
         found_mem_nums = nums.each_with_object([]) do |num_val, mem_word|
-        elm_id = "user_memorable_parts_#{num_val}"
-        mem_word.push(num_val) if Browser.b.select(:id => elm_id).exist?
+          elm_id = "user_memorable_parts_#{num_val}"
+          mem_word.push(num_val) if Browser.b.select(id: elm_id).exist?
         end.compact
 
         array_password = password.split('')
         array_password.map!(&:upcase)
 
-        found_mem_nums.each { |mem_num|
-        char = array_password[(mem_num-1)]
-        elm_id = "user_memorable_parts_#{mem_num}"
-        Browser.b.select_list(:id => elm_id).option(:value => "#{char}").select
-        }
+        found_mem_nums.each do |mem_num|
+          char = array_password[(mem_num - 1)]
+          elm_id = "user_memorable_parts_#{mem_num}"
+          Browser.b.select_list(id: elm_id).option(value: char.to_s).select
+        end
 
         Browser.b.button(value: 'Sign in').wait_until(&:exists?).click
         if Browser.b.title.eql?(b_title_sucess)
@@ -84,6 +84,6 @@ module TestSteps
           return false
         end
       end
-    end 
+    end
   end
 end

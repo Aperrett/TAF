@@ -19,6 +19,7 @@ require 'nokogiri'
 require 'time_difference'
 require 'colored'
 require 'rubyXL'
+require 'optparse'
 
 # list of all the required files
 require_relative './utils/test_steps'

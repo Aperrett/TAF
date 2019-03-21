@@ -5,7 +5,7 @@ module TestSteps
     class BrowserForward < Base
       register :browser_forward
 
-      def perform(step_attributes)
+      def perform(_step_attributes)
         Browser.b.forward
         MyLog.log.info('Browser navigated forward')
         true

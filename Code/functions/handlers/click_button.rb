@@ -9,13 +9,14 @@ module TestSteps
         button = step_attributes[:testvalue]
         locate = step_attributes[:locate]
 
-        elms = %i{button span a div link image h1 h2 h3 h4}
+        elms = %i[button span a div link image h1 h2 h3 h4]
 
         found_button = elms.map do |elm|
           Browser.b.send(elm, :"#{locate}" => button).exists?
         end.compact
 
         raise 'Multiple matches' if found_button.select { |i| i }.empty?
+
         index = found_button.index(true)
         return unless index
 

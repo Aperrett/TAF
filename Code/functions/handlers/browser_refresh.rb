@@ -5,7 +5,7 @@ module TestSteps
     class BrowserRefresh < Base
       register :browser_refresh
 
-      def perform(step_attributes)
+      def perform(_step_attributes)
         Browser.b.refresh
         MyLog.log.info('The Browser has been refreshed')
         true

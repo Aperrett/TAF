@@ -17,22 +17,22 @@ module TestEngine
 
     # loop through all the available test files to execute the tests
     Parser.test_files.each_with_index do |test_file_name, test_file_index|
-      begin # start of rescue block for readTestData
+      begin
         # read in the test data
-        testFileType = Parser.read_test_data(test_file_name)
+        test_file_type = Parser.read_test_data(test_file_name)
         # if unable to read the test data, show the error and move onto the
         # next file (if there is one)
       rescue StandardError => error
         MyLog.log.warn 'Terminating the current test case: ' \
                      "#{test_file_name} #{error}"
         MyLog.log.info '...continuing with the next test case (if there is one)'
-      end # of rescue block for readTestData
+      end
 
       # create project folders - these only need creating once per test suite
       CreateDirectories.construct_projectdirs
 
       # loop through the test file
-      MyLog.log.info 'Not a valid XLSX File Type' if testFileType != 'XLSX'
+      MyLog.log.info 'Not a valid XLSX File Type' if test_file_type != 'XLSX'
 
       # get the test case start time
       $test_case_start_time = Report.current_time
@@ -40,12 +40,12 @@ module TestEngine
       $test_case_end_time = Report.current_time
 
       begin
-        test_steps = Parser.parse_test_step_data(testFileType)
+        test_steps = Parser.parse_test_step_data(test_file_type)
 
         test_steps.each_with_index do |test_step, step_index|
-          $testStep         = test_step[:testStep]
-          $testStepDes      = test_step[:testdesc]
-          screen_shot       = test_step[:screenShotData]
+          $test_step     = test_step[:testStep]
+          $test_step_des = test_step[:testdesc]
+          screen_shot    = test_step[:screenShotData]
 
           # process the test step data
           TestSteps.process_test_steps(test_file_name, step_index, test_step)
@@ -77,5 +77,5 @@ module TestEngine
       $testStepFailures = 0
       $testStepNotrun   = 0
     end
-  end # while loop for test files
+  end
 end

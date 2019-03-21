@@ -3,30 +3,6 @@ set -e
 if [ -n "$DEBUG" ]; then set -x; fi
 
 #
-# Helper functions
-#
-
-resolve_link() {
-  $(type -p greadlink readlink | head -1) $1
-}
-
-abs_dirname() {
-  local path="$1"
-  local cwd
-
-  cwd="$(pwd)"
-
-  while [ -n "$path" ]; do
-    cd "${path%/*}"
-    local name="${path##*/}"
-    path="$(resolve_link "$name" || true)"
-  done
-
-  pwd
-  cd "$cwd"
-}
-
-#
 # Main Functions
 #
 
@@ -60,10 +36,11 @@ copy_taf_gem_files(){
 build_taf_gem() {
   releaseflag="$1"
   versionflag="$2"
-  echo "Building Ruby Gem TAF for: $releaseflag use, with version: $versionflag."
+  datenow="$(date +'%Y-%m-%d')"
+  echo "Building Ruby Gem TAF for: $releaseflag use, with version: $versionflag, with date: $datenow"
   rm -rf temp
   mkdir temp
-  if [ $releaseflag = "external" ]; then
+  if [ "$releaseflag" = "external" ]; then
     copy_taf_gem_files
     rm temp/lib/functions/handlers/sso_login.rb
     rm temp/lib/functions/handlers/sint_login.rb
@@ -73,23 +50,25 @@ build_taf_gem() {
     sed -i -e "s/0.0.0/$versionflag/g" temp/lib/version.rb
     rm temp/lib/version.rb-e
     sed -i -e "s/releaseflag/$releaseflag/g" temp/taf.gemspec
+    sed -i -e "s/change_date/$datenow/g" temp/taf.gemspec
     rm temp/taf.gemspec-e
-  elif [ $releaseflag = "internal" ]; then
+  elif [ "$releaseflag" = "internal" ]; then
     copy_taf_gem_files
     sed -i -e "s/0.0.0/$versionflag/g" temp/lib/version.rb
     rm temp/lib/version.rb-e
     sed -i -e "s/releaseflag/$releaseflag/g" temp/taf.gemspec
+    sed -i -e "s/change_date/$datenow/g" temp/taf.gemspec
     rm temp/taf.gemspec-e
   else
     echo "Not a valid release flag set."
   fi
 cd temp/
-gem build taf.gemspec    
-cp -R taf-$versionflag.gem ../     
+gem build taf.gemspec
+cp -R "taf-$versionflag.gem" ../
 cd ..
 rm -rf temp
 echo ''
-echo "Built TAF Ruby Gem for: $releaseflag use, with version: $versionflag."
+echo "Built TAF Ruby Gem for: $releaseflag use, with version: $versionflag, with date: $datenow"
 }
 
 delete_results() {
@@ -108,27 +87,16 @@ delete_taf_image() {
   fi
 }
 
-# run() {
-#   echo "Launching the TAF natively in the local shell:"
-#   echo "Using the following options:" "$1" "$2"
-#   ruby main.rb "$1" "$2"
-# }
+lint() {
+  echo "Linting taf for errors..."
 
-run() {
-  local file="$1"
+  if ! command -v rubocop >/dev/null 2>&1; then
+    echo "Rubocop is not installed. Run:"
+    echo "$ gem install rubocop"
+    exit 1
+  fi
 
-  docker run --rm --shm-size 2g \
-    -e PORTAL_URL="$PORTAL_URL" \
-    -e ADMINL_URL="$ADMINL_URL" \
-    -e PORTAL_USER_1="$PORTAL_USER_1" \
-    -e PORTAL_USER_2="$PORTAL_USER_2" \
-    -e PORTAL_USER_PASS="$PORTAL_USER_PASS" \
-    -e PORTAL_MEM="$PORTAL_MEM" \
-    -e PORTAL_USER_CHANGE_PASS="$PORTAL_USER_CHANGE_PASS" \
-    -e ADMIN_USER="$ADMIN_USER" \
-    -e ADMIN_USER_PASS="$ADMIN_USER_PASS" \
-    -v "$(pwd)"/target:/app/Results:cached taf taf "$file" firefox-headless
-    return $?
+  rubocop
 }
 
 security_audit() {
@@ -147,35 +115,31 @@ help () {
   echo "usage: taf <command>"
   echo ""
   echo "Build Commands:"
-  echo "  build_taf_image                     - Builds Latest TAF Docker Image."
-  echo "  build_taf_gem <release> <version>   - Builds Latest TAF Ruby Gem."
-  echo "                                        - <release> internal use or" 
-  echo "                                                    or external use."
-  echo "                                        - <version> e.g. 0.0.1."
+  echo "  build_taf_image                   - Builds Latest TAF Docker Image."
+  echo "  build_taf_gem <release> <version> - Builds Latest TAF Ruby Gem."
+  echo "                                    - <release> internal use or"
+  echo "                                                or external use."
+  echo "                                    - <version> e.g. 0.0.1."
   echo ""
   echo "Delete Commands:"
-  echo "  delete_results    - Delete all the previous test results."
-  echo "  delete_taf_image  - Deletes the TAF Docker Image."
+  echo "  delete_results                    - Delete all the previous test results."
+  echo "  delete_taf_image                  - Deletes the TAF Docker Image."
   echo ""
   echo "Misc Commands:"
-  echo "  security_audit  - Run Security Audit of Ruby Gems used for the TAF."
-  echo ""
-  echo "Run TAF Commands:"
-  echo "  run <file> <browser>              - Run the TAF natively in shell."
-  echo "                                      - <file> TestSuite to run."
-  echo "                                      - <browser> to use."
+  echo "  help                              - Show this message."
+  echo "  lint                              - Run rubocop against taf code."
+  echo "  security_audit                    - Run Security Audit of Ruby Gems used for the TAF."
 }
 
 main () {
   local command="$1"
-  shift 1
 
   case "$command" in
     build_taf_image)
       build_taf_image
       ;;
     build_taf_gem)
-      build_taf_gem "$1" "$2"
+      build_taf_gem "$2" "$3"
       ;;
     security_audit)
       security_audit
@@ -185,10 +149,12 @@ main () {
       ;;
     delete_taf_image)
       delete_taf_image
-      ;;  
-    run)
-      run "$1" "$2"
-      exit $?
+      ;;
+    help)
+      help
+      ;;
+    lint)
+      lint
       ;;
     *)
       help 1>&2

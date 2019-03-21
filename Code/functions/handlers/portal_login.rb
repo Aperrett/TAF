@@ -15,7 +15,7 @@ module TestSteps
         b_title_sucess = 'Home'
         user_elm = 'user_email'
         pass_elm = 'user_password'
-        
+
         open_url_process(url)
         login_process(b_title, user_elm, pass_elm, user, pass)
         mem_word_check(user, b_title_sucess)

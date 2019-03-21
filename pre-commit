@@ -1,0 +1,22 @@
+#!/bin/sh -e
+
+if ! command -v rubocop >/dev/null 2>&1; then
+  echo "Rubocop is not installed. Run:"
+  echo "$ gem install rubocop"
+  exit 1
+fi
+
+echo 'Running rubocop...'
+
+# Run linting and count number of errors.
+COUNT=$(rubocop --format json | ruby -e "require 'json'; puts JSON.parse(ARGF.read)['summary']['offense_count']")
+
+# Max number of linting errors permitted.
+# Adjust this number downwards as we fix lint errors.
+THRESHOLD=192
+
+if [ "$COUNT" -gt "$THRESHOLD" ]; then
+  echo "Number of lint errors exceed threshold of $THRESHOLD ($COUNT found)"
+  echo 'Run $ taf.sh lint to check errors'
+  exit 1
+fi

@@ -13,51 +13,46 @@ chrome-headless
 firefox
 firefox-headless
 
-<h2>TAF script help </h2>
+<h3>TAF script help: </h3>
 To use the TAF Script, Navigate to the Code/ Folder.
 Run the following script: 
 ./taf.sh help
 
-<h2>Security Audit of Ruby Gems used </h2>
+<h3>Security Audit of Ruby Gems used: </h3>
 Run the following script: 
 ./taf.sh security_audit
 
-<h1>TAF Builder</h1>
-
-<h2>To build the TAF Docker image</h2>
+<h2>TAF Builder</h2> 
+<h3>To build the TAF Docker image:</h3>
 Run the following script: 
 ./taf.sh build_taf_image
 
-<h2>To build the TAF Ruby Gem</h2>
+<h3>To build the TAF Ruby Gem</h3>
 Run the following script: 
 ./taf.sh build_taf_gem {internal} or {external} {version} (i.e. 0.1.2)
 
-<h1>TAF Runner - Docker</h1>
+<h2>TAF Runner - Docker</h2>
 <h3>To run the TAF in Docker Container</h3>
-Run following script in terminal:
-
-docker run --rm --shm-size 2g
-
---env URL="http://url_blah.com"
-
---env USER="emailblah.com"
-
--v "$(pwd)"/target:/app/Results:cached taf taf {test folder location} {browser}
-
+Run following script in terminal: \
+docker run --rm --shm-size 2g \
+--env PORTAL_URL="http://url_blah.com" \
+--env PORTAL_USER_1="emailblah.com" \
+-v "$(pwd)"/target:/app/Results:cached taf taf --tests {test folder name} -- browser {browser}
 
 Please note the --env will need to be changed.
 
-<h1>TAF Runner - Native</h1>
+<h3>To run the TAF in debug mode (using VNC)</h3>
+* Navigate to the taf project directory.
+* Run `docker build -f Code/Dockerfile -t taf Code/ && docker run -e DEBUG=1 -p 5901:5901 --rm --shm-size 2g taf --tests {test folder name} -- browser {browser}`
+
+<h2>TAF Runner - Native</h2>
 <h3>Pre-Requirements</h3>
 Ruby 2.5.1 has to be installed on the system.
 
 run bundle install - to install the required gems including the TAF Gem
 
-<h2>To run a Test Suite using the TAF Gem:</h2>
-taf {test folder location} {browser}
-
-<h2>To run a Test Suite using the TAF Script:</h2>
-./taf.sh run {test folder location} {browser}
+<h3>To run a Test Suite using the TAF Gem:</h3>
+taf --tests {test folder name} -- browser {browser}
 
 <h2>Contributing</h2>
 

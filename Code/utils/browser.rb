@@ -30,7 +30,7 @@ module Browser
   rescue BrowserFailedOpen => error
     # construct the error message from custom text and the actual system error
     # message (converted to a string)
-    error_text = "Unable to open"\
+    error_text = 'Unable to open'\
                   "the requested browser: #{lc_browser_type} " + error.to_s
     raise error_text
   end
@@ -68,7 +68,7 @@ module Browser
     options = Selenium::WebDriver::Firefox::Options.new(args: ['-headless'])
     caps['acceptInsecureCerts'] = true
     driver = Selenium::WebDriver.for(:firefox, options: options,
-                                    desired_capabilities: caps)
+                                               desired_capabilities: caps)
     @browser = Watir::Browser.new(driver)
     # makes the browser full screen.
     @browser.driver.manage.window.resize_to(1920, 1200)
@@ -101,42 +101,40 @@ module Browser
 
   # define browser value
   def self.b
-    browser = @browser
+    @browser
   end
 
   # Check browser version
   def self.browser_version
-    browserversion = @browser.driver.capabilities[:version]
+    @browser.driver.capabilities[:version]
   rescue StandardError
-    browserversion = 'No Browser version'
+    'No Browser version'
   end
 
   # create screenshot filename and save the screenshot if the test has failed or
   # if explictly required
   def self.check_save_screenshot(screen_shot)
-    if ($currentTestFail || screen_shot)
+    if $currentTestFail || screen_shot
       time = Time.now.strftime('%H%M')
-      if ($currentTestFail)
-        full_sc_dirname = CreateDirectories.construct_testspecdirs
-        scFileName = full_sc_dirname + "/Test_step-#{$testStep}_Failed_"\
-                                        "#{time}.png"
-      else
-        # file name will be teststep.png
-        full_sc_dirname = CreateDirectories.construct_testspecdirs
-        scFileName = full_sc_dirname + "/Test_step-#{$testStep}_#{time}.png"
-      end
+      sc_dir = CreateDirectories.construct_testspecdirs
+
+      sc_file_name = if $currentTestFail
+                       "#{sc_dir}/Test_step-#{$test_step}_Failed_#{time}.png"
+                     else
+                       "#{sc_dir}/Test_step-#{$test_step}_#{time}.png"
+                     end
 
       # Screenshot capture for websites
-      Browser.b.screenshot.save scFileName
-      MyLog.log.info("Screenshot saved to: #{scFileName} \n")
-      else
-        MyLog.log.debug "No screenshot requested \n"
-      end
+      Browser.b.screenshot.save sc_file_name
+      MyLog.log.info("Screenshot saved to: #{sc_file_name} \n")
+    else
+      MyLog.log.debug "No screenshot requested \n"
+    end
 
     # if any issues with saving the screenshot then log a warning
-    rescue StandardError => error
+  rescue StandardError => error
     # construct the error message from custom text and the actual system
     # error message (converted to a string).
-    MyLog.log.warn("Error saving the screenshot: #{scFileName}   #{error.to_s}")
+    MyLog.log.warn("Error saving the screenshot: #{sc_file_name}   #{error}")
   end
 end
