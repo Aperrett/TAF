@@ -40,28 +40,24 @@ build_taf_gem() {
   echo "Building Ruby Gem TAF for: $releaseflag use, with version: $versionflag, with date: $datenow"
   rm -rf temp
   mkdir temp
+  copy_taf_gem_files
+  sed -i -e "s/0.0.0/$versionflag/g" temp/lib/version.rb
+  rm temp/lib/version.rb-e
+  sed -i -e "s/change_date/$datenow/g" temp/taf.gemspec
   if [ "$releaseflag" = "external" ]; then
-    copy_taf_gem_files
     rm temp/lib/functions/handlers/sso_login.rb
     rm temp/lib/functions/handlers/sint_login.rb
     rm temp/lib/functions/handlers/admin_portal_login.rb
+    rm temp/lib/functions/handlers/open_portal_url.rb
     sed -i -e "s/- UKCloud Portal//g" temp/lib/functions/handlers/portal_login.rb
     rm temp/lib/functions/handlers/portal_login.rb-e
-    sed -i -e "s/0.0.0/$versionflag/g" temp/lib/version.rb
-    rm temp/lib/version.rb-e
     sed -i -e "s/releaseflag/$releaseflag/g" temp/taf.gemspec
-    sed -i -e "s/change_date/$datenow/g" temp/taf.gemspec
-    rm temp/taf.gemspec-e
   elif [ "$releaseflag" = "internal" ]; then
-    copy_taf_gem_files
-    sed -i -e "s/0.0.0/$versionflag/g" temp/lib/version.rb
-    rm temp/lib/version.rb-e
     sed -i -e "s/releaseflag/$releaseflag/g" temp/taf.gemspec
-    sed -i -e "s/change_date/$datenow/g" temp/taf.gemspec
-    rm temp/taf.gemspec-e
   else
     echo "Not a valid release flag set."
   fi
+rm temp/taf.gemspec-e
 cd temp/
 gem build taf.gemspec
 cp -R "taf-$versionflag.gem" ../
