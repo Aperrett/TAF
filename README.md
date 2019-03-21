@@ -37,13 +37,13 @@ Run following script in terminal: \
 docker run --rm --shm-size 2g \
 --env PORTAL_URL="http://url_blah.com" \
 --env PORTAL_USER_1="emailblah.com" \
--v "$(pwd)"/target:/app/Results:cached taf taf --tests {test folder name} -- browser {browser}
+-v "$(pwd)"/target:/app/Results:cached taf taf --tests {test folder name} --browser {browser}
 
 Please note the --env will need to be changed.
 
 <h3>To run the TAF in debug mode (using VNC)</h3>
 * Navigate to the taf project directory.
-* Run `docker build -f Code/Dockerfile -t taf Code/ && docker run -e DEBUG=1 -p 5901:5901 --rm --shm-size 2g taf --tests {test folder name} -- browser {browser}`
+* Run `docker build -f Code/Dockerfile -t taf Code/ && docker run -e DEBUG=1 -p 5901:5901 --rm --shm-size 2g taf --tests {test folder name} --browser {browser}`
 
 <h2>TAF Runner - Native</h2>
 <h3>Pre-Requirements</h3>
@@ -52,7 +52,7 @@ Ruby 2.5.1 has to be installed on the system.
 run bundle install - to install the required gems including the TAF Gem
 
 <h3>To run a Test Suite using the TAF Gem:</h3>
-taf --tests {test folder name} -- browser {browser}
+taf --tests {test folder name} --browser {browser}
 
 <h2>Contributing</h2>
 
