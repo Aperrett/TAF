@@ -8,15 +8,7 @@ fi
 
 echo 'Running rubocop...'
 
-# Run linting and count number of errors.
-COUNT=$(rubocop --format json | ruby -e "require 'json'; puts JSON.parse(ARGF.read)['summary']['offense_count']")
-
-# Max number of linting errors permitted.
-# Adjust this number downwards as we fix lint errors.
-THRESHOLD=192
-
-if [ "$COUNT" -gt "$THRESHOLD" ]; then
-  echo "Number of lint errors exceed threshold of $THRESHOLD ($COUNT found)"
-  echo 'Run $ taf.sh lint to check errors'
+if ! rubocop; then
+  echo '\033[0;31mLint errors returned. Aborting commit.\033[0m'
   exit 1
 fi

@@ -10,17 +10,19 @@
 module JunitReport
   require_relative '../taf_config.rb'
   # holds printable test report summary for all the executed tests
-  @testStepReportSummary2 = []
+  @test_step_report_summary2 = []
   # construct the test suite header for junit
   def self.test_step_summary_xml(test_file_name, test_file_name_index)
-    @testStepReportSummary2[test_file_name_index] = {
+    @test_step_report_summary2[test_file_name_index] = {
       'classname' => test_file_name,
       'name' => test_file_name,
       'assertions' => $numberOfTestSteps,
       'failures' => $testStepFailures,
       'tests' => $testStepPasses,
       'skipped' => $testStepNotrun,
-      'time' => TimeDifference.between($test_case_end_time, $test_case_start_time).in_seconds
+      'time' => TimeDifference.between(
+        $test_case_end_time, $test_case_start_time
+      ).in_seconds
     }
   end
 
@@ -34,15 +36,19 @@ module JunitReport
         'failures' => $totalTestFailures.to_s,
         'timestamp' => $test_start_time.to_s,
         'skipped' => $totalTestNotrun.to_s,
-        'time' => TimeDifference.between($test_end_time, $test_start_time).in_seconds
+        'time' => TimeDifference.between($test_end_time, $test_start_time)
+                                .in_seconds
       }
       xml.testsuites(testsuite_attrs) do |testsuites|
-        @testStepReportSummary2.each do |testStepReportSummary2|
-          testsuites.testsuite(testStepReportSummary2) do |testsuite|
-            $testStep_xml[testStepReportSummary2['name']].each do |test_step_index, testStep_xml|
-              testsuite.testcase(testStep_xml) do |testcase|
-                failure = $failtestStep_xml&.[](testStepReportSummary2['name'])&.[](test_step_index)
-                skipped = $skiptestStep_xml&.[](testStepReportSummary2['name'])&.[](test_step_index)
+        @test_step_report_summary2.each do |test_step_report_summary2|
+          testsuites.testsuite(test_step_report_summary2) do |testsuite|
+            $testStep_xml[test_step_report_summary2['name']]
+              .each do |test_step_index, test_step_xml|
+              testsuite.testcase(test_step_xml) do |testcase|
+                failure = $failtestStep_xml
+                  &.[](test_step_report_summary2['name'])&.[](test_step_index)
+                skipped = $skiptestStep_xml
+                  &.[](test_step_report_summary2['name'])&.[](test_step_index)
                 testcase.failure(failure) if failure
                 testcase.skipped(skipped) if skipped
               end
@@ -57,12 +63,14 @@ module JunitReport
 
     # open the suite summary file for writing if not already open
     if !File.exist?($TestSuiteSummaryXML) || $TestSuiteSummaryXML.closed?
-      $testSuiteSummaryFile_xml = File.open($TestSuiteSummaryXML, 'w+')
-      $testSuiteSummaryFile_xml.write builder.to_xml
-    elsif MyLog.log.warn "test suite summary file xml name: #{$TestSuiteSummaryXML} is already open"
+      testSuiteSummaryFile_xml = File.open($TestSuiteSummaryXML, 'w+')
+      testSuiteSummaryFile_xml.write builder.to_xml
+    else
+      MyLog.log.warn 'test suite summary file xml name:' \
+        " #{$TestSuiteSummaryXML} is already open"
     end
 
     # if the file is open then close it
-    $testSuiteSummaryFile_xml.close unless $testSuiteSummaryFile_xml.closed?
+    testSuiteSummaryFile_xml.close unless testSuiteSummaryFile_xml.closed?
   end
 end

@@ -10,10 +10,10 @@
 module ReportSummary
   require_relative '../taf_config.rb'
   # holds printable test report summary for all the executed tests
-  @testStepReportSummary = []
+  @test_step_report_summary = []
   # output the test results summary for the current test case
   def self.test_step_summary(test_file_name, test_file_name_index)
-    @testStepReportSummary[test_file_name_index] = <<~TEXT
+    @test_step_report_summary[test_file_name_index] = <<~TEXT
       Test file executed: #{test_file_name}
       Browser type used: #{$browserType}
       Browser version: #{Browser.browser_version}
@@ -29,17 +29,19 @@ module ReportSummary
   def self.print_overall_test_summary
     # output to the console
 
-    MyLog.log.info "Finished processing all test files - executed via test suite: #{$testcasesFolder}"
+    MyLog.log.info 'Finished processing all test files -' \
+      "executed via test suite: #{$testcasesFolder}"
     MyLog.log.info "Overall Test Summary: \n"
-    @testStepReportSummary.each do |testStepReportSummary|
-      testStepReportSummary.each_line do |line|
+    @test_step_report_summary.each do |test_step_report_summary|
+      test_step_report_summary.each_line do |line|
         MyLog.log.info(line.strip)
       end
     end
 
     MyLog.log.info "Total Tests started at: #{$test_start_time}"
     MyLog.log.info "Total Tests finished at: #{$test_end_time}"
-    MyLog.log.info ('Total Tests duration: ' + TimeDifference.between($test_end_time, $test_start_time).humanize)
+    MyLog.log.info 'Total Tests duration: ' \
+      + TimeDifference.between($test_end_time, $test_start_time).humanize
     MyLog.log.info "Total Tests Passed: #{$totalTestPasses}".green
     MyLog.log.info "Total Tests Failed: #{$totalTestFailures}".red
     MyLog.log.info "Total Tests Skipped: #{$totalTestNotrun}".blue

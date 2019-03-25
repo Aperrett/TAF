@@ -10,23 +10,21 @@ module XlsxParser
 
   def self.parse_xlxs_test_header_data
     # get the number of test steps in the file
-    $numberOfTestSteps = ($xlsxDoc[0].sheet_data.size) - 4
+    $numberOfTestSteps = $xlsxDoc[0].sheet_data.size - 4
     worksheet = $xlsxDoc[0]
     # get the remaining test data
-    $testId    = worksheet.sheet_data[1][0].value
+    $testId = worksheet.sheet_data[1][0].value
     $projectId    = worksheet.sheet_data[1][1].value
     $testDes      = worksheet.sheet_data[1][2].value
     MyLog.log.info "Number of test steps: #{$numberOfTestSteps}"
     MyLog.log.info "Test Description: #{$testDes}"
     MyLog.log.info "TestID: #{$testId} \n"
-    
   end
 
   # parseTestStepData
-  def self.parse_test_step_data(testFileType)
-    begin
+  def self.parse_test_step_data(_test_file_type)
     worksheet = $xlsxDoc[0]
-    worksheet[4..$numberOfTestSteps+4].map do |row|
+    worksheet[4..$numberOfTestSteps + 4].map do |row|
       test = {
         testStep: row[0].value,
         testdesc: row[1].value,
@@ -36,7 +34,7 @@ module XlsxParser
         testvalue2: row[5].value,
         locate2: row[6].value,
         screenShotData: row[7].value,
-        skipTestCase: row[8].value,
+        skipTestCase: row[8].value
       }
 
       # convert test step, screenshot and skip test case functions to lowercase.
@@ -44,36 +42,31 @@ module XlsxParser
 
       # get screenshot request, check for a null value and default to 'N'
 
-      if (test[:screenShotData] == 'Y')
-        test[:screenShotData] = true
-      elsif (test[:screenShotData] == 'N')
-        test[:screenShotData] = false
-      else
-        test[:screenShotData] = false
-      end
+      test[:screenShotData] = if test[:screenShotData] == 'Y'
+                                true
+                              elsif test[:screenShotData] == 'N'
+                                false
+                              else
+                                false
+                              end
 
-      if (test[:skipTestCase] == 'Y')
-        test[:skipTestCase] = true
-      elsif(test[:skipTestCase] == 'N')
-        test[:skipTestCase] = false
-      else
-        test[:skipTestCase] = false
-      end
+      test[:skipTestCase] = if test[:skipTestCase] == 'Y'
+                              true
+                            elsif test[:skipTestCase] == 'N'
+                              false
+                            else
+                              false
+                            end
 
       # if there is an element locator then use it, otherwise use an ID
-      if (test[:locate].to_s == '')
-        test[:locate] = 'id'
-      end
+      test[:locate] = 'id' if test[:locate].to_s == ''
 
-      if (test[:locate2].to_s == '')
-        test[:locate2] = 'id'
-      end
+      test[:locate2] = 'id' if test[:locate2].to_s == ''
 
       test
-     # if an error reading the test step data then re-raise the exception
+    # if an error reading the test step data then re-raise the exception
     rescue StandardError => error
-      raise
+      raise error
     end
   end
-end
 end

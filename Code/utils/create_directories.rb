@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # Created on 20 Sept 2017
 # @author: Andy Perrett
 #
@@ -16,54 +15,51 @@ module CreateDirectories
   #
   # ----> Project directory (working directory)
   #
-  # ------->directory named after the test run number
+  # ------->directory named after the test run ID UUID
   #
-  # ---------->directory named after test_id (with browser type identified)
+  # ---------->directory named after test_id
   #
   # ------------->directory named 'Screenshots'
 
+  def self.time_now
+    Time.new.strftime('%d-%b-%Y_%H_%M')
+  end
+
   def self.construct_projectdirs
-    # create top-level 'Results' directory if it doesn't already exist
-    result_home = 'Results'
-    Dir.mkdir(result_home) unless File.directory? result_home
-
-    # create the 'Project' directory if it doesn't already exist
+    # create top-level directory if it doesn't already exist:
+    # Results/Project_id
     project_id = $projectId.delete(' ')
-    $project_iddir = result_home + '/' + project_id
-    Dir.mkdir($project_iddir) unless File.directory? $project_iddir
+    $project_iddir = File.join('Results', project_id
+    )
 
-    # the test suite summary is a XML report generated will be called 'suite_summary.xml'
-    time = Time.new
-    f_date = time.strftime('%d-%b-%Y')
-    f_time = time.strftime('%H_%M_%S')
+    FileUtils.mkdir_p($project_iddir)
 
-    $TestSuiteSummaryXML = 'Results/' + $projectId + '/' + f_date + '_' + f_time + '_test_result.xml'
+    # Generate UUID
+    $run_uuid = SecureRandom.uuid
+
+    # the test suite summary is a XML report generated will be called
+    # 'suite_summary.xml'
+    $TestSuiteSummaryXML = "Results/#{project_id}/#{time_now}" \
+                           '_test_result.xml'
   end
 
   def self.construct_testspecdirs
-    time = Time.new
-    f_date = time.strftime('%d-%b-%Y')
-    f_time = time.strftime('%H_%M_%S')
-    $runNoDir = $project_iddir + '/' + 'Ran_on_' + f_date + '_' + f_time
-    Dir.mkdir($runNoDir)
+    # create directories for each test spec for screenshots:
+    # Results/Project_id/Run_ID_UUID/Test_ID/Screenshots
+    screenshot_dir = File.join(
+      $project_iddir, "Run_ID_#{$run_uuid}",  "#{$testId.delete(' ')}",  
+      'Screenshots'
+    )
 
-    # create directories for each test spec
-    # create a sub-directory named from the 'testId' (with any spaces taken out)
-    # if it doesn't already exist plus the browser type
-    testid_dir = $runNoDir + '/' + $testId.delete(' ') + '_' + $browserType.capitalize
-    Dir.mkdir(testid_dir) unless File.directory? testid_dir
-
-    # create a screenshot directory under the 'testId' directory - it will always need creating
-    screenshot_dir = testid_dir + '/' + 'Screenshots' + '/'
-    Dir.mkdir(screenshot_dir)
-
-    # create absolute paths to the screenshots and test suite summary directories
     abs_path_screenshot_dir = File.absolute_path(screenshot_dir)
-
-  # if any issues then set error message and re-raise the exception
+    # abs_path_run_no_dir = File.absolute_path(runNoDir)
+    FileUtils.mkdir_p(abs_path_screenshot_dir)
+    # if any issues then set error message and re-raise the exception
   rescue StandardError => error
-    # construct the error message from custom text and the actual system error message (converted to a string)
-    error_to_display = 'Error creating the test directory structure or opening the test results file : ' + error.to_s
+    # construct the error message from custom text and the actual system error
+    # message (converted to a string)
+    error_to_display = 'Error creating the test directory structure or' \
+      ' opening the test results file : ' + error.to_s
     raise error_to_display
   else
     # if no exception then return the screenshot file directory path

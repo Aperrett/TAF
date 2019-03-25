@@ -20,16 +20,27 @@ module Main
       # Whenever we see -b, -t or --browser, or --tests with an
       # argument, save the argument.
       parser.banner = 'Usage: taf [options]'
-      parser.on('-h', '--help', "2 arguments are required: {Browser} {Testcase folder}'") do
+      parser.on(
+        '-h',
+        '--help',
+        "2 arguments are required: {Browser} {Testcase folder}'"
+      ) do
         puts parser
         Process.exit
       end
 
-      parser.on('-b', '--browser browser', 'Supported Browsers: chrome, chrome-headless, firefox, firefox-headless.') do |b|
+      parser.on(
+        '-b',
+        '--browser browser',
+        'Supported Browsers: chrome,' \
+        ' chrome-headless, firefox, firefox-headless.'
+      ) do |b|
         options[:browser] = b
         $browserType = options[:browser]
-        unless ['chrome', 'chrome-headless', 'firefox', 'firefox-headless'].include?($browserType)
-          MyLog.log.warn 'A valid Browser has not been supplied as a command-line parameter as expected'
+        unless ['chrome', 'chrome-headless', 'firefox', 'firefox-headless']
+               .include?($browserType)
+          MyLog.log.warn 'A valid Browser has not been supplied as a' \
+            ' command-line parameter as expected'
           Process.exit
         end
       end
@@ -38,10 +49,12 @@ module Main
         options[:testfolder] = t
         $testcasesFolder = options[:testfolder]
         if Parser.test_files.size.positive?
-          MyLog.log.info "There are: #{Parser.test_files.size} test files to process"
+          MyLog.log.info "There are: #{Parser.test_files.size}" \
+            ' test files to process'
           MyLog.log.info "List of Tests files: #{Parser.test_files} \n"
         else
-          MyLog.log.warn 'A valid Test case location has not been supplied as a command-line parameter as expected'
+          MyLog.log.warn 'A valid Test case location has not been supplied' \
+            ' as a command-line parameter as expected'
           Process.exit
         end
       end
