@@ -23,7 +23,6 @@ require 'optparse'
 require 'fileutils'
 require 'securerandom'
 
-
 # list of all the required files
 require_relative './utils/test_steps'
 require_relative './report/report'

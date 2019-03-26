@@ -119,9 +119,11 @@ module Browser
       sc_dir = CreateDirectories.construct_testspecdirs
 
       sc_file_name = if $currentTestFail
-                       "#{sc_dir}/Test_step-#{$test_step}_Failed_#{time}.png"
+                       "#{sc_dir}/Test_ID-#{$testId.delete(' ')}"\
+                        "_Test_step-#{$test_step}_Failed_#{time}.png"
                      else
-                       "#{sc_dir}/Test_step-#{$test_step}_#{time}.png"
+                       "#{sc_dir}/Test_ID-#{$testId.delete(' ')}"\
+                        "_Test_step-#{$test_step}_#{time}.png"
                      end
 
       # Screenshot capture for websites

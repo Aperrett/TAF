@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Created on 20 Sept 2017
 # @author: Andy Perrett
 #
@@ -8,18 +9,13 @@
 # create_directories.rb - Creates folder structures.
 module CreateDirectories
   # create the project directories and open the test results file,
-  # returns the screenshot directory name, the screenshot will be placed in a
-  # unique filename based upon the testStep.
+  # the screenshot will be placed in a unique filename based upon the testStep.
   # A single top-level directory named after the Project ID will be used and the
   # target sub-directories will be created for each run of the test
   #
   # ----> Project directory (working directory)
   #
   # ------->directory named after the test run ID UUID
-  #
-  # ---------->directory named after test_id
-  #
-  # ------------->directory named 'Screenshots'
 
   def self.time_now
     Time.new.strftime('%d-%b-%Y_%H_%M')
@@ -29,8 +25,7 @@ module CreateDirectories
     # create top-level directory if it doesn't already exist:
     # Results/Project_id
     project_id = $projectId.delete(' ')
-    $project_iddir = File.join('Results', project_id
-    )
+    $project_iddir = File.join('Results', project_id)
 
     FileUtils.mkdir_p($project_iddir)
 
@@ -45,11 +40,8 @@ module CreateDirectories
 
   def self.construct_testspecdirs
     # create directories for each test spec for screenshots:
-    # Results/Project_id/Run_ID_UUID/Test_ID/Screenshots
-    screenshot_dir = File.join(
-      $project_iddir, "Run_ID_#{$run_uuid}",  "#{$testId.delete(' ')}",  
-      'Screenshots'
-    )
+    # Results/Project_id/Run_ID_UUID
+    screenshot_dir = File.join($project_iddir, "Run_ID_#{$run_uuid}")
 
     abs_path_screenshot_dir = File.absolute_path(screenshot_dir)
     # abs_path_run_no_dir = File.absolute_path(runNoDir)
