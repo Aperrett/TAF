@@ -8,7 +8,6 @@ require './lib/version.rb'
 Gem::Specification.new do |taf|
   taf.name        = 'taf'
   taf.version     = Taf::Version::STRING
-  taf.date        = 'change_date'
   taf.summary     = 'TAF to allow simple web automation.'
   taf.description = 'Test Automation Framework (TAF) to allow simple test web automation - releaseflag use'
   taf.authors     = ['Andy Perrett']

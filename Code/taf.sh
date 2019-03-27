@@ -36,35 +36,46 @@ copy_taf_gem_files(){
 build_taf_gem() {
   releaseflag="$1"
   versionflag="$2"
-  datenow="$(date +'%Y-%m-%d')"
-  echo "Building Ruby Gem TAF for: $releaseflag use, with version: $versionflag, with date: $datenow"
-  rm -rf temp
-  mkdir temp
-  copy_taf_gem_files
-  sed -i -e "s/0.0.0/$versionflag/g" temp/lib/version.rb
-  rm temp/lib/version.rb-e
-  sed -i -e "s/change_date/$datenow/g" temp/taf.gemspec
-  if [ "$releaseflag" = "external" ]; then
-    rm temp/lib/functions/handlers/sso_login.rb
-    rm temp/lib/functions/handlers/sint_login.rb
-    rm temp/lib/functions/handlers/admin_portal_login.rb
-    rm temp/lib/functions/handlers/open_portal_url.rb
-    sed -i -e "s/- UKCloud Portal//g" temp/lib/functions/handlers/portal_login.rb
-    rm temp/lib/functions/handlers/portal_login.rb-e
-    sed -i -e "s/releaseflag/$releaseflag/g" temp/taf.gemspec
-  elif [ "$releaseflag" = "internal" ]; then
-    sed -i -e "s/releaseflag/$releaseflag/g" temp/taf.gemspec
-  else
-    echo "Not a valid release flag set."
+
+  if [ -z "$versionflag" ]; then
+    echo 'No version flag set.'
+    exit 1
   fi
-rm temp/taf.gemspec-e
-cd temp/
-gem build taf.gemspec
-cp -R "taf-$versionflag.gem" ../
-cd ..
-rm -rf temp
-echo ''
-echo "Built TAF Ruby Gem for: $releaseflag use, with version: $versionflag, with date: $datenow"
+
+  echo "Building Ruby Gem TAF for: $releaseflag use, with version: $versionflag"
+
+  rm -rf temp && mkdir temp
+
+  copy_taf_gem_files
+
+  case "$releaseflag" in
+    internal)
+      ;;
+    external)
+      rm temp/lib/functions/handlers/sso_login.rb
+      rm temp/lib/functions/handlers/sint_login.rb
+      rm temp/lib/functions/handlers/admin_portal_login.rb
+      rm temp/lib/functions/handlers/open_portal_url.rb
+      sed -i '' 's/- UKCloud Portal//g' \
+        temp/lib/functions/handlers/portal_login.rb \
+        temp/lib/functions/handlers/base_handler.rb
+      ;;
+    *)
+      echo 'No valid release flag set.'
+      exit 1
+      ;;
+  esac
+
+  sed -i '' "s/0.0.0/$versionflag/g" temp/lib/version.rb
+  sed -i '' "s/releaseflag/$releaseflag/g" temp/taf.gemspec
+
+  cd temp/
+  gem build taf.gemspec
+  cp "taf-$versionflag.gem" ../
+  cd ..
+  rm -rf temp
+
+  echo "Built TAF Ruby Gem for: $releaseflag use, with version: $versionflag"
 }
 
 delete_results() {
