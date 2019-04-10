@@ -58,19 +58,8 @@ module JunitReport
       end
     end
 
-    # output XML content to console for debug
-    # puts builder.to_xml
-
-    # open the test suite (TS) summary file for writing if not already open
-    if !File.exist?($TestSuiteSummaryXML) || $TestSuiteSummaryXML.closed?
-      ts_summary_file_xml = File.open($TestSuiteSummaryXML, 'w+')
-      ts_summary_file_xml.write builder.to_xml
-    else
-      MyLog.log.warn 'test suite summary file xml name:' \
-        " #{$TestSuiteSummaryXML} is already open"
-    end
-
-    # if the file is open then close it
-    ts_summary_file_xml.close unless ts_summary_file_xml.closed?
+    ts_summary_file_xml = File.open($TestSuiteSummaryXML, 'w')
+    ts_summary_file_xml.write builder.to_xml
+    ts_summary_file_xml.close
   end
 end

@@ -1,0 +1,29 @@
+version: '2.2'
+services:
+  app:
+    image: ruby:2.6.1-alpine3.8
+    init: true
+    command:
+      - ruby
+      - -run
+      - -e
+      - httpd
+      - index.html
+      - -p
+      - '5000'
+    volumes:
+      - ./index.html:/index.html
+
+  taf:
+    build:
+      context: .
+      dockerfile: Dockerfile.e2e
+    command:
+      - -b
+      - firefox-headless
+      - -t
+      - /e2e/fixtures
+    depends_on:
+      - app
+    volumes:
+      - ./fixtures:/e2e/fixtures

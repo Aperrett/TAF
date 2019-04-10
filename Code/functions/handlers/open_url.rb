@@ -9,14 +9,23 @@ module TestSteps
         url = step_attributes[:testvalue]
 
         Browser.open_browser
+
+        url = if ENV[url]
+                ENV[url.to_s]
+              else
+                step_attributes[:testvalue]
+              end
         Browser.b.goto(url)
-        sleep 2
-        url_nme = Browser.b.url
-        if url_nme == url
+        OpenUrl.check_current_url(url)
+      end
+
+      def self.check_current_url(url)
+        url_check = Browser.b.url
+        if url_check == url
           MyLog.log.info("Opened URL: #{url}")
           return true
         else
-          MyLog.log.warn("URL not open: #{url} - opened #{url_nme} instead")
+          MyLog.log.warn("URL not open: #{url} - opened #{url_check} instead")
           return false
         end
       end

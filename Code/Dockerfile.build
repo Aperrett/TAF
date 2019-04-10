@@ -1,0 +1,32 @@
+FROM ruby:2.6.1-alpine3.8 AS builder
+
+WORKDIR /taf
+COPY taf.gemspec           .
+COPY bin                   bin
+COPY lib                   lib
+COPY functions             lib/functions
+COPY parser                lib/parser
+COPY report                lib/report
+COPY utils                 lib/utils
+COPY main.rb taf_config.rb lib/
+
+ARG VERSION
+RUN sed -i "s/0.0.0/$VERSION/g" lib/version.rb
+
+FROM builder AS internal
+
+RUN sed -i 's/releaseflag/internal/g' taf.gemspec
+RUN gem build -o taf.gem taf.gemspec
+
+FROM builder AS external
+
+RUN rm lib/functions/handlers/sso_login.rb \
+  lib/functions/handlers/sint_login.rb \
+  lib/functions/handlers/admin_portal_login.rb
+
+RUN sed -i 's/- UKCloud Portal//g' \
+  lib/functions/handlers/portal_login.rb \
+  lib/functions/handlers/base_handler.rb
+
+RUN sed -i 's/releaseflag/external/g' taf.gemspec
+RUN gem build -o taf.gem taf.gemspec

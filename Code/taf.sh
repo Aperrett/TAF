@@ -21,18 +21,6 @@ check_ruby_version() {
   fi
 }
 
-copy_taf_gem_files(){
-  cp -R lib temp/
-  cp -R bin temp/
-  cp -R taf.gemspec temp/
-  cp -R main.rb temp/lib/
-  cp -R taf_config.rb temp/lib/
-  cp -R report temp/lib/
-  cp -R parser temp/lib/
-  cp -R utils temp/lib/
-  cp -R functions temp/lib/
-}
-
 build_taf_gem() {
   releaseflag="$1"
   versionflag="$2"
@@ -44,21 +32,10 @@ build_taf_gem() {
 
   echo "Building Ruby Gem TAF for: $releaseflag use, with version: $versionflag"
 
-  rm -rf temp && mkdir temp
-
-  copy_taf_gem_files
-
   case "$releaseflag" in
-    internal)
-      ;;
-    external)
-      rm temp/lib/functions/handlers/sso_login.rb
-      rm temp/lib/functions/handlers/sint_login.rb
-      rm temp/lib/functions/handlers/admin_portal_login.rb
-      rm temp/lib/functions/handlers/open_portal_url.rb
-      sed -i '' 's/- UKCloud Portal//g' \
-        temp/lib/functions/handlers/portal_login.rb \
-        temp/lib/functions/handlers/base_handler.rb
+    external|internal)
+        docker build -f Dockerfile.build -t "taf:$releaseflag-latest" \
+          --build-arg VERSION="$versionflag" --target "$releaseflag" .
       ;;
     *)
       echo 'No valid release flag set.'
@@ -66,14 +43,10 @@ build_taf_gem() {
       ;;
   esac
 
-  sed -i '' "s/0.0.0/$versionflag/g" temp/lib/version.rb
-  sed -i '' "s/releaseflag/$releaseflag/g" temp/taf.gemspec
-
-  cd temp/
-  gem build taf.gemspec
-  cp "taf-$versionflag.gem" ../
-  cd ..
-  rm -rf temp
+  docker container rm -f taf-build || true
+  docker container create --name taf-build "taf:$releaseflag-latest"
+  docker container cp taf-build:/taf/taf.gem "taf-$releaseflag-$versionflag.gem"
+  docker container rm -f taf-build
 
   echo "Built TAF Ruby Gem for: $releaseflag use, with version: $versionflag"
 }
