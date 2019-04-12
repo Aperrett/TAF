@@ -18,9 +18,6 @@ module TestSteps
       rescue StandardError
         MyLog.log.warn("Dropdown item: #{value2} has NOT been selected")
         false
-      rescue StandardError
-        MyLog.log.warn("the dropdown: #{dropdown} does not exist")
-        false
       end
     end
   end

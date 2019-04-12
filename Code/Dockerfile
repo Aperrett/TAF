@@ -1,4 +1,4 @@
-FROM ruby:2.6.1-alpine3.8
+FROM ruby:2.6.2-alpine3.9
 
 LABEL author="Andy Perrett"
 
@@ -9,27 +9,19 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repos
 RUN apk --update add --no-cache \
     build-base \
     curl \
-    unzip \
-    libuuid=2.32-r0 \
-    libmount=2.32-r0 \
-    libblkid=2.32-r0 \
-    expat=2.2.5-r0 \
-    git \
-    libexif \
-    libffi-dev \
     firefox \
     font-misc-misc \
     #chromium \
     #chromium-chromedriver \
     # VNC for debugging.
-    dbus=1.10.24-r1 \
-    dumb-init=1.2.2-r1 \
-    fluxbox=1.3.7-r2 \
-    gnutls=3.6.2-r0 \
-    libxshmfence-dev=1.2-r2 \
-    x11vnc=0.9.14-r4 \
-    xdpyinfo=1.3.2-r0 \
-    xvfb=1.19.6-r3 \
+    dbus\
+    dumb-init \
+    fluxbox \
+    gnutls \
+    libxshmfence-dev \
+    x11vnc \
+    xdpyinfo \
+    xvfb \
     && rm -rf /var/cache/apk/*
 
 #RUN apk upgrade

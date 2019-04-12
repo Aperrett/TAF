@@ -14,16 +14,16 @@ services:
     volumes:
       - ./index.html:/index.html
 
-  taf:
+  test:
     build:
       context: .
       dockerfile: Dockerfile.e2e
-    command:
-      - -b
-      - firefox-headless
-      - -t
-      - /e2e/fixtures
     depends_on:
       - app
+    environment:
+      FAKETIME_DONT_FAKE_MONOTONIC: 1
+      FAKETIME: '2018-12-24 20:30:00'
     volumes:
+      - ../spec_helper.rb:/e2e/spec_helper.rb
       - ./fixtures:/e2e/fixtures
+      - ./tests:/e2e/spec

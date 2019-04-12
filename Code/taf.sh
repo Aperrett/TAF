@@ -89,6 +89,12 @@ security_audit() {
            bundle audit check --update
 }
 
+test() {
+  # Run end-to-end tests.
+  docker-compose -f spec/end_to_end/docker-compose.yml up \
+    --build --exit-code-from test
+}
+
 help () {
   check_ruby_version
   echo ""
@@ -108,6 +114,7 @@ help () {
   echo "Misc Commands:"
   echo "  help                              - Show this message."
   echo "  lint                              - Run rubocop against taf code."
+  echo "  test                              - Run tests against taf code."
   echo "  security_audit                    - Run Security Audit of Ruby Gems used for the TAF."
 }
 
@@ -135,6 +142,9 @@ main () {
       ;;
     lint)
       lint
+      ;;
+    test)
+      test
       ;;
     *)
       help 1>&2

@@ -1,4 +1,4 @@
-FROM ruby:2.6.1-alpine3.8
+FROM ruby:2.6.2-alpine3.9
 
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
     && echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories \
@@ -6,22 +6,27 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repos
 
 RUN apk add --no-cache --update \
   build-base \
-  ca-certificates \
   curl \
-  expat=2.2.5-r0 \
   firefox \
   font-misc-misc \
-  libuuid=2.32-r0 \
-  libmount=2.32-r0 \
-  libblkid=2.32-r0 \
+  git \
   tar
+
+RUN git clone https://github.com/wolfcw/libfaketime \
+  && cd libfaketime && make && make install
+
+ENV LD_PRELOAD=/usr/local/lib/faketime/libfaketime.so.1
 
 ARG GECKODRIVER_VERSION=0.23.0
 RUN curl -Ls https://github.com/mozilla/geckodriver/releases/download/v$GECKODRIVER_VERSION/geckodriver-v$GECKODRIVER_VERSION-linux64.tar.gz | tar xz \
   && chmod 755 geckodriver \
   && mv geckodriver /usr/local/bin/geckodriver
 
+RUN gem install rspec
+
 COPY --from=taf:external-latest /taf/taf.gem .
 RUN gem install taf.gem
 
-ENTRYPOINT ["taf"]
+WORKDIR /e2e
+
+ENTRYPOINT ["rspec"]

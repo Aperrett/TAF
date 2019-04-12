@@ -38,10 +38,13 @@ module ReportSummary
       end
     end
 
+    duration = TimeDifference.between(
+      $test_end_time, $test_start_time
+    ).humanize || 0
+
     MyLog.log.info "Total Tests started at: #{$test_start_time}"
     MyLog.log.info "Total Tests finished at: #{$test_end_time}"
-    MyLog.log.info 'Total Tests duration: ' \
-      + TimeDifference.between($test_end_time, $test_start_time).humanize
+    MyLog.log.info "Total Tests duration: #{duration}"
     MyLog.log.info "Total Tests Passed: #{$totalTestPasses}".green
     MyLog.log.info "Total Tests Failed: #{$totalTestFailures}".red
     MyLog.log.info "Total Tests Skipped: #{$totalTestNotrun}".blue
