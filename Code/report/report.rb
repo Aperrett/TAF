@@ -17,7 +17,7 @@ module Report
 
   # print the test Step info to the test results file
   def self.print_test_step_header(test_file_name, test_step_index)
-    MyLog.log.info "Test start time: #{current_time}"
+    @test_start_time = current_time
     MyLog.log.info "Test step: #{$test_step} : #{$test_step_des}"
 
     step = {
@@ -79,7 +79,12 @@ module Report
       $skiptestStep_xml[test_file_name] ||= []
       $skiptestStep_xml[test_file_name][test_step_index] = skipstep
     end
-    MyLog.log.info "Test end time: #{current_time}"
+    test_end_time = current_time
+
+    test_duration = TimeDifference.between(
+      test_end_time, @test_start_time
+    ).humanize || 0
+    MyLog.log.info "Test step duration: #{test_duration}"
   end
 
   # check if the test failure threshold has been reached for total failures or consecutive failures.

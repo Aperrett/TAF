@@ -17,8 +17,6 @@ module ReportSummary
       Test file executed: #{test_file_name}
       Browser type used: #{$browserType}
       Browser version: #{Browser.browser_version}
-      Started at: #{$test_case_start_time}
-      Finished at: #{$test_case_end_time}
       There are: #{$testStepPasses} Passes
       There are: #{$testStepFailures} Failures
       There are: #{$testStepNotrun} Skipped Tests \n
