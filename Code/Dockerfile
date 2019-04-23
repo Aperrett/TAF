@@ -11,6 +11,7 @@ RUN apk --update add --no-cache \
     curl \
     firefox \
     font-misc-misc \
+    git \
     #chromium \
     #chromium-chromedriver \
     # VNC for debugging.
