@@ -31,7 +31,7 @@ GEM
     selenium-webdriver (3.141.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.2, >= 1.2.2)
-    taf (0.2.5)
+    taf (0.2.6)
       bundler-audit (~> 0.6)
       colored (~> 1.2)
       logger (~> 1.2)

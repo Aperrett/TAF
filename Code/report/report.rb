@@ -87,7 +87,8 @@ module Report
     MyLog.log.info "Test step duration: #{test_duration}"
   end
 
-  # check if the test failure threshold has been reached for total failures or consecutive failures.
+  # check if the test failure threshold has been reached for total failures
+  # or consecutive failures.
   # If a certain number of consecutive tests fail then throw an exception
   def self.check_failure_threshold(test_file_name, _test_step_index)
     consecutive_fail_threshold = 5

@@ -20,13 +20,12 @@ RUN gem build -o taf.gem taf.gemspec
 
 FROM builder AS external
 
-RUN rm lib/functions/handlers/sso_login.rb \
-  lib/functions/handlers/sint_login.rb \
-  lib/functions/handlers/admin_portal_login.rb
-
-RUN sed -i 's/- UKCloud Portal//g' \
-  lib/functions/handlers/portal_login.rb \
+RUN sed -i 's/- UKCloud //g' \
+  lib/functions/handlers/login.rb \
   lib/functions/handlers/base_handler.rb
+
+RUN sed -i 's/- SINT /blah/g' \
+  lib/functions/handlers/login.rb
 
 RUN sed -i 's/releaseflag/external/g' taf.gemspec
 RUN gem build -o taf.gem taf.gemspec
