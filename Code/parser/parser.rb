@@ -7,11 +7,9 @@
 # parser.rb - basic parser functions
 module Parser
   require_relative '../taf_config.rb'
-  # variables:
-  @xlsx_file_name_type = '.xlsx'
 
   def self.test_files
-    @test_files ||= Dir.glob("#{$testcasesFolder}/*.xlsx").reject do |file|
+    @test_files ||= Dir.glob("#{$testcasesFolder}/*.json").reject do |file|
       File.basename(file).start_with?('~$')
     end.sort
   end
@@ -20,17 +18,20 @@ module Parser
   def self.read_test_data(test_file_name)
     # get the file type
     file_type = File.extname(test_file_name)
-    if file_type.casecmp(@xlsx_file_name_type).zero?
+    if file_type.casecmp('.json').zero?
       MyLog.log.info "Processing test file: #{test_file_name}"
       MyLog.log.info "Browser Type: #{$browserType}"
-      $xlsxDoc = RubyXL::Parser.parse(test_file_name)
-      XlsxParser.parse_xlxs_test_header_data
-      return 'XLSX'
+      json = File.read(test_file_name)
+      parse_json = JSON.parse(json)
+
+      JsonParser.parse_test_header_data(parse_json)
+      return parse_json
     else
       # if unable to read the test file list then construct a custom error
       # message and raise an exception.
+      MyLog.log.info 'Not a valid JSON File Type' if test_file_name != 'JSON'
       error_to_display = "Test File Name: '#{test_file_name}' " \
-                         'type not recognised (must be .xslx)'
+                         'type not recognised (must be .xslx or .json)'
       raise IOError, error_to_display
     end
 
@@ -41,7 +42,7 @@ module Parser
   end
 
   # parseTestStepData
-  def self.parse_test_step_data(test_file_type)
-    XlsxParser.parse_test_step_data(test_file_type)
+  def self.parse_test_step_data(parse_json)
+    JsonParser.parse_test_step_data(parse_json)
   end
 end

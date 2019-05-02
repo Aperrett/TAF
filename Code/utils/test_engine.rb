@@ -19,7 +19,7 @@ module TestEngine
     Parser.test_files.each_with_index do |test_file_name, test_file_index|
       begin
         # read in the test data
-        test_file_type = Parser.read_test_data(test_file_name)
+        tests = Parser.read_test_data(test_file_name)
         # if unable to read the test data, show the error and move onto the
         # next file (if there is one)
       rescue StandardError => error
@@ -31,26 +31,18 @@ module TestEngine
       # create project folders - these only need creating once per test suite
       CreateDirectories.construct_projectdirs
 
-      # loop through the test file
-      MyLog.log.info 'Not a valid XLSX File Type' if test_file_type != 'XLSX'
-
       # get the test case start time
       $test_case_start_time = Report.current_time
       # initialise the test end time
       $test_case_end_time = Report.current_time
 
       begin
-        test_steps = Parser.parse_test_step_data(test_file_type)
-
-        test_steps.each_with_index do |test_step, step_index|
-          $test_step     = test_step[:testStep]
-          $test_step_des = test_step[:testdesc]
-          screen_shot    = test_step[:screenShotData]
-
+        tests['steps'].each do |test_step|
+          parsed_steps = Parser.parse_test_step_data(test_step)
           # process the test step data
-          TestSteps.process_test_steps(test_file_name, step_index, test_step)
+          TestSteps.process_test_steps(test_file_name, parsed_steps[:testStep], parsed_steps)
           # see if screenshot required
-          Browser.check_save_screenshot(screen_shot)
+          Browser.check_save_screenshot(parsed_steps[:screenShotData])
         end
       rescue TafError => error
         warn error

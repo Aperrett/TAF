@@ -16,14 +16,14 @@ module Report
   end
 
   # print the test Step info to the test results file
-  def self.print_test_step_header(test_file_name, test_step_index)
+  def self.print_test_step_header(test_file_name, test_step_index, step_attributes)
     @test_start_time = current_time
-    MyLog.log.info "Test step: #{$test_step} : #{$test_step_des}"
+    MyLog.log.info "Test step: #{step_attributes[:testStep]} : #{step_attributes[:testdesc]}"
 
     step = {
-      'id' => $test_step,
-      'classname' => 'SuiteID: ' + $testId.to_s + ' Test Step: ' + $test_step.to_s + ' ' + $test_step_des.to_s,
-      'name' => $test_step_des,
+      'id' => step_attributes[:testStep],
+      'classname' => 'SuiteID: ' + $testId.to_s + ' Test Step: ' + step_attributes[:testStep].to_s + ' ' + step_attributes[:testdesc].to_s,
+      'name' => step_attributes[:testdesc],
       'file' => test_file_name
     }
     # output to console to show test step
@@ -37,19 +37,19 @@ module Report
   end
 
   # print the Pass / Fail status of a test to the test results file
-  def self.test_pass_fail(pass_fail, test_file_name, test_step_index)
+  def self.test_pass_fail(pass_fail, test_file_name, test_step_index, step_attributes)
     if pass_fail == true
       $previousTestFail = $currentTestFail
       $currentTestFail = false
       $testStepPasses += 1
-      MyLog.log.info "Test #{$test_step} has Passed ".green
+      MyLog.log.info "Test #{step_attributes[:testStep]} has Passed ".green
     elsif pass_fail == false
       $previousTestFail = $currentTestFail
       $currentTestFail = true
       $testStepFailures += 1
-      MyLog.log.info "Test #{$test_step} has FAILED ".red
+      MyLog.log.info "Test #{step_attributes[:testStep]} has FAILED ".red
       failstep = {
-        'message' => 'SuiteID: ' + $testId.to_s + ' Test Step: ' + $test_step.to_s + ' Test has FAILED - Check logs',
+        'message' => 'SuiteID: ' + $testId.to_s + ' Test Step: ' + step_attributes[:testStep].to_s + ' Test has FAILED - Check logs',
         'type' => 'FAILURE',
         'file' => test_file_name
       }
@@ -64,9 +64,9 @@ module Report
     else
       $currentTestFail = false
       $testStepNotrun += 1
-      MyLog.log.info "Test #{$test_step} no checks performed ".blue
+      MyLog.log.info "Test #{step_attributes[:testStep]} no checks performed ".blue
       skipstep = {
-        'message' => 'SuiteID: ' + $testId.to_s + ' Test Step: ' + $test_step.to_s + ' No checks performed - Check logs',
+        'message' => 'SuiteID: ' + $testId.to_s + ' Test Step: ' + step_attributes[:testStep].to_s + ' No checks performed - Check logs',
         'type' => 'SKIPPED',
         'file' => test_file_name
       }

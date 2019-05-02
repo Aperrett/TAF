@@ -71,8 +71,6 @@ module Main
      $totalTestNotrun = 0
      $previousTestFail = false
      $currentTestFail = false
-     # initialised stores for the input xlsx test data
-     $XlsxDoc = ''
      # parses the cmd line imput into the taf
      Main.cmdline_input
    end

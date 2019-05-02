@@ -18,10 +18,10 @@ require 'net/ping'
 require 'nokogiri'
 require 'time_difference'
 require 'colored'
-require 'rubyXL'
 require 'optparse'
 require 'fileutils'
 require 'securerandom'
+require 'json'
 
 # list of all the required files
 require_relative './utils/test_steps'
@@ -34,7 +34,7 @@ require_relative './utils/exceptions'
 require_relative './report/junit_report'
 require_relative './report/report_summary'
 require_relative './parser/parser'
-require_relative './parser/xlsx_parser'
+require_relative './parser/json_parser'
 
 # Require all test step handlers, which register themselves with
 # TestStep.handlers when the files are required.
