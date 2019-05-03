@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>TAF Create TAF Spec</title>
+    <style>
+
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+
+  <body class="container-fluid">
+    <h1>TAF Create Test Spec</h1>
+    <table>
+      <tr>
+        <th>Test ID:</th>
+        <th>Project ID:</th>
+        <th>Test Description:</th>
+      </tr>
+      <tr>
+        <form>
+          <td><input type="text" id="test_id"></td>
+          <td><input type="text" id="project_id"></td>
+          <td><input type="text" id="test_desc"></td>
+        </form>
+      </tr>
+    </table>
+    <hr>
+    <script language="javascript">
+      var rowID = 1
+
+      const locatorOptions = [
+        "action", "class", "css", "href", "id", "index", "method", "name", "src", "text", "title", "value", "xpath"
+      ]
+
+      const loginOptions = [
+        "dummy_login", "another_login", "sso_login"
+      ]
+
+      const testFunctions = [
+        {
+          name: "browser_back",
+          display_name: "Browser Back",
+          steps: []
+        },
+        {
+          name: "browser_forward",
+          display_name: "Browser Forward",
+          steps: []
+        },
+        {
+          name: "browser_quit",
+          display_name: "Browser Quit",
+          steps: []
+        },
+        {
+          name: "browser_refresh",
+          display_name: "Browser Refresh",
+          steps: []
+        },
+        {
+          name: "capture_alert",
+          display_name: "Capture Alert",
+          steps: []
+        },
+        {
+          name: "check_box",
+          display_name: 'Check Box',
+          steps: [
+            { type: 'text', placeholder: 'Value' },
+            { type: 'dropdown', options: locatorOptions }
+          ]
+        },
+        {
+          name: "check_box_data",
+          display_name: 'Check Box Data',
+          steps: [
+            { type: 'text', placeholder: 'Value' },
+            { type: 'dropdown', options: locatorOptions },
+            { type: 'text', placeholder: 'Value' }
+          ]
+        },
+        {
+          name: "check_browser_title",
+          display_name: 'Check Browser Title',
+          steps: [
+            { type: 'text', placeholder: 'Title' }
+          ]
+        },
+        {
+          name: "check_log_file",
+          display_name: 'Check Log File',
+          steps: [
+            { type: 'text', placeholder: 'Text' },
+            { type: 'text', placeholder: 'Filename' }
+          ]
+        },
+        {
+          name: "check_screen_data",
+          display_name: 'Check Screen Data',
+          steps: [
+            { type: 'text', placeholder: 'Text' }
+          ]
+        },
+        {
+          name: "check_url",
+          display_name: 'Check URL',
+          steps: [
+            { type: 'text', placeholder: 'URL' }
+          ]
+        },
+        {
+          name: "click_button",
+          display_name: 'Click Button',
+          steps: [
+            { type: 'text', placeholder: 'Value' },
+            { type: 'dropdown', options: locatorOptions }
+          ]
+        },
+        {
+          name: "execute_system_command",
+          display_name: 'Execute System Command',
+          steps: [
+            { type: 'text', placeholder: 'Command' }
+          ]
+        },
+        {
+          name: "handle_browser_window",
+          display_name: 'Handle Browser Window',
+          steps: [
+            { type: 'text', placeholder: 'Browser title' }
+          ]
+        },
+        {
+          name: "ipause",
+          display_name: 'Ipause',
+          steps: [
+            { type: 'number', placeholder: 'Time' }
+          ]
+        },
+        {
+          name: "list_all_dropdown_values",
+          display_name: 'List All Dropdown Values',
+          steps: [
+            { type: 'text', placeholder: 'Value' },
+            { type: 'dropdown', options: locatorOptions }
+          ]
+        },
+        {
+          name: "login",
+          display_name: 'Login',
+          steps: [
+            { type: 'dropdown', options: loginOptions },
+            {},
+            { type: 'text', placeholder: 'Username Envvar' }
+          ]
+        },
+        {
+          name: "open_url",
+          display_name: 'Open URL',
+          steps: [
+            { type: 'text', placeholder: 'URL' }
+          ]
+        },
+        {
+          name: "ping_test",
+          display_name: 'Ping Test',
+          steps: [
+            { type: 'text', placeholder: 'IP/Url' }
+          ]
+        },
+        {
+          name: "radio_button",
+          display_name: 'Radio Button',
+          steps: [
+            { type: 'text', placeholder: 'Input group' },
+            { type: 'dropdown', options: locatorOptions },
+            { type: 'text', placeholder: 'Radio button' },
+            { type: 'dropdown', options: locatorOptions }
+          ]
+        },
+        {
+          name: "select_dropdown",
+          display_name: 'Select Dropdown',
+          steps: [
+            { type: 'text', placeholder: 'Dropdown box' },
+            { type: 'dropdown', options: locatorOptions },
+            { type: 'text', placeholder: 'Option value' },
+            { type: 'dropdown', options: locatorOptions }
+          ]
+        },
+        {
+          name: "send_special_keys",
+          display_name: 'Send Special Keys',
+          steps: [
+            { type: 'text', placeholder: 'Special Key' }
+          ]
+        },
+        {
+          name: "write_box_data",
+          display_name: 'Write Box Data',
+          steps: [
+            { type: 'text', placeholder: 'Value' },
+            { type: 'dropdown', options: locatorOptions },
+            { type: 'text', placeholder: 'Data to type' }
+          ]
+        }
+      ]
+
+      function getTestSteps(name) {
+        var output = null
+        testFunctions.some(function (object) {
+          if (object.name == name) {
+            output = object.steps
+          }
+        })
+        return output
+      }
+
+      function getTestNames() {
+        var names = []
+        testFunctions.forEach(function (object) {
+          names.push([object.name, object.display_name])
+        })
+        return names
+      }
+
+      function getTestOptions() {
+        var outstr = ""
+        getTestNames().forEach(function (name) {
+          outstr += "<option value='" + name[0] + "'>" + name[1] + "</option>"
+        })
+        return outstr
+      }
+
+      function displayTestOptions(element) {
+        var steps = getTestSteps(element.value)
+        var row = element.parentElement.parentElement
+        generateTestOption(row, steps)
+      }
+
+      function generateRow(rowID) {
+        return "<td><input type='checkbox' name='chk'/></td>" +
+          "<td><input type='text' name='test_desc'/></td>" +
+          "<td><select name='test_function' onchange='displayTestOptions(this)'><option value=''></option>" +
+          getTestOptions() +
+          "</select>" +
+          "<td></td><td></td><td></td><td></td>" +
+          "<td><select name='screenshot'><option value='no'>No</option><option value='yes'>Yes</option></select>" +
+          "<td><select name='skip_test_case'><option value='no'>No</option><option value='yes'>Yes</option></select>"
+      }
+
+      function importRow(step) {
+        return "<td><input type='checkbox' name='chk' /></td>" +
+          "<td><input type='text' name='test_desc' value='" + step.description + "'/></td>" +
+          "<td><select name='test_function' onchange='displayTestOptions(this)'><option value=''></option>" +
+          getTestOptions() +
+          "</select>" +
+          "<td></td><td></td><td></td><td></td>" +
+          "<td><select name='screenshot'>" + 
+          "<option value='no'" + (step.screenshot == 'no' ? ' selected' : '') + ">No</option>" +
+          "<option value='yes'" + (step.screenshot == 'yes' ? ' selected' : '') + ">Yes</option>" +
+          "</select>" +
+          "<td><select name='skip_test_case'>" + 
+          "<option value='no'" + (step.skipTestCase == 'no' ? ' selected' : '') + ">No</option>" +
+          "<option value='yes'" + (step.skipTestCase == 'yes' ? ' selected' : '') + ">Yes</option>" +
+          "</select>"
+      }
+
+      function generateOptions(optionsList) {
+        var outstr = ""
+        optionsList.forEach(function (name) {
+          outstr += "<option value=" + name + ">" + name + "</option>"
+        })
+        return outstr
+      }
+
+      function generateTestOption(row, steps) {
+        colOffset = 3
+        for (i = 0; i < 4; i++) {
+          row.children[colOffset + i].innerHTML = "<td></td>"
+        }
+        for(i = 0; i < steps.length; i++) {
+          step = steps[i]
+          if (step.type == 'text') {
+            row.children[colOffset + i].innerHTML = "<td><input name='input" + i + "' type='text' placeholder='" + step.placeholder + "' /></td>"
+          } else if (step.type == 'dropdown') {
+            row.children[colOffset + i].innerHTML = "<td><select name='select" + i + "' >" + generateOptions(step.options) + "</select></td>"
+          } else if (step.type == 'number') {
+            row.children[colOffset + i].innerHTML = "<td><input name='input" + i + "' type='number' min=0 placeholder='" + step.placeholder + "' /></td>"
+          }
+        }
+      }
+
+      function addRow(step = null) {
+        var table = document.getElementById('table_content')
+        var row = table.insertRow(-1)
+        rowID += 1
+        row.id = 'row' + rowID
+        if (step) {
+          row.innerHTML = importRow(step)
+        } else {
+          row.innerHTML = generateRow()  
+        }
+      }
+
+      function deleteRow(tableID) {
+        try {
+          var table = document.getElementById(tableID)
+          var rowCount = table.rows.length;
+
+          for (var i = 0; i < rowCount; i++) {
+            var row = table.rows[i]
+            var chkbox = row.cells[0].childNodes[0]
+            if (null != chkbox && true == chkbox.checked) {
+              if (rowCount <= 2) {
+                alert("Cannot delete all the rows.")
+                break
+              }
+              table.deleteRow(i)
+              rowCount--
+              i--
+            }
+          }
+        } catch (e) {
+          alert(e)
+        }
+      }
+
+      function exportJson() {
+        out = document.getElementById('exported_json')
+        table = document.getElementById('dataTable')
+        rows = table.children[1].children
+
+        steps = []
+        currentStep = 1
+        for(i = 0; i < rows.length; i++) {
+          row = rows[i]
+
+          if (getColumnValue(row, 2) == "") {
+            continue
+          }
+
+          step = {
+            currentStep: currentStep,
+            description: getColumnValue(row, 1),
+            function: getColumnValue(row, 2),
+            screenshot: getColumnValue(row, 7),
+            skipTestCase: getColumnValue(row, 8)
+          }
+
+          for (j = 0; j < 4; j++) {
+            if (getColumnValue(row, j + 3) != null) {
+              step["value" + j] = getColumnValue(row, j + 3)
+            }
+          }
+          steps.push(step)
+          currentStep += 1
+        }
+
+        json = {
+          testId: valueById('test_id') || '',
+          projectId: valueById('project_id') || '',
+          testDescription: valueById('test_desc') || '',
+          steps: steps
+        }
+
+        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(json))
+        var dlAnchorElem = document.getElementById('downloadAnchorElem')
+        dlAnchorElem.setAttribute("href", dataStr)
+        dlAnchorElem.setAttribute("download", json.projectId + "-" + json.testId + "-taf.json")
+        dlAnchorElem.click()
+      }
+
+      function getColumnValue(row, index) {
+        if (row.children[index].children[0] != undefined) {
+          return row.children[index].children[0].value
+        } else {
+          return null
+        }
+      }
+
+      function valueById(id) {
+        return document.getElementById(id).value
+      }
+
+      function rowById(id) {
+        return document.getElementById('row' + id)
+      }
+
+      function selectOption(select, option) {
+        index = null
+        for (let child of select.children) {
+          if (child.value == option) {
+            index = child.index
+          }
+        }
+        if (index) {
+          select.selectedIndex = index
+        }
+      }
+
+      function showJsonInput() {
+        document.getElementById('json_input').style.display = 'block'
+      }
+
+      function importJson(jsonSource) {
+        document.getElementById('table_content').innerHTML = ""
+        json = JSON.parse(jsonSource.value)
+        document.getElementById('test_id').value = json.testId
+        document.getElementById('project_id').value = json.projectId
+        document.getElementById('test_desc').value = json.testDescription
+        json.steps.forEach(function(step) {
+          addRow(step)
+          row = rowById(rowID)
+          select = row.children[2].children[0]
+          selectOption(select, step.function)
+          select.onchange()
+          for (i = 0; i < 4; i++) {
+            value = step['value' + i]
+            if (value) {
+              value = value.toString()
+              element = row.children[3 + i].children[0]
+              if (element.tagName == 'INPUT') {
+                element.value = value
+              } else if (element.tagName == 'SELECT') {
+                selectOption(element, value)
+              }
+            }
+          }
+        })
+
+        jsonSource.style.display = "none"
+      }
+    </script>
+    <div class="table-responsive">
+      <table class="table" id="dataTable" width="450px" border="2">
+        <thead>
+          <tr>
+            <th>Select:</th>
+            <th>Test Step Description:</th>
+            <th>Test Step Function:</th>
+            <th>Test Value 1:</th>
+            <th>Locator 1:</th>
+            <th>Test Value 2:</th>
+            <th>Locator 2:</th>
+            <th>Screenshot:</th>
+            <th>Skip Test Case:</th>
+          </tr>
+        </thead>
+        <tbody id="table_content">
+          <tr id='row1'>
+            <script>rowById(1).innerHTML = generateRow()</script>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <input type="button" value="Add Row" onclick="addRow()" />
+    <input type="button" value="Delete Row" onclick="deleteRow('dataTable')" />
+    <button onclick="exportJson()">Export</button>
+    <button onclick="showJsonInput()">Import</button>
+    <a id="downloadAnchorElem" style="display:none"></a>
+    <textarea id="json_input" style="display:none" onchange="importJson(this)" rows=8 cols=80></textarea>
+  </body>
+</html>
