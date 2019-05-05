@@ -13,15 +13,10 @@
     <h1>TAF Create Test Spec</h1>
     <table>
       <tr>
-        <th>Test ID:</th>
-        <th>Project ID:</th>
-        <th>Test Description:</th>
-      </tr>
-      <tr>
         <form>
-          <td><input type="text" id="test_id"></td>
-          <td><input type="text" id="project_id"></td>
-          <td><input type="text" id="test_desc"></td>
+          <td><input data-toggle="tooltip" title="input a test id" type="text" id="test_id" placeholder= "Test ID:"></td>
+          <td><input data-toggle="tooltip" title="input a project id" type="text" id="project_id" placeholder= "Project ID:"></td>
+          <td><input data-toggle="tooltip" title="input a test descrtiption" type="text" id="test_desc" placeholder= "Test Description:"></td>
         </form>
       </tr>
     </table>
@@ -34,7 +29,7 @@
       ]
 
       const loginOptions = [
-        "dummy_login", "another_login", "sso_login"
+        "dummy_login", "test_login", "alogin_login", "sso_login"
       ]
 
       const testFunctions = [
@@ -432,6 +427,10 @@
 
         jsonSource.style.display = "none"
       }
+
+      $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();   
+      });
     </script>
     <div class="table-responsive">
       <table class="table" id="dataTable" width="450px" border="2">
@@ -455,10 +454,10 @@
         </tbody>
       </table>
     </div>
-    <input type="button" value="Add Row" onclick="addRow()" />
-    <input type="button" value="Delete Row" onclick="deleteRow('dataTable')" />
-    <button onclick="exportJson()">Export</button>
-    <button onclick="showJsonInput()">Import</button>
+    <input data-toggle="tooltip" title="Add new row" type="button" value="Add Row" onclick="addRow()" />
+    <input data-toggle="tooltip" title="Select a check box to delete a row" type="button" value="Delete Row" onclick="deleteRow('dataTable')" />
+    <button data-toggle="tooltip" title="Export tests to a json file" onclick="exportJson()">Export</button>
+    <button data-toggle="tooltip" title="Import json content in to the text box once button has been clicked" onclick="showJsonInput()">Import</button>
     <a id="downloadAnchorElem" style="display:none"></a>
     <textarea id="json_input" style="display:none" onchange="importJson(this)" rows=8 cols=80></textarea>
   </body>
