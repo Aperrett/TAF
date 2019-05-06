@@ -252,11 +252,11 @@
           getTestOptions() +
           "</select>" +
           "<td></td><td></td><td></td><td></td>" +
-          "<td><select name='screenshot'>" + 
+          "<td><select name='screenshot'>" +
           "<option value='no'" + (step.screenshot == 'no' ? ' selected' : '') + ">No</option>" +
           "<option value='yes'" + (step.screenshot == 'yes' ? ' selected' : '') + ">Yes</option>" +
           "</select>" +
-          "<td><select name='skip_test_case'>" + 
+          "<td><select name='skip_test_case'>" +
           "<option value='no'" + (step.skipTestCase == 'no' ? ' selected' : '') + ">No</option>" +
           "<option value='yes'" + (step.skipTestCase == 'yes' ? ' selected' : '') + ">Yes</option>" +
           "</select>"
@@ -295,7 +295,7 @@
         if (step) {
           row.innerHTML = importRow(step)
         } else {
-          row.innerHTML = generateRow()  
+          row.innerHTML = generateRow()
         }
       }
 
@@ -429,7 +429,7 @@
       }
 
       $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();   
+        $('[data-toggle="tooltip"]').tooltip();
       });
     </script>
     <div class="table-responsive">
