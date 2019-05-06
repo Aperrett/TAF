@@ -305,7 +305,6 @@
   }
 
   function exportJson() {
-    out = document.getElementById('exported_json')
     table = document.getElementById('dataTable')
     rows = table.children[1].children
 
@@ -377,37 +376,38 @@
     }
   }
 
-  function showJsonInput() {
-    document.getElementById('json_input').style.display = 'block'
-  }
+  function importJSON(event) {
+    var file = event.target.files[0];
+    var reader = new FileReader();
 
-  function importJson(jsonSource) {
-    document.getElementById('table_content').innerHTML = ""
-    json = JSON.parse(jsonSource.value)
-    document.getElementById('test_id').value = json.testId
-    document.getElementById('project_id').value = json.projectId
-    document.getElementById('test_desc').value = json.testDescription
-    json.steps.forEach(function (step) {
-      addRow(step)
-      row = rowById(rowID)
-      select = row.children[2].children[0]
-      selectOption(select, step.function)
-      select.onchange()
-      for (i = 0; i < 4; i++) {
-        value = step['value' + i]
-        if (value) {
-          value = value.toString()
-          element = row.children[3 + i].children[0]
-          if (element.tagName == 'INPUT') {
-            element.value = value
-          } else if (element.tagName == 'SELECT') {
-            selectOption(element, value)
+    reader.onload = function (e) {
+      document.getElementById('table_content').innerHTML = ""
+      json = JSON.parse(e.target.result)
+      document.getElementById('test_id').value = json.testId
+      document.getElementById('project_id').value = json.projectId
+      document.getElementById('test_desc').value = json.testDescription
+      json.steps.forEach(function (step) {
+        addRow(step)
+        row = rowById(rowID)
+        select = row.children[2].children[0]
+        selectOption(select, step.function)
+        select.onchange()
+        for (i = 0; i < 4; i++) {
+          value = step['value' + i]
+          if (value) {
+            value = value.toString()
+            element = row.children[3 + i].children[0]
+            if (element.tagName == 'INPUT') {
+              element.value = value
+            } else if (element.tagName == 'SELECT') {
+              selectOption(element, value)
+            }
           }
         }
-      }
-    })
+      })
+    };
 
-    jsonSource.style.display = "none"
+    reader.readAsText(file);
   }
 
   $(document).ready(function () {
@@ -450,12 +450,15 @@
       </tbody>
     </table>
   </div>
-  <input class="btn btn-success" data-toggle="tooltip" title="Add new row" type="button" value="Add Row" onclick="addRow()" />
-  <input class="btn btn-danger" data-toggle="tooltip" title="Select a check box to delete a row" type="button" value="Delete Row"
-    onclick="deleteRow('dataTable')" />
-  <button class="btn btn-secondary" data-toggle="tooltip" title="Import json content in to the text box once button has been clicked"
-  onclick="showJsonInput()">Import</button>
-  <button class="btn btn-secondary" data-toggle="tooltip" title="Export tests to a json file" onclick="exportJson()">Export</button>
+  <input class="btn btn-success" data-toggle="tooltip" title="Add new row" type="button" value="Add Row"
+    onclick="addRow()" />
+  <input class="btn btn-danger" data-toggle="tooltip" title="Select a check box to delete a row" type="button"
+    value="Delete Row" onclick="deleteRow('dataTable')" />
+  <label class="btn btn-secondary" for="file-import" style="cursor:pointer; margin:0">Import</label>
+  <input data-toggle="tooltip" id="file-import"
+    title="Import json content in to the text box once button has been clicked" type="file" onchange="importJSON(event)"
+    style="display:none">
+  <button class="btn btn-secondary" data-toggle="tooltip" title="Export tests to a json file"
+    onclick="exportJson()">Export</button>
   <a id="downloadAnchorElem" style="display:none"></a>
-  <textarea id="json_input" style="display:none" onchange="importJson(this)" rows=8 cols=80></textarea>
 </body>
