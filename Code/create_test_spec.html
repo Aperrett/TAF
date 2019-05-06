@@ -336,9 +336,9 @@
 
     json = {
       projectId: valueById('project_id') || '',
-      steps: steps,
       testDescription: valueById('test_desc') || '',
       testId: valueById('test_id') || '',
+      steps: steps,
     }
 
     var dataStr = "data:application/json," + encodeURIComponent(JSON.stringify(json, null, 4))
