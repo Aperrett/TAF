@@ -354,13 +354,13 @@
         }
 
         json = {
-          testId: valueById('test_id') || '',
           projectId: valueById('project_id') || '',
+          steps: steps,
           testDescription: valueById('test_desc') || '',
-          steps: steps
+          testId: valueById('test_id') || '',
         }
 
-        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(json))
+        var dataStr = "data:application/json," + encodeURIComponent(JSON.stringify(json, null, 4))
         var dlAnchorElem = document.getElementById('downloadAnchorElem')
         dlAnchorElem.setAttribute("href", dataStr)
         dlAnchorElem.setAttribute("download", json.projectId + "-" + json.testId + "-taf.json")
