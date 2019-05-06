@@ -450,12 +450,12 @@
       </tbody>
     </table>
   </div>
-  <input data-toggle="tooltip" title="Add new row" type="button" value="Add Row" onclick="addRow()" />
-  <input data-toggle="tooltip" title="Select a check box to delete a row" type="button" value="Delete Row"
+  <input class="btn btn-success" data-toggle="tooltip" title="Add new row" type="button" value="Add Row" onclick="addRow()" />
+  <input class="btn btn-danger" data-toggle="tooltip" title="Select a check box to delete a row" type="button" value="Delete Row"
     onclick="deleteRow('dataTable')" />
-  <button data-toggle="tooltip" title="Export tests to a json file" onclick="exportJson()">Export</button>
-  <button data-toggle="tooltip" title="Import json content in to the text box once button has been clicked"
-    onclick="showJsonInput()">Import</button>
+  <button class="btn btn-secondary" data-toggle="tooltip" title="Import json content in to the text box once button has been clicked"
+  onclick="showJsonInput()">Import</button>
+  <button class="btn btn-secondary" data-toggle="tooltip" title="Export tests to a json file" onclick="exportJson()">Export</button>
   <a id="downloadAnchorElem" style="display:none"></a>
   <textarea id="json_input" style="display:none" onchange="importJson(this)" rows=8 cols=80></textarea>
 </body>
