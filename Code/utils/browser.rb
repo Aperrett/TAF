@@ -110,33 +110,4 @@ module Browser
   rescue StandardError
     'No Browser version'
   end
-
-  # create screenshot filename and save the screenshot if the test has failed or
-  # if explictly required
-  def self.check_save_screenshot(screen_shot)
-    if $currentTestFail || screen_shot
-      time = Time.now.strftime('%H%M')
-      sc_dir = CreateDirectories.construct_testspecdirs
-
-      sc_file_name = if $currentTestFail
-                       "#{sc_dir}/Test_ID-#{$testId.delete(' ')}"\
-                        "_Test_step-#{$test_step}_Failed_#{time}.png"
-                     else
-                       "#{sc_dir}/Test_ID-#{$testId.delete(' ')}"\
-                        "_Test_step-#{$test_step}_#{time}.png"
-                     end
-
-      # Screenshot capture for websites
-      Browser.b.screenshot.save sc_file_name
-      MyLog.log.info("Screenshot saved to: #{sc_file_name} \n")
-    else
-      MyLog.log.debug "No screenshot requested \n"
-    end
-
-    # if any issues with saving the screenshot then log a warning
-  rescue StandardError => error
-    # construct the error message from custom text and the actual system
-    # error message (converted to a string).
-    MyLog.log.warn("Error saving the screenshot: #{sc_file_name}   #{error}")
-  end
 end

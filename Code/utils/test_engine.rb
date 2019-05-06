@@ -40,9 +40,11 @@ module TestEngine
         tests['steps'].each do |test_step|
           parsed_steps = Parser.parse_test_step_data(test_step)
           # process the test step data
-          TestSteps.process_test_steps(test_file_name, parsed_steps[:testStep], parsed_steps)
+          TestSteps.process_test_steps(test_file_name, parsed_steps[:testStep],
+                                       parsed_steps)
           # see if screenshot required
-          Browser.check_save_screenshot(parsed_steps[:screenShotData])
+          Screenshot.save_screenshot(parsed_steps[:screenShotData],
+                                     parsed_steps)
         end
       rescue TafError => error
         warn error

@@ -18,14 +18,16 @@ module TestSteps
   # processing the associated data accordingly
   def self.process_test_steps(test_file_name, test_step_index, step_attributes)
     # print the test step information
-    Report.print_test_step_header(test_file_name, test_step_index, step_attributes)
+    Report.print_test_step_header(test_file_name, test_step_index,
+                                  step_attributes)
     runtest = step_attributes[:skipTestCase]
     step_function = step_attributes[:testFunction]
     handler = handlers[step_function.to_s]
 
     if handler.respond_to?(:perform)
       func = handler.perform(step_attributes) if runtest == false
-      Report.test_pass_fail(func, test_file_name, test_step_index, step_attributes)
+      Report.test_pass_fail(func, test_file_name, test_step_index,
+                            step_attributes)
       Report.check_failure_threshold(test_file_name, test_step_index)
       return true
     else
