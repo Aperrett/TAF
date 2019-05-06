@@ -1,10 +1,10 @@
-# Created on 02 Aug 2018
+# Created on 07 May 2019
 # @author: Andy Perrett
 #
 # Versions:
 # 1.0 - Baseline
 #
-# browser_setup.rb - a browser functions
+# screenshot.rb - a screenshot save function
 module Screenshot
   require_relative '../taf_config.rb'
 
