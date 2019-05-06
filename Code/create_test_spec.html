@@ -11,16 +11,17 @@
 
   <body class="container-fluid">
     <h1>TAF Create Test Spec</h1>
-    <table>
-      <tr>
-        <form>
-          <td><input data-toggle="tooltip" title="input a test id" type="text" id="test_id" placeholder= "Test ID:"></td>
-          <td><input data-toggle="tooltip" title="input a project id" type="text" id="project_id" placeholder= "Project ID:"></td>
-          <td><input data-toggle="tooltip" title="input a test descrtiption" type="text" id="test_desc" placeholder= "Test Description:"></td>
-        </form>
-      </tr>
-    </table>
-    <hr>
+    <form class="form-inline">
+      <label class="sr-only" for="test_id">Test ID</label>
+      <input class="form-control mb-2 mr-sm-2" data-toggle="tooltip" title="input a test id" type="text" id="test_id"
+        placeholder="Test ID:">
+      <label class="sr-only" for="project_id">Project ID</label>
+      <input class="form-control mb-2 mr-sm-2" data-toggle="tooltip" title="input a project id" type="text"
+        id="project_id" placeholder="Project ID:">
+      <label class="sr-only" for="test_desc">Test Description</label>
+      <input class="form-control mb-2 mr-sm-2" data-toggle="tooltip" title="input a test description" type="text"
+        id="test_desc" placeholder="Test Description:">
+    </form>
     <script language="javascript">
       var rowID = 1
 
