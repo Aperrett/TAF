@@ -28,7 +28,8 @@ module TestSteps
       func = handler.perform(step_attributes) if runtest == false
       Report.test_pass_fail(func, test_file_name, test_step_index,
                             step_attributes)
-      Report.check_failure_threshold(test_file_name, test_step_index)
+      Report.check_failure_threshold(test_file_name, test_step_index,
+                                     step_attributes)
       return true
     else
       MyLog.log.warn "\nUnable to match function: #{step_function}"

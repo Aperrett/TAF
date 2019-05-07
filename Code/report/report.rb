@@ -90,7 +90,8 @@ module Report
   # check if the test failure threshold has been reached for total failures
   # or consecutive failures.
   # If a certain number of consecutive tests fail then throw an exception
-  def self.check_failure_threshold(test_file_name, _test_step_index)
+  def self.check_failure_threshold(test_file_name, _test_step_index,
+                                   _step_attributes)
     consecutive_fail_threshold = 5
     if $previousTestFail && $currentTestFail
       @consecutive_test_fail += 1
@@ -104,7 +105,7 @@ module Report
     MyLog.log.warn "Terminating the current test case: #{test_file_name} as" \
       " the test failure threshold (#{consecutive_fail_threshold}) has been " \
       ' reached.'
-    MyLog.log.warn '...continuing with the next test case (if there is one)'
+    MyLog.log.warn '...continuing with the next test spec (if there is one)'
 
     raise FailureThresholdExceeded,
           "#{consecutive_fail_threshold} Test Steps Failed."
