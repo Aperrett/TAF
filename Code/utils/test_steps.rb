@@ -16,20 +16,18 @@ module TestSteps
 
   # process the test step data by matching the test step functions and
   # processing the associated data accordingly
-  def self.process_test_steps(test_file_name, test_step_index, step_attributes)
+  def self.process_test_steps(test_file_name, test_step_idx, step_attributes)
     # print the test step information
-    Report.print_test_step_header(test_file_name, test_step_index,
-                                  step_attributes)
+    Report.print_test_step_header(test_file_name, test_step_idx,
+                                  step_attributes[:testdesc])
     runtest = step_attributes[:skipTestCase]
     step_function = step_attributes[:testFunction]
     handler = handlers[step_function.to_s]
 
     if handler.respond_to?(:perform)
       func = handler.perform(step_attributes) if runtest == false
-      Report.test_pass_fail(func, test_file_name, test_step_index,
-                            step_attributes)
-      Report.check_failure_threshold(test_file_name, test_step_index,
-                                     step_attributes)
+      Report.test_pass_fail(func, test_file_name, test_step_idx)
+      Report.check_failure_threshold(test_file_name)
       return true
     else
       MyLog.log.warn "\nUnable to match function: #{step_function}"

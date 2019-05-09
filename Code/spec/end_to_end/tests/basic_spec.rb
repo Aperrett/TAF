@@ -25,15 +25,15 @@ context 'End-to-end tests' do
     test_suite = xml.root[0]
 
     expect(test_suite['assertions']).to eq('1')
-    expect(test_suite['classname']).to eq('/e2e/fixtures/basic/basic.xlsx')
-    expect(test_suite['name']).to eq('/e2e/fixtures/basic/basic.xlsx')
+    expect(test_suite['classname']).to eq('/e2e/fixtures/basic/basic.json')
+    expect(test_suite['name']).to eq('/e2e/fixtures/basic/basic.json')
     expect(test_suite['tests']).to eq('1')
 
     test_case = test_suite[0]
 
     expect(test_case['classname'])
       .to eq('SuiteID: End-to-End Test Step: 1 Test Open_URL')
-    expect(test_case['file']).to eq('/e2e/fixtures/basic/basic.xlsx')
+    expect(test_case['file']).to eq('/e2e/fixtures/basic/basic.json')
     expect(test_case['id']).to eq('1')
     expect(test_case['name']).to eq('Test Open_URL')
   end

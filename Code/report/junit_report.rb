@@ -43,12 +43,12 @@ module JunitReport
         @test_step_report_summary2.each do |test_step_report_summary2|
           testsuites.testsuite(test_step_report_summary2) do |testsuite|
             $testStep_xml[test_step_report_summary2['name']]
-              .each do |test_step_index, test_step_xml|
+              .each do |test_step_idx, test_step_xml|
               testsuite.testcase(test_step_xml) do |testcase|
                 failure = $failtestStep_xml
-                  &.[](test_step_report_summary2['name'])&.[](test_step_index)
+                  &.[](test_step_report_summary2['name'])&.[](test_step_idx)
                 skipped = $skiptestStep_xml
-                  &.[](test_step_report_summary2['name'])&.[](test_step_index)
+                  &.[](test_step_report_summary2['name'])&.[](test_step_idx)
                 testcase.failure(failure) if failure
                 testcase.skipped(skipped) if skipped
               end

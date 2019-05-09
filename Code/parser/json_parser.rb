@@ -23,7 +23,6 @@ module JsonParser
   # parseTestStepData
   def self.parse_test_step_data(parse_json)
     parsed_step = {
-      testStep: parse_json['currentStep'],
       testdesc: parse_json['description'],
       testFunction: parse_json['function'].downcase,
       testvalue: parse_json['value0'],

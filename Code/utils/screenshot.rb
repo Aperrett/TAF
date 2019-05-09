@@ -10,18 +10,18 @@ module Screenshot
 
   # create screenshot filename and save the screenshot if the test has failed or
   # if explictly required
-  def self.save_screenshot(screen_shot, parsed_steps)
+  def self.save_screenshot(screen_shot, test_step_idx)
     if $currentTestFail || screen_shot
       time = Time.now.strftime('%H%M')
       sc_dir = CreateDirectories.construct_testspecdirs
 
       sc_file_name = if $currentTestFail
                        "#{sc_dir}/Test_ID-#{$testId.delete(' ')}"\
-                        "_Test_step-#{parsed_steps[:testStep]}_Failed"\
+                        "_Test_step-#{test_step_idx}_Failed"\
                         "_#{time}.png"
                      else
                        "#{sc_dir}/Test_ID-#{$testId.delete(' ')}"\
-                        "_Test_step-#{parsed_steps[:testStep]}_#{time}.png"
+                        "_Test_step-#{test_step_idx}_#{time}.png"
                      end
 
       # Screenshot capture for websites

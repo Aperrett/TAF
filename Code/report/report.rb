@@ -16,14 +16,14 @@ module Report
   end
 
   # print the test Step info to the test results file
-  def self.print_test_step_header(test_file_name, test_step_index, step_attributes)
+  def self.print_test_step_header(test_file_name, test_step_idx, test_desc)
     @test_start_time = current_time
-    MyLog.log.info "Test step: #{step_attributes[:testStep]} : #{step_attributes[:testdesc]}"
+    MyLog.log.info "Test step: #{test_step_idx} : #{test_desc}"
 
     step = {
-      'id' => step_attributes[:testStep],
-      'classname' => 'SuiteID: ' + $testId.to_s + ' Test Step: ' + step_attributes[:testStep].to_s + ' ' + step_attributes[:testdesc].to_s,
-      'name' => step_attributes[:testdesc],
+      'id' => test_step_idx,
+      'classname' => "SuiteID: #{$testId} Test Step: #{test_step_idx} #{test_desc}",
+      'name' => test_desc,
       'file' => test_file_name
     }
     # output to console to show test step
@@ -33,23 +33,23 @@ module Report
 
     $testStep_xml ||= {}
     $testStep_xml[test_file_name] ||= {}
-    $testStep_xml[test_file_name][test_step_index] = step
+    $testStep_xml[test_file_name][test_step_idx] = step
   end
 
   # print the Pass / Fail status of a test to the test results file
-  def self.test_pass_fail(pass_fail, test_file_name, test_step_index, step_attributes)
+  def self.test_pass_fail(pass_fail, test_file_name, test_step_idx)
     if pass_fail == true
       $previousTestFail = $currentTestFail
       $currentTestFail = false
       $testStepPasses += 1
-      MyLog.log.info "Test #{step_attributes[:testStep]} has Passed ".green
+      MyLog.log.info "Test #{test_step_idx} has Passed ".green
     elsif pass_fail == false
       $previousTestFail = $currentTestFail
       $currentTestFail = true
       $testStepFailures += 1
-      MyLog.log.info "Test #{step_attributes[:testStep]} has FAILED ".red
+      MyLog.log.info "Test #{test_step_idx} has FAILED ".red
       failstep = {
-        'message' => 'SuiteID: ' + $testId.to_s + ' Test Step: ' + step_attributes[:testStep].to_s + ' Test has FAILED - Check logs',
+        'message' => "SuiteID: #{$testId} Test Step: #{test_step_idx} Test has FAILED - Check logs",
         'type' => 'FAILURE',
         'file' => test_file_name
       }
@@ -60,13 +60,13 @@ module Report
 
       $failtestStep_xml ||= {}
       $failtestStep_xml[test_file_name] ||= []
-      $failtestStep_xml[test_file_name][test_step_index] = failstep
+      $failtestStep_xml[test_file_name][test_step_idx] = failstep
     else
       $currentTestFail = false
       $testStepNotrun += 1
-      MyLog.log.info "Test #{step_attributes[:testStep]} no checks performed ".blue
+      MyLog.log.info "Test #{test_step_idx} no checks performed ".blue
       skipstep = {
-        'message' => 'SuiteID: ' + $testId.to_s + ' Test Step: ' + step_attributes[:testStep].to_s + ' No checks performed - Check logs',
+        'message' => "SuiteID: #{$testId} Test Step: #{test_step_idx} No checks performed - Check logs",
         'type' => 'SKIPPED',
         'file' => test_file_name
       }
@@ -77,7 +77,7 @@ module Report
 
       $skiptestStep_xml ||= {}
       $skiptestStep_xml[test_file_name] ||= []
-      $skiptestStep_xml[test_file_name][test_step_index] = skipstep
+      $skiptestStep_xml[test_file_name][test_step_idx] = skipstep
     end
     test_end_time = current_time
 
@@ -90,8 +90,7 @@ module Report
   # check if the test failure threshold has been reached for total failures
   # or consecutive failures.
   # If a certain number of consecutive tests fail then throw an exception
-  def self.check_failure_threshold(test_file_name, _test_step_index,
-                                   _step_attributes)
+  def self.check_failure_threshold(test_file_name)
     consecutive_fail_threshold = 5
     if $previousTestFail && $currentTestFail
       @consecutive_test_fail += 1

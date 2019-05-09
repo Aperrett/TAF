@@ -37,14 +37,17 @@ module TestEngine
       $test_case_end_time = Report.current_time
 
       begin
-        tests['steps'].each do |test_step|
+        tests['steps'].each_with_index do |test_step, test_step_idx|
+          test_step_idx += 1
+
           parsed_steps = Parser.parse_test_step_data(test_step)
+
           # process the test step data
-          TestSteps.process_test_steps(test_file_name, parsed_steps[:testStep],
+          TestSteps.process_test_steps(test_file_name, test_step_idx,
                                        parsed_steps)
           # see if screenshot required
           Screenshot.save_screenshot(parsed_steps[:screenShotData],
-                                     parsed_steps)
+                                     test_step_idx)
         end
       rescue TafError => e
         warn e
