@@ -2,6 +2,9 @@
 
 <title>TAF Create TAF Spec</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <script>
     var rowID = 1
 
@@ -438,11 +441,11 @@
     <h1>TAF Create Test Spec</h1>
     <form class="form-inline">
         <label class="sr-only" for="test_id">Test ID</label>
-        <input class="form-control mb-2 mr-sm-2" data-toggle="tooltip" title="input a test id" type="text" id="test_id" placeholder="Test ID:">
+        <input class="form-control mb-2 mr-sm-2" data-toggle="tooltip" title="Input a test id" type="text" id="test_id" placeholder="Test ID:">
         <label class="sr-only" for="project_id">Project ID</label>
-        <input class="form-control mb-2 mr-sm-2" data-toggle="tooltip" title="input a project id" type="text" id="project_id" placeholder="Project ID:">
+        <input class="form-control mb-2 mr-sm-2" data-toggle="tooltip" title="Input a project id" type="text" id="project_id" placeholder="Project ID:">
         <label class="sr-only" for="test_desc">Test Description</label>
-        <input class="form-control mb-2 mr-sm-2" data-toggle="tooltip" title="input a test description" type="text" id="test_desc" placeholder="Test Description:">
+        <input class="form-control mb-2 mr-sm-2" data-toggle="tooltip" title="Input a test description" type="text" id="test_desc" placeholder="Test Description:">
     </form>
     <div class="table-responsive-xl table-bordered mb-2">
         <table class="table table-striped table-light table-hover" id="dataTable" width="450px">
@@ -470,8 +473,8 @@
     </div>
     <input class="btn btn-success" data-toggle="tooltip" title="Add new row" type="button" value="Add Row" onclick="addRow()" />
     <input class="btn btn-danger" data-toggle="tooltip" title="Select a check box to delete a row" type="button" value="Delete Row" onclick="deleteRow('dataTable')" />
-    <label class="btn btn-secondary" for="file-import" style="cursor:pointer; margin:0">Import</label>
-    <input data-toggle="tooltip" id="file-import" title="Import json content in to the text box once button has been clicked" type="file" onchange="importJSON(event)" style="display:none">
+    <label class="btn btn-secondary" for="file-import" data-toggle="tooltip" title="Import a json file" style="cursor:pointer; margin:0">Import</label>
+    <input id="file-import" type="file" onchange="importJSON(event)" style="display:none">
     <button class="btn btn-secondary" data-toggle="tooltip" title="Export tests to a json file" onclick="exportJSON()" class="download icon">Export</button>
     <a id="downloadAnchorElem" style="display:none"></a>
 </body>
