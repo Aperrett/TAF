@@ -27,11 +27,11 @@ module Browser
       MyLog.log.error "unable to open selected browser: #{lc_browser_type}"
       raise BrowserFailedOpen
     end
-  rescue BrowserFailedOpen => error
+  rescue BrowserFailedOpen => e
     # construct the error message from custom text and the actual system error
     # message (converted to a string)
     error_text = 'Unable to open'\
-                  "the requested browser: #{lc_browser_type} " + error.to_s
+                  "the requested browser: #{lc_browser_type} " + e.to_s
     raise error_text
   end
 

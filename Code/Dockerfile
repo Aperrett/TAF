@@ -1,36 +1,21 @@
-FROM ruby:2.6.2-alpine3.9
+FROM ruby:2.6.3-slim-stretch
 
 LABEL author="Andy Perrett"
 
-RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
-    && echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories \
-    && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
-
-RUN apk --update add --no-cache \
-    build-base \
-    curl \
-    firefox \
-    font-misc-misc \
-    git \
-    #chromium \
-    #chromium-chromedriver \
-    # VNC for debugging.
-    dbus\
-    dumb-init \
-    fluxbox \
-    gnutls \
-    libxshmfence-dev \
-    x11vnc \
-    xdpyinfo \
-    xvfb \
-    && rm -rf /var/cache/apk/*
-
-#RUN apk upgrade
+RUN apt-get update \
+	&& apt-get install -y --no-install-recommends \
+		build-essential \
+    apt-utils \
+    firefox-esr \
+		git-core \
+		curl \
+    wget \
+	&& rm -rf /var/lib/apt/lists/*
 
 #============
 # GeckoDriver
 #============
-ARG GECKODRIVER_VERSION=0.23.0
+ARG GECKODRIVER_VERSION=0.24.0
 RUN wget --no-verbose --no-check-certificate -O geckodriver.tar.gz https://github.com/mozilla/geckodriver/releases/download/v$GECKODRIVER_VERSION/geckodriver-v$GECKODRIVER_VERSION-linux64.tar.gz \
   && tar -zxf geckodriver.tar.gz \
   && rm geckodriver.tar.gz \
@@ -42,4 +27,5 @@ COPY Gemfile Gemfile.lock /app/
 RUN bundle install
 COPY . /app/
 
-ENTRYPOINT ["/usr/bin/dumb-init", "/app/docker-entrypoint.sh"]
+# ENTRYPOINT ["/usr/bin/dumb-init", "/app/docker-entrypoint.sh"]
+ENTRYPOINT ["/app/docker-entrypoint.sh"]

@@ -37,8 +37,8 @@ module Parser
 
     # if an error occurred reading the test file list then
     # re-raise the exception.
-  rescue StandardError => error
-    raise IOError, error
+  rescue StandardError => e
+    raise IOError, e
   end
 
   # parseTestStepData

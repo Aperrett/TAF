@@ -27,8 +27,8 @@ module ReportSummary
   def self.print_overall_test_summary
     # output to the console
 
-    MyLog.log.info 'Finished processing all test files -' \
-      "executed via test suite: #{$testcasesFolder}"
+    MyLog.log.info 'Finished processing all test files ' \
+      "from the following test folder: #{$testcasesFolder}"
     MyLog.log.info "Overall Test Summary: \n"
     @test_step_report_summary.each do |test_step_report_summary|
       test_step_report_summary.each_line do |line|

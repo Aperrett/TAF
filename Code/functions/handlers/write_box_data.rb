@@ -16,9 +16,9 @@ module TestSteps
 
       def self.input_value(box, text, locate)
         found_box = [
-          Browser.b.textarea(:"#{locate}" => box).exist?,
-          Browser.b.text_field(:"#{locate}" => box).exist?,
-          Browser.b.iframe(:"#{locate}" => box).exist?
+          Browser.b.textarea("#{locate}": box).exist?,
+          Browser.b.text_field("#{locate}": box).exist?,
+          Browser.b.iframe("#{locate}": box).exist?
         ]
 
         raise 'Multiple matches' if found_box.select { |i| i }.empty?
@@ -27,13 +27,13 @@ module TestSteps
         return unless index
 
         if index.zero?
-          Browser.b.textarea(:"#{locate}" => box).wait_until(&:exists?).set text
-          (Browser.b.textarea(:"#{locate}" => box).text == text)
+          Browser.b.textarea("#{locate}": box).wait_until(&:exists?).set text
+          (Browser.b.textarea("#{locate}": box).text == text)
         elsif index == 1
-          Browser.b.text_field(:"#{locate}" => box).wait_until(&:exists?).set text
-          (Browser.b.text_field(:"#{locate}" => box).text == text)
+          Browser.b.text_field("#{locate}": box).wait_until(&:exists?).set text
+          (Browser.b.text_field("#{locate}": box).text == text)
         elsif index == 2
-          Browser.b.iframe(:"#{locate}" => box).wait_until(&:exists?).send_keys text
+          Browser.b.iframe("#{locate}": box).wait_until(&:exists?).send_keys text
         end
         MyLog.log.info("Textbox: #{box} has correct value: #{text}")
         true

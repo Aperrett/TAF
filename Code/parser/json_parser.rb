@@ -36,7 +36,7 @@ module JsonParser
 
     parsed_step
     # if an error reading the test step data then re-raise the exception
-  rescue StandardError => error
-    raise error
+  rescue StandardError => e
+    raise e
   end
 end

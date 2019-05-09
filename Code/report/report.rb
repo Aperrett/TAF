@@ -102,12 +102,12 @@ module Report
     return if @consecutive_test_fail < consecutive_fail_threshold
 
     # write info to stdout
-    MyLog.log.warn "Terminating the current test case: #{test_file_name} as" \
-      " the test failure threshold (#{consecutive_fail_threshold}) has been " \
+    MyLog.log.warn "Terminating the current test file: #{test_file_name} as" \
+      " the test failure threshold (#{$testStepFailures}) has been" \
       ' reached.'
-    MyLog.log.warn '...continuing with the next test spec (if there is one)'
+    MyLog.log.warn '...continuing with the next test file (if there is one)'
 
     raise FailureThresholdExceeded,
-          "#{consecutive_fail_threshold} Test Steps Failed."
+          "#{$testStepFailures} Test Steps Failed."
   end
 end

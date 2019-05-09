@@ -47,11 +47,11 @@ module CreateDirectories
     # abs_path_run_no_dir = File.absolute_path(runNoDir)
     FileUtils.mkdir_p(abs_path_screenshot_dir)
     # if any issues then set error message and re-raise the exception
-  rescue StandardError => error
+  rescue StandardError => e
     # construct the error message from custom text and the actual system error
     # message (converted to a string)
     error_to_display = 'Error creating the test directory structure or' \
-      ' opening the test results file : ' + error.to_s
+      ' opening the test results file : ' + e.to_s
     raise error_to_display
   else
     # if no exception then return the screenshot file directory path

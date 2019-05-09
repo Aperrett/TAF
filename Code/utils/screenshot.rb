@@ -32,9 +32,9 @@ module Screenshot
     end
 
     # if any issues with saving the screenshot then log a warning
-  rescue StandardError => error
+  rescue StandardError => e
     # construct the error message from custom text and the actual system
     # error message (converted to a string).
-    MyLog.log.warn("Error saving the screenshot: #{sc_file_name}   #{error}")
+    MyLog.log.warn("Error saving the screenshot: #{sc_file_name}   #{e}")
   end
 end

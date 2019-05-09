@@ -22,10 +22,10 @@ module TestEngine
         tests = Parser.read_test_data(test_file_name)
         # if unable to read the test data, show the error and move onto the
         # next file (if there is one)
-      rescue StandardError => error
-        MyLog.log.warn 'Terminating the current test case: ' \
-                     "#{test_file_name} #{error}"
-        MyLog.log.info '...continuing with the next test case (if there is one)'
+      rescue StandardError => e
+        MyLog.log.warn 'Terminating the current test spec: ' \
+                     "#{test_file_name} #{e}"
+        MyLog.log.info '...continuing with the next test file (if there is one)'
       end
 
       # create project folders - these only need creating once per test suite
@@ -46,9 +46,9 @@ module TestEngine
           Screenshot.save_screenshot(parsed_steps[:screenShotData],
                                      parsed_steps)
         end
-      rescue TafError => error
-        warn error
-        MyLog.log.warn error
+      rescue TafError => e
+        warn e
+        MyLog.log.warn e
       end
 
       # get the test case end time
