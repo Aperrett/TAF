@@ -13,7 +13,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <script>
-    var rowID = 1
+    var rowID = 0
 
     const locatorOptions = [
         "action", "class", "css", "href", "id", "index", "method", "name", "src", "text", "title", "value", "xpath"
@@ -333,21 +333,32 @@
         row.parentNode.removeChild(row);
     }
 
-    function addRow(step = null) {
+    function addRow(step = null, idx = -1) {
         var table = document.getElementById('table_content')
-        var row = table.insertRow(-1)
+        var row = table.insertRow(idx)
         rowID += 1
         row.id = 'row' + rowID
+
         if (step) {
             row.innerHTML = importRow(step)
         } else {
             row.innerHTML = generateRow()
         }
+
+        row.addEventListener('keydown', e => {
+            if (e.key !== 'Enter') return
+
+            if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'SELECT')
+                return
+
+            addRow(null, row.rowIndex)
+        })
+
+        row.querySelector('input').focus()
     }
 
     function exportJSON() {
-        const table = document.getElementById('dataTable')
-        const rows = table.children[1].children
+        const rows = document.querySelectorAll('#table_content > tr')
 
         const steps = []
         for (let i = 0; i < rows.length; i++) {
@@ -480,11 +491,7 @@
                 </tr>
             </thead>
             <tbody id="table_content">
-                <tr id='row1'>
-                    <script>
-                        rowById(1).innerHTML = generateRow()
-                    </script>
-                </tr>
+                <script>addRow()</script>
             </tbody>
         </table>
     </div>
