@@ -5,6 +5,13 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+
+<!-- icons links -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <script>
     var rowID = 1
 
@@ -13,7 +20,7 @@
     ]
 
     const loginOptions = [
-        "portal_login", "1_login", "2_login", "sso_login"
+        "portal_login", "admin_portal_login", "sint_login", "sso_login"
     ]
 
     const testFunctions = [{
@@ -242,31 +249,35 @@
     }
 
     function generateRow() {
-        return "<td><input type='checkbox' name='chk'/></td>" +
-            "<td><input type='text' name='test_desc' size='30px'/></td>" +
-            "<td><select name='test_function' onchange='displayTestOptions(this)'><option value=''></option>" +
+        return "<td><input class='form-control' type='text' name='test_desc' size='30px'/></td>" +
+            "<td><select class='form-control' name='test_function' onchange='displayTestOptions(this)'><option value=''></option>" +
             getTestOptions() +
             "</select>" +
             "<td></td><td></td><td></td><td></td>" +
-            "<td><select name='screenshot'><option value='no'>No</option><option value='yes'>Yes</option></select>" +
-            "<td><select name='skip_test_case'><option value='no'>No</option><option value='yes'>Yes</option></select>"
+            "<td><select class='form-control' name='screenshot'><option value='no'>No</option><option value='yes'>Yes</option></select>" +
+            "<td><select class='form-control' name='skip_test_case'><option value='no'>No</option><option value='yes'>Yes</option></select>" +
+            "<td><span class='table-up'><a href='#!' onclick='moveRowUp(this)' class='indigo-text'><i class='fas fa-long-arrow-alt-up' aria-hidden='true'></i></a></span>" +
+            "<span class='table-down'><a href='#!' onclick='moveRowDown(this)' class='indigo-text'><i class='fas fa-long-arrow-alt-down' aria-hidden='true '></i></a></span></td>" +
+            "<td><button type='button' class='btn btn-danger' onclick='deleteRow(this)'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Remove </button></td>"
     }
 
     function importRow(step) {
-        return "<td><input type='checkbox' name='chk' /></td>" +
-            "<td><input type='text' name='test_desc' value='" + step.description + "'/></td>" +
-            "<td><select name='test_function' onchange='displayTestOptions(this)'><option value=''></option>" +
+        return "<td><input class='form-control' type='text' name='test_desc' value='" + step.description + "'/></td>" +
+            "<td><select class='form-control' name='test_function' onchange='displayTestOptions(this)'><option value=''></option>" +
             getTestOptions() +
             "</select>" +
             "<td></td><td></td><td></td><td></td>" +
-            "<td><select name='screenshot'>" +
+            "<td><select class='form-control' name='screenshot'>" +
             "<option value='no'" + (step.screenshot == 'no' ? ' selected' : '') + ">No</option>" +
             "<option value='yes'" + (step.screenshot == 'yes' ? ' selected' : '') + ">Yes</option>" +
             "</select>" +
-            "<td><select name='skip_test_case'>" +
+            "<td><select class='form-control' name='skip_test_case'>" +
             "<option value='no'" + (step.skipTestCase == 'no' ? ' selected' : '') + ">No</option>" +
             "<option value='yes'" + (step.skipTestCase == 'yes' ? ' selected' : '') + ">Yes</option>" +
-            "</select>"
+            "</select>" +
+            "<td><span class='table-up'><a href='#!' onclick='moveRowUp(this)' class='indigo-text'><i class='fas fa-long-arrow-alt-up' aria-hidden='true'></i></a></span>" +
+            "<span class='table-down'><a href='#!' onclick='moveRowDown(this)' class='indigo-text'><i class='fas fa-long-arrow-alt-down' aria-hidden='true '></i></a></span></td>" +
+            "<td><button type='button' class='btn btn-danger' onclick='deleteRow(this)'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Remove </button></td>"
     }
 
     function generateOptions(optionsList) {
@@ -278,20 +289,48 @@
     }
 
     function generateTestOption(row, steps) {
-        const colOffset = 3
-        for (let i = 0; i < 4; i++) {
+        const colOffset = 2
+        for (let i = 0; i < 3; i++) {
             row.children[colOffset + i].innerHTML = "<td></td>"
         }
         for (let i = 0; i < steps.length; i++) {
             const step = steps[i]
             if (step.type == 'text') {
-                row.children[colOffset + i].innerHTML = "<td><input name='input" + i + "' type='text' placeholder='" + step.placeholder + "' /></td>"
+                row.children[colOffset + i].innerHTML = "<td><input class='form-control' name='input" + i + "' type='text' placeholder='" + step.placeholder + "' /></td>"
             } else if (step.type == 'dropdown') {
-                row.children[colOffset + i].innerHTML = "<td><select name='select" + i + "' >" + generateOptions(step.options) + "</select></td>"
+                row.children[colOffset + i].innerHTML = "<td><select class='form-control' name='select" + i + "' >" + generateOptions(step.options) + "</select></td>"
             } else if (step.type == 'number') {
-                row.children[colOffset + i].innerHTML = "<td><input name='input" + i + "' type='number' min=0 placeholder='" + step.placeholder + "' /></td>"
+                row.children[colOffset + i].innerHTML = "<td><input class='form-control' name='input" + i + "' type='number' min=0 placeholder='" + step.placeholder + "' /></td>"
             }
         }
+    }
+
+    $('.table-up').click(function() {
+        var $row = $(this).parents('td');
+        if ($row.index() === 1) return; // Don't go above the header
+        $row.prev().before($row.get(0));
+    });
+
+    //     $('.table-down').click(function() {
+    //         var $row = $(this).parents('tr');
+    //         $row.next().after($row.get(0));
+    //     });
+
+    function moveRowUp(btn) {
+        alert("I am an alert box! for move up");
+        var row = btn.parentNode.parentNode;
+        row.next().after(row.get(0));
+    }
+
+    function moveRowDown(btn) {
+        alert("I am an alert box! for move down");
+        var row = btn.parentNode.parentNode;
+        row.next().after(row.get(0));
+    }
+
+    function deleteRow(btn) {
+        var row = btn.parentNode.parentNode;
+        row.parentNode.removeChild(row);
     }
 
     function addRow(step = null) {
@@ -306,29 +345,6 @@
         }
     }
 
-    function deleteRow(tableID) {
-        try {
-            var table = document.getElementById(tableID)
-            var rowCount = table.rows.length;
-
-            for (var i = 0; i < rowCount; i++) {
-                var row = table.rows[i]
-                var chkbox = row.cells[0].childNodes[0]
-                if (null != chkbox && true == chkbox.checked) {
-                    if (rowCount <= 2) {
-                        alert("Cannot delete all the rows.")
-                        break
-                    }
-                    table.deleteRow(i)
-                    rowCount--
-                    i--
-                }
-            }
-        } catch (e) {
-            alert(e)
-        }
-    }
-
     function exportJSON() {
         const table = document.getElementById('dataTable')
         const rows = table.children[1].children
@@ -337,20 +353,20 @@
         for (let i = 0; i < rows.length; i++) {
             const row = rows[i]
 
-            if (getColumnValue(row, 2) == "") {
+            if (getColumnValue(row, 1) == "") {
                 continue
             }
 
             const step = {
-                description: getColumnValue(row, 1),
-                function: getColumnValue(row, 2),
-                screenshot: getColumnValue(row, 7),
-                skipTestCase: getColumnValue(row, 8)
+                description: getColumnValue(row, 0),
+                function: getColumnValue(row, 1),
+                screenshot: getColumnValue(row, 6),
+                skipTestCase: getColumnValue(row, 7)
             }
 
-            for (let j = 0; j < 4; j++) {
-                if (getColumnValue(row, j + 3) != null) {
-                    step["value" + j] = getColumnValue(row, j + 3)
+            for (let j = 0; j < 3; j++) {
+                if (getColumnValue(row, j + 2) != null) {
+                    step["value" + j] = getColumnValue(row, j + 2)
                 }
             }
             steps.push(step)
@@ -411,18 +427,18 @@
             json.steps.forEach(function(step) {
                 addRow(step)
                 const row = rowById(rowID)
-                const select = row.children[2].children[0]
+                const select = row.children[1].children[0]
                 selectOption(select, step.function)
                 select.onchange()
-                for (let i = 0; i < 4; i++) {
+                for (let i = 0; i < 3; i++) {
                     const value = step['value' + i]
                     if (value) {
-                        const value = value.toString()
-                        const element = row.children[3 + i].children[0]
+                        const valueStr = value.toString()
+                        const element = row.children[2 + i].children[0]
                         if (element.tagName == 'INPUT') {
-                            element.value = value
+                            element.value = valueStr
                         } else if (element.tagName == 'SELECT') {
-                            selectOption(element, value)
+                            selectOption(element, valueStr)
                         }
                     }
                 }
@@ -451,7 +467,6 @@
         <table class="table table-striped table-light table-hover" id="dataTable" width="450px">
             <thead>
                 <tr>
-                    <th>Select:</th>
                     <th>Test Step Description:</th>
                     <th>Test Step Function:</th>
                     <th>Test Value 1:</th>
@@ -460,6 +475,8 @@
                     <th>Locator 2:</th>
                     <th>Screenshot:</th>
                     <th>Skip Test Case:</th>
+                    <th>Sort:</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody id="table_content">
@@ -471,10 +488,11 @@
             </tbody>
         </table>
     </div>
-    <input class="btn btn-success" data-toggle="tooltip" title="Add new row" type="button" value="Add Row" onclick="addRow()" />
-    <input class="btn btn-danger" data-toggle="tooltip" title="Select a check box to delete a row" type="button" value="Delete Row" onclick="deleteRow('dataTable')" />
-    <label class="btn btn-secondary" for="file-import" data-toggle="tooltip" title="Import a json file" style="cursor:pointer; margin:0">Import</label>
+    <button class="btn btn-success" type="button" value="Add Row" onclick="addRow()">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Row</button>
+    <label class="btn btn-secondary" for="file-import" data-toggle="tooltip" title="Import a json file" style="cursor:pointer; margin:0"><span class="glyphicon glyphicon-import" aria-hidden="true"></span> Import </label>
     <input id="file-import" type="file" onchange="importJSON(event)" style="display:none">
-    <button class="btn btn-secondary" data-toggle="tooltip" title="Export tests to a json file" onclick="exportJSON()" class="download icon">Export</button>
+    <button class="btn btn-secondary" data-toggle="tooltip" title="Export tests to a json file" onclick="exportJSON()" class="download icon">
+            <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Export</button>
     <a id="downloadAnchorElem" style="display:none"></a>
 </body>
