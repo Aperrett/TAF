@@ -4,14 +4,13 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
 
 <!-- icons links -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
 <script>
     var rowID = 0
 
@@ -20,7 +19,7 @@
     ]
 
     const loginOptions = [
-        "portal_login", "admin_portal_login", "sint_login", "sso_login"
+        "portal_login", "1_login", "2_login", "sso_login"
     ]
 
     const testFunctions = [{
@@ -256,8 +255,6 @@
             "<td></td><td></td><td></td><td></td>" +
             "<td><select class='form-control' name='screenshot'><option value='no'>No</option><option value='yes'>Yes</option></select>" +
             "<td><select class='form-control' name='skip_test_case'><option value='no'>No</option><option value='yes'>Yes</option></select>" +
-            "<td><span class='table-up'><a href='#!' onclick='moveRowUp(this)' class='indigo-text'><i class='fas fa-long-arrow-alt-up' aria-hidden='true'></i></a></span>" +
-            "<span class='table-down'><a href='#!' onclick='moveRowDown(this)' class='indigo-text'><i class='fas fa-long-arrow-alt-down' aria-hidden='true '></i></a></span></td>" +
             "<td><button type='button' class='btn btn-danger' onclick='deleteRow(this)'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Remove </button></td>"
     }
 
@@ -275,8 +272,6 @@
             "<option value='no'" + (step.skipTestCase == 'no' ? ' selected' : '') + ">No</option>" +
             "<option value='yes'" + (step.skipTestCase == 'yes' ? ' selected' : '') + ">Yes</option>" +
             "</select>" +
-            "<td><span class='table-up'><a href='#!' onclick='moveRowUp(this)' class='indigo-text'><i class='fas fa-long-arrow-alt-up' aria-hidden='true'></i></a></span>" +
-            "<span class='table-down'><a href='#!' onclick='moveRowDown(this)' class='indigo-text'><i class='fas fa-long-arrow-alt-down' aria-hidden='true '></i></a></span></td>" +
             "<td><button type='button' class='btn btn-danger' onclick='deleteRow(this)'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Remove </button></td>"
     }
 
@@ -303,29 +298,6 @@
                 row.children[colOffset + i].innerHTML = "<td><input class='form-control' name='input" + i + "' type='number' min=0 placeholder='" + step.placeholder + "' /></td>"
             }
         }
-    }
-
-    $('.table-up').click(function() {
-        var $row = $(this).parents('td');
-        if ($row.index() === 1) return; // Don't go above the header
-        $row.prev().before($row.get(0));
-    });
-
-    //     $('.table-down').click(function() {
-    //         var $row = $(this).parents('tr');
-    //         $row.next().after($row.get(0));
-    //     });
-
-    function moveRowUp(btn) {
-        alert("I am an alert box! for move up");
-        var row = btn.parentNode.parentNode;
-        row.next().after(row.get(0));
-    }
-
-    function moveRowDown(btn) {
-        alert("I am an alert box! for move down");
-        var row = btn.parentNode.parentNode;
-        row.next().after(row.get(0));
     }
 
     function deleteRow(btn) {
@@ -486,12 +458,15 @@
                     <th>Locator 2:</th>
                     <th>Screenshot:</th>
                     <th>Skip Test Case:</th>
-                    <th>Sort:</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody id="table_content">
-                <script>addRow()</script>
+                <tr>
+                    <script>
+                        addRow()
+                    </script>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -502,4 +477,14 @@
     <button class="btn btn-secondary" data-toggle="tooltip" title="Export tests to a json file" onclick="exportJSON()" class="download icon">
             <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Export</button>
     <a id="downloadAnchorElem" style="display:none"></a>
+
+
+    <!-- Drag and drop for rows on table -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <script src="https://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        $('tbody').sortable();
+    </script>
 </body>
