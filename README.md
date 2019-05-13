@@ -11,6 +11,10 @@ Please see the Wiki for more details: https://github.com/Aperrett/TAF/wiki
 Double click on create_test_spec.html to create test specs.
 ![Create Test Spec](https://user-images.githubusercontent.com/32389685/57616562-5d18ae00-7576-11e9-9999-84af21586735.png?raw=true "Create Test Spec")
 
+<div align="center">
+    <img src="https://user-images.githubusercontent.com/32389685/57616562-5d18ae00-7576-11e9-9999-84af21586735.png" width="400px"</img> 
+</div>
+
 <h2>TAF Supported Browsers </h2>
 chrome
 chrome-headless
