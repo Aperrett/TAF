@@ -3,9 +3,13 @@
 
 This is the Test Automation Framework (TAF)
 
-Created in Ruby and using Watir to allow a user to Automate a website using an Excel file type.
+Created in Ruby and using Watir to allow a user to Automate a website using an Json file type.
 
 Please see the Wiki for more details: https://github.com/Aperrett/TAF/wiki
+
+<h2>TAF Create Test Specs </h2>
+Double click on create_test_spec.html to create test specs.
+
 
 <h2>TAF Supported Browsers </h2>
 chrome
