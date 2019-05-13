@@ -8,7 +8,8 @@ Created in Ruby and using Watir to allow a user to Automate a website using an J
 Please see the Wiki for more details: https://github.com/Aperrett/TAF/wiki
 
 <h2>TAF Create Test Specs </h2>
-Double click on create_test_spec.html to create test specs.
+Double click on `create_test_spec.html` to create test specs.
+
 
 <div align="center">
     <img src="https://user-images.githubusercontent.com/32389685/57616562-5d18ae00-7576-11e9-9999-84af21586735.png" width="500px"</img> 
