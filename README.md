@@ -9,9 +9,7 @@ Please see the Wiki for more details: https://github.com/Aperrett/TAF/wiki
 
 <h2>TAF Create Test Specs </h2>
 Double click on create_test_spec.html to create test specs.
-![](https://user-images.githubusercontent.com/32389685/57616562-5d18ae00-7576-11e9-9999-84af21586735.png)
-
-
+![Alt text](https://user-images.githubusercontent.com/32389685/57616562-5d18ae00-7576-11e9-9999-84af21586735.png "Create Test Spec")
 
 <h2>TAF Supported Browsers </h2>
 chrome
