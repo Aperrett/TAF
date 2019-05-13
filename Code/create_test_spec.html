@@ -9,6 +9,27 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+<style>
+    input[type=file] {
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        width: 0.1px;
+        z-index: -1;
+    }
+
+    input[type=file] + label {
+        cursor: pointer;
+    }
+
+    input[type=file]:focus-within + label {
+        box-shadow: 0 0 0 .2rem rgba(130,138,145,.5);
+        color: #333;
+        outline: -webkit-focus-ring-color auto 5px;
+    }
+</style>
+
 <script>
     var rowID = 0
 
@@ -470,10 +491,13 @@
     </div>
     <button class="btn btn-success" type="button" value="Add Row" onclick="addRow()">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Row</button>
-    <label class="btn btn-secondary" for="file-import" style="cursor:pointer; margin:0"><span class="glyphicon glyphicon-import" aria-hidden="true"></span> Import </label>
-    <input id="file-import" type="file" onchange="importJSON(event)" style="display:none">
-    <button class="btn btn-secondary" onclick="exportJSON()" class="download icon">
-        <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Export</button>
+    <input id="file-import" type="file" onchange="importJSON(event)">
+    <label class="btn btn-secondary" for="file-import">
+        <span class="glyphicon glyphicon-import" aria-hidden="true"></span> Import
+    </label>
+    <button class="btn btn-secondary" onclick="exportJSON()">
+        <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Export
+    </button>
     <a id="downloadAnchorElem" style="display:none"></a>
 
 
