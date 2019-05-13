@@ -44,7 +44,7 @@
         display_name: 'Check Box',
         steps: [{
             type: 'text',
-            placeholder: 'Value'
+            placeholder: 'Check Box identifier'
         }, {
             type: 'dropdown',
             options: locatorOptions
@@ -54,27 +54,27 @@
         display_name: 'Check Box Data',
         steps: [{
             type: 'text',
-            placeholder: 'Value'
+            placeholder: 'Check Box Identifier'
         }, {
             type: 'dropdown',
             options: locatorOptions
         }, {
             type: 'text',
-            placeholder: 'Value'
+            placeholder: 'Check Box Value'
         }]
     }, {
         name: "check_browser_title",
         display_name: 'Check Browser Title',
         steps: [{
             type: 'text',
-            placeholder: 'Title'
+            placeholder: 'Browser Title'
         }]
     }, {
         name: "check_log_file",
         display_name: 'Check Log File',
         steps: [{
             type: 'text',
-            placeholder: 'Text'
+            placeholder: 'Text to Check'
         }, {
             type: 'text',
             placeholder: 'Filename'
@@ -84,7 +84,7 @@
         display_name: 'Check Screen Data',
         steps: [{
             type: 'text',
-            placeholder: 'Text'
+            placeholder: 'Text to Check'
         }]
     }, {
         name: "check_url",
@@ -98,7 +98,7 @@
         display_name: 'Click Button',
         steps: [{
             type: 'text',
-            placeholder: 'Value'
+            placeholder: 'Button Identifier'
         }, {
             type: 'dropdown',
             options: locatorOptions
@@ -108,14 +108,14 @@
         display_name: 'Execute System Command',
         steps: [{
             type: 'text',
-            placeholder: 'Command'
+            placeholder: 'System Command to run'
         }]
     }, {
         name: "handle_browser_window",
         display_name: 'Handle Browser Window',
         steps: [{
             type: 'text',
-            placeholder: 'Browser title'
+            placeholder: 'Browser Title'
         }]
     }, {
         name: "ipause",
@@ -129,7 +129,7 @@
         display_name: 'List All Dropdown Values',
         steps: [{
             type: 'text',
-            placeholder: 'Value'
+            placeholder: 'Dropdown Identifier'
         }, {
             type: 'dropdown',
             options: locatorOptions
@@ -163,7 +163,7 @@
         display_name: 'Radio Button',
         steps: [{
             type: 'text',
-            placeholder: 'Input group'
+            placeholder: 'Radio Button Identifier'
         }, {
             type: 'dropdown',
             options: locatorOptions
@@ -179,7 +179,7 @@
         display_name: 'Select Dropdown',
         steps: [{
             type: 'text',
-            placeholder: 'Dropdown box'
+            placeholder: 'Dropdown Identifier'
         }, {
             type: 'dropdown',
             options: locatorOptions
@@ -202,7 +202,7 @@
         display_name: 'Write Box Data',
         steps: [{
             type: 'text',
-            placeholder: 'Value'
+            placeholder: 'TextBox Identifier'
         }, {
             type: 'dropdown',
             options: locatorOptions
@@ -479,7 +479,6 @@
     <!-- Drag and drop for rows on table -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
-    <script src="https://getbootstrap.com/dist/js/bootstrap.min.js"></script>
 
     <script type="text/javascript">
         $('tbody').sortable();
