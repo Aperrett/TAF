@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TestSteps
   require_relative '../../taf_config.rb'
   module Handlers

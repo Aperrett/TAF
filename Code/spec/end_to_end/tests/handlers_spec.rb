@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 context 'End-to-end tests' do
   subject(:status) do
     system('taf', '-b', 'firefox-headless', '-t', '/e2e/fixtures/handlers')

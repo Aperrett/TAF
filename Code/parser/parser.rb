@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Created on 02 Aug 2018
 # @author: Andy Perrett
 #
