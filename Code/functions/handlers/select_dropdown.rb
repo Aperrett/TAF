@@ -4,6 +4,7 @@ require_relative 'base_handler'
 
 module TestSteps
   module Handlers
+    # Select Dropdown function.
     class SelectDropdown < Base
       register :select_dropdown
 

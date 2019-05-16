@@ -4,6 +4,7 @@ require_relative 'base_handler'
 
 module TestSteps
   module Handlers
+    # Click Button function.
     class ClickButton < Base
       register :click_button
 

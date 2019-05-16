@@ -4,6 +4,7 @@ require_relative 'base_handler'
 
 module TestSteps
   module Handlers
+    # Radio Button function.
     class RadioButton < Base
       register :radio_button
 

@@ -4,6 +4,7 @@ require_relative 'base_handler'
 
 module TestSteps
   module Handlers
+    # Browser Quit function.
     class BrowserQuit < Base
       register :browser_quit
 

@@ -4,6 +4,7 @@ require_relative 'base_handler'
 
 module TestSteps
   module Handlers
+    # Send a Special Key function.
     class SendSpecialKeys < Base
       register :send_special_keys
 

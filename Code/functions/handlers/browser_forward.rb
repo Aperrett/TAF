@@ -4,6 +4,7 @@ require_relative 'base_handler'
 
 module TestSteps
   module Handlers
+    # Browser Forward function.
     class BrowserForward < Base
       register :browser_forward
 

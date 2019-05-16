@@ -4,6 +4,7 @@ require_relative 'base_handler'
 
 module TestSteps
   module Handlers
+    # Check a log file function.
     class CheckLogs < Base
       register :check_log_file
 

@@ -4,6 +4,7 @@ require_relative 'base_handler'
 
 module TestSteps
   module Handlers
+    # Browser Refresh function.
     class BrowserRefresh < Base
       register :browser_refresh
 

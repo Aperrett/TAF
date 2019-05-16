@@ -4,6 +4,7 @@ require_relative 'base_handler'
 
 module TestSteps
   module Handlers
+    # Check URL function.
     class CheckUrl < Base
       register :check_url
 

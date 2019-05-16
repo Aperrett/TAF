@@ -7,7 +7,7 @@
 # 1.0 - Baseline
 #
 # logger.rb - logger file
-
+# Logger function.
 module MyLog
   require_relative '../taf_config.rb'
   def self.log

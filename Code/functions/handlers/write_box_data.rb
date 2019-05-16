@@ -4,6 +4,7 @@ require_relative 'base_handler'
 
 module TestSteps
   module Handlers
+    # Write box data function.
     class WriteBoxdata < Base
       register :write_box_data
 
@@ -16,7 +17,7 @@ module TestSteps
         WriteBoxdata.input_value(box, txt, locate)
       end
 
-      def self.input_value(box, text, locate)
+      def self.input_value(box, txt, locate)
         found_box = [
           Browser.b.textarea("#{locate}": box).exist?,
           Browser.b.text_field("#{locate}": box).exist?,
@@ -30,10 +31,10 @@ module TestSteps
 
         if index.zero?
           Browser.b.textarea("#{locate}": box).wait_until(&:exists?).set txt
-          (Browser.b.textarea("#{locate}": box).text == text)
+          (Browser.b.textarea("#{locate}": box).text == txt)
         elsif index == 1
           Browser.b.text_field("#{locate}": box).wait_until(&:exists?).set txt
-          (Browser.b.text_field("#{locate}": box).text == text)
+          (Browser.b.text_field("#{locate}": box).text == txt)
         elsif index == 2
           Browser.b.iframe("#{locate}": box).wait_until(&:exists?).send_keys txt
         end

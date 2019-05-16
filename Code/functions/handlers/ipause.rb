@@ -4,6 +4,7 @@ require_relative 'base_handler'
 
 module TestSteps
   module Handlers
+    # Pause the test function.
     class Ipause < Base
       register :ipause
 

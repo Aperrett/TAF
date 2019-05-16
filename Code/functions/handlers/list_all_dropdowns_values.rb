@@ -4,6 +4,7 @@ require_relative 'base_handler'
 
 module TestSteps
   module Handlers
+    # List all Dropdown Values function.
     class ListAllDropdownValues < Base
       register :list_all_dropdown_values
 

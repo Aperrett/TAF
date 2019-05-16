@@ -4,6 +4,7 @@ require_relative 'base_handler'
 
 module TestSteps
   module Handlers
+    # Open URL function.
     class OpenUrl < Base
       register :open_url
 

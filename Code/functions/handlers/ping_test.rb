@@ -4,6 +4,7 @@ require_relative 'base_handler'
 
 module TestSteps
   module Handlers
+    # Png Test function.
     class PingTest < Base
       register :ping_test
 

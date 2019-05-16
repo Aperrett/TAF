@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
+# Base Hanfer file to contain all shared login functions
 module TestSteps
   require_relative '../../taf_config.rb'
   module Handlers
+    # All Login functions function.
     class Base
       def self.register(name)
         TestSteps.handlers[name.to_s] = self

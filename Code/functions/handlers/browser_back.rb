@@ -4,6 +4,7 @@ require_relative 'base_handler'
 
 module TestSteps
   module Handlers
+    # Browser Back function.
     class BrowserBack < Base
       register :browser_back
 

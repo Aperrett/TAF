@@ -4,6 +4,7 @@ require_relative 'base_handler'
 
 module TestSteps
   module Handlers
+    # Handle Browser Window function.
     class HandleBrowserWindow < Base
       register :handle_browser_window
 

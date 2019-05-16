@@ -4,6 +4,7 @@ require_relative 'base_handler'
 
 module TestSteps
   module Handlers
+    # Check Box function.
     class CheckBox < Base
       register :check_box
 

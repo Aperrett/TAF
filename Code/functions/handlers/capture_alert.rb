@@ -4,6 +4,7 @@ require_relative 'base_handler'
 
 module TestSteps
   module Handlers
+    # Capture Alert function.
     class CaptureAlert < Base
       register :capture_alert
 

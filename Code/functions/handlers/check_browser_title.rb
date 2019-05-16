@@ -4,6 +4,7 @@ require_relative 'base_handler'
 
 module TestSteps
   module Handlers
+    # Check Browser Title function.
     class CheckTitle < Base
       register :check_browser_title
 
