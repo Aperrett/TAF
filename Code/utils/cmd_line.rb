@@ -33,7 +33,7 @@ module CMDLine
         '-b',
         '--browser browser',
         'Supported Browsers: chrome,' \
-        ' chrome-headless, firefox, firefox-headless.'
+        ' chrome-headless, firefox, firefox-headless'
       ) do |b|
         options[:browser] = b
         $browserType = options[:browser]

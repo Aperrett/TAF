@@ -21,10 +21,6 @@ module Browser
       firefox
     when 'firefox-headless'
       firefox_headless
-    when 'ie'
-      ie
-    when 'safari'
-      safari
     else
       MyLog.log.error "unable to open selected browser: #{lc_browser_type}"
       raise BrowserFailedOpen
@@ -77,20 +73,6 @@ module Browser
     @browser.driver.manage.window.move_to(0, 0)
     browser_version
     # browser
-  end
-
-  # ie browser details
-  def self.ie
-    @browser = Watir::Browser.new :ie
-    browser_full_screen
-    browser_version
-  end
-
-  # sarfari headless browser details
-  def self.safari
-    @browser = Watir::Browser.new :safari
-    browser_full_screen
-    browser_version
   end
 
   # makes the browser full screen.

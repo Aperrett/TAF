@@ -29,6 +29,10 @@ module TestSteps
         index = found_box.index(true)
         return unless index
 
+        WriteBoxdata.write_to_box_data(index, box, txt, locate)
+      end
+
+      def self.write_to_box_data(index, box, txt, locate)
         if index.zero?
           Browser.b.textarea("#{locate}": box).wait_until(&:exists?).set txt
           (Browser.b.textarea("#{locate}": box).text == txt)
