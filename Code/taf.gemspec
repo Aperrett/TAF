@@ -9,7 +9,8 @@ Gem::Specification.new do |taf|
   taf.name        = 'taf'
   taf.version     = Taf::Version::STRING
   taf.summary     = 'TAF to allow simple web automation.'
-  taf.description = 'Test Automation Framework (TAF) to allow simple test web automation - releaseflag use'
+  taf.description = 'Test Automation Framework (TAF) to allow simple test' \
+                      'web automation - releaseflag use'
   taf.authors     = ['Andy Perrett']
   taf.require_paths = ['lib']
   taf.files       = Dir['lib/*.rb'] + Dir['lib/**/*.rb'] + Dir['bin/*']

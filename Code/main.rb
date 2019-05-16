@@ -11,7 +11,7 @@ module Main
   require_relative './taf_config.rb'
 
   begin
-    # variables to manage the failure reporting
+     # variables to manage the failure reporting
      $testStepPasses = 0
      $testStepFailures   = 0
      $testStepNotrun     = 0

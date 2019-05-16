@@ -12,8 +12,8 @@ module TestSteps
         value = step_attributes[:testvalue2]
         locate = step_attributes[:locate]
 
-        text = ENV[value.to_s] || step_attributes[:testvalue2]
-        WriteBoxdata.input_value(box, text, locate)
+        txt = ENV[value.to_s] || step_attributes[:testvalue2]
+        WriteBoxdata.input_value(box, txt, locate)
       end
 
       def self.input_value(box, text, locate)
@@ -29,18 +29,18 @@ module TestSteps
         return unless index
 
         if index.zero?
-          Browser.b.textarea("#{locate}": box).wait_until(&:exists?).set text
+          Browser.b.textarea("#{locate}": box).wait_until(&:exists?).set txt
           (Browser.b.textarea("#{locate}": box).text == text)
         elsif index == 1
-          Browser.b.text_field("#{locate}": box).wait_until(&:exists?).set text
+          Browser.b.text_field("#{locate}": box).wait_until(&:exists?).set txt
           (Browser.b.text_field("#{locate}": box).text == text)
         elsif index == 2
-          Browser.b.iframe("#{locate}": box).wait_until(&:exists?).send_keys text
+          Browser.b.iframe("#{locate}": box).wait_until(&:exists?).send_keys txt
         end
-        MyLog.log.info("Textbox: #{box} has correct value: #{text}")
+        MyLog.log.info("Textbox: #{box} has correct value: #{txt}")
         true
       rescue StandardError
-        MyLog.log.warn("Textbox: #{box} has the incorrect value: #{text}")
+        MyLog.log.warn("Textbox: #{box} has the incorrect value: #{txt}")
         false
       rescue StandardError
         MyLog.log.warn("Textbox: #{box} does not exist")

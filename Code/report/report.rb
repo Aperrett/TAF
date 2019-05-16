@@ -22,7 +22,8 @@ module Report
 
     step = {
       'id' => test_step_idx,
-      'classname' => "SuiteID: #{$testId} Test Step: #{test_step_idx} #{test_desc}",
+      'classname' => "SuiteID: #{$testId} Test Step: #{test_step_idx} "\
+      "#{test_desc}",
       'name' => test_desc,
       'file' => test_file_name
     }
@@ -49,7 +50,8 @@ module Report
       $testStepFailures += 1
       MyLog.log.info "Test #{test_step_idx} has FAILED ".red
       failstep = {
-        'message' => "SuiteID: #{$testId} Test Step: #{test_step_idx} Test has FAILED - Check logs",
+        'message' => "SuiteID: #{$testId} Test Step: #{test_step_idx} Test has"\
+         ' FAILED - Check logs',
         'type' => 'FAILURE',
         'file' => test_file_name
       }
@@ -66,7 +68,8 @@ module Report
       $testStepNotrun += 1
       MyLog.log.info "Test #{test_step_idx} no checks performed ".blue
       skipstep = {
-        'message' => "SuiteID: #{$testId} Test Step: #{test_step_idx} No checks performed - Check logs",
+        'message' => "SuiteID: #{$testId} Test Step: #{test_step_idx} No"\
+          ' checks performed - Check logs',
         'type' => 'SKIPPED',
         'file' => test_file_name
       }
