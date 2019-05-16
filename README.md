@@ -1,6 +1,10 @@
 # [Test Automation Framework (TAF)](https://github.com/Aperrett/TAF)
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://opensource.org/licenses/MIT) [![Gem Version](https://badge.fury.io/rb/taf.svg)](https://badge.fury.io/rb/taf)
 
+
+<div align="center">
+    <img src="https://github.com/Aperrett/TAF/blob/master/Code/taf_logo.png" width="500px"</img> 
+</div>
 This is the Test Automation Framework (TAF)
 
 Created in Ruby and using Watir to allow a user to Automate a website using an Json file type.
