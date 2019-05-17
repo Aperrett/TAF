@@ -8,15 +8,13 @@ module TestSteps
     class ExecuteSystemCommand < Base
       register :execute_system_command
 
-      def perform(step_attributes)
-        syst_cmd = step_attributes[:testvalue]
-
-        b_result = system syst_cmd
+      def perform
+        b_result = system @value
         if b_result == true
-          MyLog.log.info("Cmd has been executed sucessfully #{syst_cmd}")
+          MyLog.log.info("Cmd has been executed sucessfully #{@value}")
           return true
         else
-          MyLog.log.warn("Theres a problem executing command #{syst_cmd}")
+          MyLog.log.warn("Theres a problem executing command #{@value}")
           return false
         end
       end

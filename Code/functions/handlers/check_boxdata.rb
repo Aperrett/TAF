@@ -8,35 +8,26 @@ module TestSteps
     class CheckBoxdata < Base
       register :check_box_data
 
-      def perform(step_attributes)
-        box = step_attributes[:testvalue]
-        value = step_attributes[:testvalue2]
-        locate = step_attributes[:locate]
+      def perform
+        elms = %i[textarea text_field iframe]
 
-        found_box = [
-          Browser.b.textarea("#{locate}": box).exist?,
-          Browser.b.text_field("#{locate}": box).exist?
-        ]
+        found_box = elms.map do |elm|
+          Browser.b.send(elm, "#{@locate}": @value).exists?
+        end.compact
 
         raise 'Multiple matches' if found_box.select { |i| i }.empty?
 
         index = found_box.index(true)
         return unless index
 
-        if index.zero?
-          Browser.b.textarea("#{locate}": box).wait_until(&:exists?)
-          (Browser.b.textarea("#{locate}": box).value == value)
-        elsif index == 1
-          Browser.b.text_field("#{locate}": box).wait_until(&:exists?)
-          (Browser.b.text_field("#{locate}": box).value == value)
-        end
-        MyLog.log.info("Textbox: #{box} has the correct value: #{value}")
+        ele = Browser.b.send(elms[index], "#{@locate}": @value)
+
+        ele.wait_until(&:exists?)
+        (ele.value == @value2)
+        MyLog.log.info("Textbox: #{@value} has correct value: #{value2}")
         true
       rescue StandardError
-        MyLog.log.warn("Textbox: #{box} has the incorrect value: #{value}")
-        false
-      rescue StandardError
-        MyLog.log.warn("Textbox: #{box} does not exist")
+        MyLog.log.warn("Textbox: #{@value} does not exist")
         false
       end
     end

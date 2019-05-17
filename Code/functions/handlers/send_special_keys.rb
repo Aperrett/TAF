@@ -8,15 +8,13 @@ module TestSteps
     class SendSpecialKeys < Base
       register :send_special_keys
 
-      def perform(step_attributes)
-        special_key = step_attributes[:testvalue]
-
-        Browser.b.send_keys :"#{special_key}"
+      def perform
+        Browser.b.send_keys :"#{@value}"
         sleep 1
-        MyLog.log.info("Browser Sent key: :#{special_key} successfully")
+        MyLog.log.info("Browser Sent key: :#{@value} successfully")
         true
       rescue StandardError
-        MyLog.log.warn("Browser Failed to Send key: :#{special_key}")
+        MyLog.log.warn("Browser Failed to Send key: :#{@value}")
         false
       end
     end

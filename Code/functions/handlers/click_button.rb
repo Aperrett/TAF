@@ -8,14 +8,11 @@ module TestSteps
     class ClickButton < Base
       register :click_button
 
-      def perform(step_attributes)
-        button = step_attributes[:testvalue]
-        locate = step_attributes[:locate]
-
+      def perform
         elms = %i[button span a div link image h1 h2 h3 h4]
 
         found_button = elms.map do |elm|
-          Browser.b.send(elm, "#{locate}": button).exists?
+          Browser.b.send(elm, "#{@locate}": @value).exists?
         end.compact
 
         raise 'Multiple matches' if found_button.select { |i| i }.empty?
@@ -23,12 +20,12 @@ module TestSteps
         index = found_button.index(true)
         return unless index
 
-        Browser.b.send(elms[index], "#{locate}": button)
+        Browser.b.send(elms[index], "#{@locate}": @value)
                .wait_until(&:exists?).click
-        MyLog.log.info("Button: #{button} has been selected")
+        MyLog.log.info("Button: #{@value} has been selected")
         true
       rescue StandardError
-        MyLog.log.warn("Button: #{button} does not exist")
+        MyLog.log.warn("Button: #{@value} does not exist")
         false
       end
     end

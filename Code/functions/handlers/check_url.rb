@@ -8,14 +8,12 @@ module TestSteps
     class CheckUrl < Base
       register :check_url
 
-      def perform(step_attributes)
-        url = step_attributes[:testvalue]
-
-        if Browser.b.url == url
-          MyLog.log.info("URL: #{url} is correct")
+      def perform
+        if Browser.b.url == @value
+          MyLog.log.info("URL: #{@value} is correct")
           true
         else
-          MyLog.log.warn("URL: #{url} is incorrect")
+          MyLog.log.warn("URL: #{@value} is incorrect")
           false
         end
       end

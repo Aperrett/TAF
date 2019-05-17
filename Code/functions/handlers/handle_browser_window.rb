@@ -8,16 +8,14 @@ module TestSteps
     class HandleBrowserWindow < Base
       register :handle_browser_window
 
-      def perform(step_attributes)
-        text_check = step_attributes[:testvalue]
-
-        Browser.b.window(title: text_check.to_s).use
+      def perform
+        Browser.b.window(title: @value.to_s).use
         sleep 3
-        Browser.b.title.eql?(text_check.to_s)
-        MyLog.log.info("Window title: #{text_check} is correct")
+        Browser.b.title.eql?(@value.to_s)
+        MyLog.log.info("Window title: #{@value} is correct")
         true
       rescue StandardError
-        MyLog.log.warn("Window not found: #{text_check}")
+        MyLog.log.warn("Window not found: #{@value}")
         false
       end
     end

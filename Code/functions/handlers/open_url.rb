@@ -8,15 +8,13 @@ module TestSteps
     class OpenUrl < Base
       register :open_url
 
-      def perform(step_attributes)
-        url = step_attributes[:testvalue]
-
+      def perform
         Browser.open_browser
 
-        url = if ENV[url]
-                ENV[url.to_s]
+        url = if ENV[@value]
+                ENV[@value.to_s]
               else
-                step_attributes[:testvalue]
+                @value
               end
         Browser.b.goto(url)
         OpenUrl.check_current_url(url)

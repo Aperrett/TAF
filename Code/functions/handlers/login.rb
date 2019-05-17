@@ -8,20 +8,22 @@ module TestSteps
     class Login < Base
       register :login
 
-      def perform(step_attributes)
-        login_type = step_attributes[:testvalue]
-        user = step_attributes[:testvalue2]
+      def perform
+        user = @value2
         user = ENV[user.to_s] if ENV[user.to_s]
 
-        lc_login_type = login_type.downcase
-        case lc_login_type
+        login_user(user)
+      rescue StandardError
+        MyLog.log.error "unable to find login: #{@value}"
+        raise LoginTypeFailed
+      end
+
+      def login_user(user)
+        case @value.downcase
         when 'portal_login'
           portal_login(user)
         when 'sso_login'
           sso_login(user)
-        else
-          MyLog.log.error "unable to find login: #{lc_login_type}"
-          raise LoginTypeFailed
         end
       end
 

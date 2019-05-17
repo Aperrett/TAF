@@ -6,12 +6,19 @@ module TestSteps
   module Handlers
     # All Login functions function.
     class Base
+      def initialize(step_attributes)
+        @value =  step_attributes[:testvalue]
+        @value2 = step_attributes[:testvalue2]
+        @locate = step_attributes[:locate]
+        @locate2 = step_attributes[:locate2]
+      end
+
       def self.register(name)
         TestSteps.handlers[name.to_s] = self
       end
 
       def self.perform(*args)
-        new.perform(*args)
+        new(*args).perform
       end
 
       def open_url_process(url)

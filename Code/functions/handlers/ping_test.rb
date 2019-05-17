@@ -9,18 +9,16 @@ module TestSteps
       register :ping_test
 
       # TODO: retry every 'x' until timeout reached.
-      def perform(step_attributes)
-        url = step_attributes[:testvalue]
-
-        check = Net::Ping::HTTP.new(url)
+      def perform
+        check = Net::Ping::HTTP.new(@value)
 
         check.ping?
         sleep 5
         if check.ping?
-          MyLog.log.info("pinged: #{url}")
+          MyLog.log.info("pinged: #{@value}")
           return true
         else
-          MyLog.log.warn("Failed to ping: #{url}")
+          MyLog.log.warn("Failed to ping: #{@value}")
           return false
         end
       end

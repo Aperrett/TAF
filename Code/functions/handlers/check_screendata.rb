@@ -8,14 +8,12 @@ module TestSteps
     class CheckScreendata < Base
       register :check_screen_data
 
-      def perform(step_attributes)
-        check_text = step_attributes[:testvalue]
-
-        Browser.b.wait_until { Browser.b.element.text.include? check_text }
-        MyLog.log.info("Text found: #{check_text}")
+      def perform
+        Browser.b.wait_until { Browser.b.element.text.include? @value }
+        MyLog.log.info("Text found: #{@value}")
         true
       rescue StandardError
-        MyLog.log.warn("Text not found: #{check_text}")
+        MyLog.log.warn("Text not found: #{@value}")
         false
       end
     end

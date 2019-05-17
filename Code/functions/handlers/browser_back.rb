@@ -8,7 +8,7 @@ module TestSteps
     class BrowserBack < Base
       register :browser_back
 
-      def perform(_step_attributes)
+      def perform
         Browser.b.back
         MyLog.log.info('Browser navigated back')
         true

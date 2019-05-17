@@ -8,16 +8,13 @@ module TestSteps
     class CheckLogs < Base
       register :check_log_file
 
-      def perform(step_attributes)
-        text = step_attributes[:testvalue]
-        file = step_attributes[:testvalue2]
-
-        blog_result = system 'egrep -i ' + text + ' ' + file + ' > ' + output
-        if blog_result == true
-          MyLog.log.info("Data has matched: #{text} in LogFile: #{file}")
+      def perform
+        result = system 'egrep -i ' + @value + ' ' + @value2 + ' > ' + output
+        if result == true
+          MyLog.log.info("Data has matched: #{@value} in LogFile: #{@value2}")
           return true
         else
-          MyLog.log.warn("Problem finding: #{text} in LogFile: #{file}")
+          MyLog.log.warn("Problem finding: #{@value} in LogFile: #{@value2}")
           return false
         end
       end
