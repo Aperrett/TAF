@@ -31,10 +31,9 @@ module TestSteps
       end
 
       def login_button
-        if Browser.b.button(value: 'Sign in').exist?
-          Browser.b.button(value: 'Sign in').wait_until(&:exists?).click
-        elsif Browser.b.button(value: 'Log in').exist?
-          Browser.b.button(value: 'Log in').wait_until(&:exists?).click
+        button = 'Sign in' || 'Log in'
+        if Browser.b.button(value: button).exist?
+          Browser.b.button(value: button).wait_until(&:exists?).click
         else
           MyLog.log.warn("User: #{user} has failed to log in.")
         end
@@ -51,7 +50,7 @@ module TestSteps
       end
 
       def mem_word_check(user, b_title_sucess)
-        if Browser.b.title.eql?('Memorable word - UKCloud Portal')
+        if Browser.b.title.eql?('Memorable word')
           portal_mem_word(user, b_title_sucess)
         elsif Browser.b.title.eql?(b_title_sucess)
           MyLog.log.info("User: #{user} has logged in successful.")
