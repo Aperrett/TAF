@@ -23,17 +23,9 @@ module TestSteps
         if Browser.b.title.eql?(b_title)
           Browser.b.text_field(id: user_elm).wait_until(&:exists?).set user
           Browser.b.text_field(id: pass_elm).wait_until(&:exists?).set pass
-          login_button
-          sleep 1
-        else
-          MyLog.log.warn("User: #{user} has failed to log in.")
-        end
-      end
-
-      def login_button
-        button = 'Sign in' || 'Log in'
-        if Browser.b.button(value: button).exist?
+          button = 'Sign in' || 'Log in'
           Browser.b.button(value: button).wait_until(&:exists?).click
+          sleep 1
         else
           MyLog.log.warn("User: #{user} has failed to log in.")
         end
