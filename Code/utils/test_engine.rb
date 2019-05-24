@@ -12,11 +12,15 @@ module TestEngine
 
   # process the test files to execute the tests
   def self.process_testfiles
-    # get the overall test start time
-    $test_start_time = Report.current_time
+    total_passes = 0
+    total_failures = 0
+    total_skipped = 0
 
     # loop through all the available test files to execute the tests
     Parser.test_files.each_with_index do |test_file_name, test_file_index|
+      metrics = Struct.new(:stepPasses, :stepFailures, :stepSkipped)
+                      .new(0, 0, 0)
+
       begin
         # read in the test data
         tests = Parser.read_test_data(test_file_name)
@@ -32,9 +36,7 @@ module TestEngine
       CreateDirectories.construct_projectdirs
 
       # get the test case start time
-      $test_case_start_time = Report.current_time
-      # initialise the test end time
-      $test_case_end_time = Report.current_time
+      tc_start = Report.current_time
 
       begin
         tests['steps'].each_with_index do |test_step, test_step_idx|
@@ -44,10 +46,7 @@ module TestEngine
 
           # process the test step data
           TestSteps.process_test_steps(test_file_name, test_step_idx,
-                                       parsed_steps)
-          # see if screenshot required
-          Screenshot.save_screenshot(parsed_steps[:screenShotData],
-                                     test_step_idx)
+                                       parsed_steps, metrics)
         end
       rescue TafError => e
         warn e
@@ -55,24 +54,24 @@ module TestEngine
       end
 
       # get the test case end time
-      $test_case_end_time = Report.current_time
+      tc_end = Report.current_time
 
       # output the test results summary for the current test case,
       # pass in the test file number to save the summary against it's testfile
-      ReportSummary.test_step_summary(test_file_name, test_file_index)
-      JunitReport.test_step_summary_xml(test_file_name, test_file_index)
+      ReportSummary.test_step_summary(test_file_name, test_file_index, metrics)
+      JunitReport.test_step_summary_xml(test_file_name, test_file_index,
+                                        tc_start, tc_end, metrics)
 
       # close the browser if created
       Browser.b.quit
 
       # record total passes and failures and reset the failure counters for
       # the test steps
-      $totalTestPasses   += $testStepPasses
-      $totalTestFailures += $testStepFailures
-      $totalTestNotrun   += $testStepNotrun
-      $testStepPasses   = 0
-      $testStepFailures = 0
-      $testStepNotrun   = 0
+      total_passes   += metrics.stepPasses
+      total_failures += metrics.stepFailures
+      total_skipped  += metrics.stepSkipped
     end
+
+    [total_passes, total_failures, total_skipped]
   end
 end

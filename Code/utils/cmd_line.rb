@@ -36,9 +36,9 @@ module CMDLine
         ' chrome-headless, firefox, firefox-headless'
       ) do |b|
         options[:browser] = b
-        $browserType = options[:browser]
+        @browser_type = options[:browser]
         unless ['chrome', 'chrome-headless', 'firefox', 'firefox-headless']
-               .include?($browserType)
+               .include?(@browser_type)
           MyLog.log.warn 'A valid Browser has not been supplied as a' \
             ' command-line parameter as expected'
           Process.exit
@@ -47,7 +47,7 @@ module CMDLine
 
       parser.on('-t', '--tests testfolder', 'i.e. tests/') do |t|
         options[:testfolder] = t
-        $testcasesFolder = options[:testfolder]
+        @tests_folder = options[:testfolder]
         if Parser.test_files.size.positive?
           MyLog.log.info "There are: #{Parser.test_files.size}" \
             ' test files to process'
@@ -59,5 +59,13 @@ module CMDLine
         end
       end
     end.parse!
+  end
+
+  def self.browser_type
+    @browser_type
+  end
+
+  def self.tests_folder
+    @tests_folder
   end
 end

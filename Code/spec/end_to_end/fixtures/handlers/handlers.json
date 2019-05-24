@@ -1,63 +1,55 @@
 {
-  "testId": "End-to-End",
-  "projectId": "Tests",
-  "testDescription": "Test TAF end-to-end",
-  "steps": [
-    {
-      "description": "Test Ping_Test",
-      "function": "ping_test",
-      "screenshot": "no",
-      "skipTestCase": "no",
-      "value0": "http://app:5000"
-    },
-    {
-      "description": "Test Open_URL",
-      "function": "open_url",
-      "screenshot": "no",
-      "skipTestCase": "no",
-      "value0": "http://app:5000/foo/bar?baz=qux"
-    },
-    {
-      "description": "Test Check_URL",
-      "function": "check_url",
-      "screenshot": "no",
-      "skipTestCase": "no",
-      "value0": "http://app:5000/foo/bar?baz=qux"
-    },
-    {
-      "description": "Test Check_Browser_Title",
-      "function": "check_browser_title",
-      "screenshot": "no",
-      "skipTestCase": "no",
-      "value0": "Test Page"
-    },
-    {
-      "description": "Test Radio_Button",
-      "function": "radio_button",
-      "screenshot": "no",
-      "skipTestCase": "no",
-      "value0": "radio-2",
-      "value1": "id",
-      "value2": "radio-2",
-      "value3": "id"
-    },
-    {
-      "description": "Test Select_Dropdown",
-      "function": "select_dropdown",
-      "screenshot": "no",
-      "skipTestCase": "no",
-      "value0": "dropdown",
-      "value1": "id",
-      "value2": "Option 2",
-      "value3": "value"
-    },
-    {
-      "description": "Test Click_Button",
-      "function": "click_button",
-      "screenshot": "no",
-      "skipTestCase": "no",
-      "value0": "Click Me!",
-      "value1": "value"
-    }
-  ]
+    "testId": "End-to-End",
+    "projectId": "Tests",
+    "testDescription": "Test TAF end-to-end",
+    "steps": [{
+            "description": "Test Ping_Test",
+            "function": "ping_test",
+            "skipTestCase": "no",
+            "value0": "http://app:5000"
+        },
+        {
+            "description": "Test Open_URL",
+            "function": "open_url",
+            "skipTestCase": "no",
+            "value0": "http://app:5000/foo/bar?baz=qux"
+        },
+        {
+            "description": "Test Check_URL",
+            "function": "check_url",
+            "skipTestCase": "no",
+            "value0": "http://app:5000/foo/bar?baz=qux"
+        },
+        {
+            "description": "Test Check_Browser_Title",
+            "function": "check_browser_title",
+            "skipTestCase": "no",
+            "value0": "Test Page"
+        },
+        {
+            "description": "Test Radio_Button",
+            "function": "radio_button",
+            "skipTestCase": "no",
+            "value0": "radio-2",
+            "value1": "id",
+            "value2": "radio-2",
+            "value3": "id"
+        },
+        {
+            "description": "Test Select_Dropdown",
+            "function": "select_dropdown",
+            "skipTestCase": "no",
+            "value0": "dropdown",
+            "value1": "id",
+            "value2": "Option 2",
+            "value3": "value"
+        },
+        {
+            "description": "Test Click_Button",
+            "function": "click_button",
+            "skipTestCase": "no",
+            "value0": "Click Me!",
+            "value1": "value"
+        }
+    ]
 }

@@ -12,31 +12,35 @@ module JunitReport
   # holds printable test report summary for all the executed tests
   @test_step_report_summary2 = []
   # construct the test suite header for junit
-  def self.test_step_summary_xml(test_file_name, test_file_name_index)
+  def self.test_step_summary_xml(test_file_name, test_file_name_index,
+                                 tc_start, tc_end, metrics)
+    number_test_steps = [metrics.stepFailures, metrics.stepPasses,
+                         metrics.stepSkipped].sum
     @test_step_report_summary2[test_file_name_index] = {
       'classname' => test_file_name,
       'name' => test_file_name,
-      'assertions' => $numberOfTestSteps,
-      'failures' => $testStepFailures,
-      'tests' => $testStepPasses,
-      'skipped' => $testStepNotrun,
+      'assertions' => number_test_steps,
+      'failures' => metrics.stepFailures,
+      'tests' => metrics.stepPasses,
+      'skipped' => metrics.stepSkipped,
       'time' => TimeDifference.between(
-        $test_case_end_time, $test_case_start_time
+        tc_end, tc_start
       ).in_seconds
     }
   end
 
-  def self.test_summary_junit
+  def self.test_summary_junit(ts_start_time, ts_end_time, total_passes,
+                              total_failures, total_skipped)
     # output to XML file format for Junit for CI.
     builder = Nokogiri::XML::Builder.new(encoding: 'UTF-8') do |xml|
       testsuite_attrs = {
-        'classname' => $testcasesFolder.to_s,
-        'name' => $testcasesFolder.to_s,
-        'tests' => $totalTests.to_s,
-        'failures' => $totalTestFailures.to_s,
-        'timestamp' => $test_start_time.to_s,
-        'skipped' => $totalTestNotrun.to_s,
-        'time' => TimeDifference.between($test_end_time, $test_start_time)
+        'classname' => CMDLine.tests_folder.to_s,
+        'name' => CMDLine.tests_folder.to_s,
+        'tests' => total_passes.to_s,
+        'failures' => total_failures.to_s,
+        'timestamp' => ts_start_time.to_s,
+        'skipped' => total_skipped.to_s,
+        'time' => TimeDifference.between(ts_end_time, ts_start_time)
                                 .in_seconds
       }
       xml.testsuites(testsuite_attrs) do |testsuites|
@@ -58,7 +62,11 @@ module JunitReport
       end
     end
 
-    ts_summary_file_xml = File.open($TestSuiteSummaryXML, 'w')
+    # the test suite summary is a XML report generated will be called
+    # 'report_uuid.xml'
+    ts_xml_file = "#{$project_iddir}/report_#{SecureRandom.uuid}.xml"
+
+    ts_summary_file_xml = File.open(ts_xml_file, 'w')
     ts_summary_file_xml.write builder.to_xml
     ts_summary_file_xml.close
   end

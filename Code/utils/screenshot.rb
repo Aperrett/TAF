@@ -10,30 +10,18 @@
 module Screenshot
   require_relative '../taf_config.rb'
 
-  # create screenshot filename and save the screenshot if the test has failed or
-  # if explictly required
-  def self.save_screenshot(screen_shot, test_step_idx)
-    if $currentTestFail || screen_shot
-      time = Time.now.strftime('%H%M')
-      sc_dir = CreateDirectories.construct_testspecdirs
+  # create screenshot filename and save the screenshot if the test has failed.
+  def self.save_screenshot(test_step_idx)
+    time = Time.now.strftime('%H%M')
+    sc_dir = CreateDirectories.construct_testspecdirs
 
-      sc_file_name = if $currentTestFail
-                       "#{sc_dir}/Test_ID-#{$testId.delete(' ')}"\
-                        "_Test_step-#{test_step_idx}_Failed"\
-                        "_#{time}.png"
-                     else
-                       "#{sc_dir}/Test_ID-#{$testId.delete(' ')}"\
-                        "_Test_step-#{test_step_idx}_#{time}.png"
-                     end
+    sc_file_name = "#{sc_dir}/Test_ID-#{JsonParser.test_id.delete(' ')}"\
+                      "_Test_step-#{test_step_idx}_Failed_#{time}.png"
 
-      # Screenshot capture for websites
-      Browser.b.screenshot.save sc_file_name
-      MyLog.log.info("Screenshot saved to: #{sc_file_name} \n")
-    else
-      MyLog.log.debug "No screenshot requested \n"
-    end
-
-    # if any issues with saving the screenshot then log a warning
+    # Screenshot capture for websites
+    Browser.b.screenshot.save sc_file_name
+    MyLog.log.info("Screenshot saved to: #{sc_file_name} \n")
+    sc_file_name
   rescue StandardError => e
     # construct the error message from custom text and the actual system
     # error message (converted to a string).

@@ -17,25 +17,16 @@ module CreateDirectories
   #
   # ------->directory named after the test run ID UUID
 
-  def self.time_now
-    Time.new.strftime('%d-%b-%Y_%H_%M')
-  end
-
   def self.construct_projectdirs
     # create top-level directory if it doesn't already exist:
     # Results/Project_id
-    project_id = $projectId.delete(' ')
+    project_id = JsonParser.project_id.delete(' ')
     $project_iddir = File.join('Results', project_id)
 
     FileUtils.mkdir_p($project_iddir)
 
     # Generate UUID
     $run_uuid = SecureRandom.uuid
-
-    # the test suite summary is a XML report generated will be called
-    # 'suite_summary.xml'
-    $TestSuiteSummaryXML = "Results/#{project_id}/#{time_now}" \
-                           '_test_result.xml'
   end
 
   def self.construct_testspecdirs

@@ -11,7 +11,7 @@ module Parser
   require_relative '../taf_config.rb'
 
   def self.test_files
-    @test_files ||= Dir.glob("#{$testcasesFolder}/*.json").reject do |file|
+    @test_files ||= Dir.glob("#{CMDLine.tests_folder}/*.json").reject do |file|
       File.basename(file).start_with?('~$')
     end.sort
   end
@@ -22,7 +22,6 @@ module Parser
     file_type = File.extname(test_file_name)
     if file_type.casecmp('.json').zero?
       MyLog.log.info "Processing test file: #{test_file_name}"
-      MyLog.log.info "Browser Type: #{$browserType}"
       json = File.read(test_file_name)
       parse_json = JSON.parse(json)
 

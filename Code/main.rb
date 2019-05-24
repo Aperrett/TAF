@@ -10,30 +10,24 @@
 module Main
   require_relative './taf_config.rb'
 
-  begin
-     # variables to manage the failure reporting
-     $testStepPasses = 0
-     $testStepFailures   = 0
-     $testStepNotrun     = 0
-     $totalTestPasses    = 0
-     $totalTestFailures  = 0
-     $totalTestNotrun = 0
-     $previousTestFail = false
-     $currentTestFail = false
-     # parses the cmd line imput into the taf
-     CMDLine.cmdline_input
-   end
+  # parses the cmd line imput into the taf
+  CMDLine.cmdline_input
+
+  # get the overall test suite end time
+  ts_start_time = Report.current_time
 
   # process the test files to execute the tests
-  TestEngine.process_testfiles
+  total_passes, total_failures, total_skipped = TestEngine.process_testfiles
 
-  # get the overall test end time
-  $test_end_time = Report.current_time
+  # get the overall test suite end time
+  ts_end_time = Report.current_time
 
   # output the overall test summary
-  ReportSummary.print_overall_test_summary
-  JunitReport.test_summary_junit
+  ReportSummary.overall_test_summary(ts_start_time, ts_end_time, total_passes,
+                                     total_failures, total_skipped)
+  JunitReport.test_summary_junit(ts_start_time, ts_end_time, total_passes,
+                                 total_failures, total_skipped)
 
   # Exit status code.
-  Process.exit($totalTestFailures.zero? ? 0 : 1)
+  Process.exit(total_failures.zero? ? 0 : 1)
 end

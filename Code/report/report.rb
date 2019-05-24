@@ -22,8 +22,8 @@ module Report
 
     step = {
       'id' => test_step_idx,
-      'classname' => "SuiteID: #{$testId} Test Step: #{test_step_idx} "\
-      "#{test_desc}",
+      'classname' => "SuiteID: #{JsonParser.test_id}" \
+      " Test Step: #{test_step_idx} #{test_desc}",
       'name' => test_desc,
       'file' => test_file_name
     }
@@ -38,20 +38,20 @@ module Report
   end
 
   # print the Pass / Fail status of a test to the test results file
-  def self.test_pass_fail(pass_fail, test_file_name, test_step_idx)
+  def self.test_pass_fail(pass_fail, test_file_name, test_step_idx, metrics)
     if pass_fail == true
-      $previousTestFail = $currentTestFail
       $currentTestFail = false
-      $testStepPasses += 1
+      metrics.stepPasses += 1
       MyLog.log.info "Test #{test_step_idx} has Passed ".green
     elsif pass_fail == false
-      $previousTestFail = $currentTestFail
       $currentTestFail = true
-      $testStepFailures += 1
+      metrics.stepFailures += 1
       MyLog.log.info "Test #{test_step_idx} has FAILED ".red
+      sc_file_name = Screenshot.save_screenshot(test_step_idx)
       failstep = {
-        'message' => "SuiteID: #{$testId} Test Step: #{test_step_idx} Test has"\
-         ' FAILED - Check logs',
+        'message' => "SuiteID: #{JsonParser.test_id}" \
+        " Test Step: #{test_step_idx} Test has" \
+         " FAILED - Check logs, see Screenshot: #{sc_file_name}",
         'type' => 'FAILURE',
         'file' => test_file_name
       }
@@ -65,10 +65,11 @@ module Report
       $failtestStep_xml[test_file_name][test_step_idx] = failstep
     else
       $currentTestFail = false
-      $testStepNotrun += 1
+      metrics.stepSkipped += 1
       MyLog.log.info "Test #{test_step_idx} no checks performed ".blue
       skipstep = {
-        'message' => "SuiteID: #{$testId} Test Step: #{test_step_idx} No"\
+        'message' => "SuiteID: #{JsonParser.test_id}" \
+        " Test Step: #{test_step_idx} No" \
           ' checks performed - Check logs',
         'type' => 'SKIPPED',
         'file' => test_file_name
@@ -87,7 +88,7 @@ module Report
     test_duration = TimeDifference.between(
       test_end_time, @test_start_time
     ).humanize || 0
-    MyLog.log.info "Test step duration: #{test_duration}"
+    MyLog.log.info "Test step duration: #{test_duration} \n"
   end
 
   # check if the test failure threshold has been reached for total failures
@@ -95,7 +96,7 @@ module Report
   # If a certain number of consecutive tests fail then throw an exception
   def self.check_failure_threshold(test_file_name)
     consecutive_fail_threshold = 5
-    if $previousTestFail && $currentTestFail
+    if $currentTestFail
       @consecutive_test_fail += 1
     else
       @consecutive_test_fail = 0
@@ -105,11 +106,11 @@ module Report
 
     # write info to stdout
     MyLog.log.warn "Terminating the current test file: #{test_file_name} as" \
-      " the test failure threshold (#{$testStepFailures}) has been" \
+      " the test failure threshold (#{@consecutive_test_fail}) has been" \
       ' reached.'
     MyLog.log.warn '...continuing with the next test file (if there is one)'
 
     raise FailureThresholdExceeded,
-          "#{$testStepFailures} Test Steps Failed."
+          "test failure threshold (#{@consecutive_test_fail}) has been reached"
   end
 end

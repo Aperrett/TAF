@@ -16,7 +16,8 @@ module TestSteps
 
   # process the test step data by matching the test step functions and
   # processing the associated data accordingly
-  def self.process_test_steps(test_file_name, test_step_idx, step_attributes)
+  def self.process_test_steps(test_file_name, test_step_idx, step_attributes,
+                              metrics)
     # print the test step information
     Report.print_test_step_header(test_file_name, test_step_idx,
                                   step_attributes[:testdesc])
@@ -26,7 +27,7 @@ module TestSteps
 
     if handler.respond_to?(:perform)
       func = handler.perform(step_attributes) if runtest == false
-      Report.test_pass_fail(func, test_file_name, test_step_idx)
+      Report.test_pass_fail(func, test_file_name, test_step_idx, metrics)
       Report.check_failure_threshold(test_file_name)
       return true
     else

@@ -12,14 +12,22 @@ module JsonParser
 
   def self.parse_test_header_data(parse_json)
     # get the number of test steps in the file
-    $numberOfTestSteps = parse_json['steps'].count
+    number_test_steps = parse_json['steps'].count
     # get the remaining test data
-    $testId = parse_json['testId']
-    $projectId    = parse_json['projectId']
-    $testDes      = parse_json['testDescription']
-    MyLog.log.info "Number of test steps: #{$numberOfTestSteps}"
-    MyLog.log.info "Test Description: #{$testDes}"
-    MyLog.log.info "TestID: #{$testId} \n"
+    @test_id = parse_json['testId']
+    @project_id = parse_json['projectId']
+    test_des = parse_json['testDescription']
+    MyLog.log.info "Number of test steps: #{number_test_steps}"
+    MyLog.log.info "Test Description: #{test_des}"
+    MyLog.log.info "TestID: #{@test_id} \n"
+  end
+
+  def self.test_id
+    @test_id
+  end
+
+  def self.project_id
+    @project_id
   end
 
   # parseTestStepData
@@ -31,7 +39,6 @@ module JsonParser
       locate: parse_json['value1'] || 'id',
       testvalue2: parse_json['value2'],
       locate2: parse_json['value3'] || 'id',
-      screenShotData: parse_json['screenshot'] == 'yes',
       skipTestCase: parse_json['skipTestCase'] == 'yes'
     }
 

@@ -11,7 +11,7 @@ module Browser
   require_relative '../taf_config.rb'
   # open_browser function
   def self.open_browser
-    lc_browser_type = $browserType.downcase
+    lc_browser_type = CMDLine.browser_type.downcase
     case lc_browser_type
     when 'chrome'
       chrome
@@ -38,7 +38,6 @@ module Browser
     @browser = Watir::Browser.new :chrome, switches: %w[
       --acceptInsecureCerts-true --start-maximized --window-size=1920,1080
     ]
-    browser_version
   end
 
   # chrome headless browser details
@@ -47,7 +46,6 @@ module Browser
       --start-maximized --disable-gpu --headless --acceptInsecureCerts-true
       --no-sandbox --window-size=1920,1080
     ]
-    browser_version
   end
 
   # firefox browser details
@@ -57,7 +55,6 @@ module Browser
     driver = Selenium::WebDriver.for(:firefox, desired_capabilities: caps)
     @browser = Watir::Browser.new(driver)
     browser_full_screen
-    browser_version
   end
 
   # firefox headless browser details
@@ -71,8 +68,6 @@ module Browser
     # makes the browser full screen.
     @browser.driver.manage.window.resize_to(1920, 1200)
     @browser.driver.manage.window.move_to(0, 0)
-    browser_version
-    # browser
   end
 
   # makes the browser full screen.
@@ -90,7 +85,13 @@ module Browser
 
   # Check browser version
   def self.browser_version
-    @browser.driver.capabilities[:version]
+    browser_name = CMDLine.browser_type.downcase
+    case browser_name
+    when 'chrome', 'chrome-headless'
+      @browser.driver.capabilities[:version]
+    when 'firefox', 'firefox-headless'
+      @browser.execute_script('return navigator.userAgent;').split('/')[-1]
+    end
   rescue StandardError
     'No Browser version'
   end
