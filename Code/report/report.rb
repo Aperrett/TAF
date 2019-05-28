@@ -40,11 +40,11 @@ module Report
   # print the Pass / Fail status of a test to the test results file
   def self.test_pass_fail(pass_fail, test_file_name, test_step_idx, metrics)
     if pass_fail == true
-      $currentTestFail = false
+      @current_test_fail = false
       metrics.stepPasses += 1
       MyLog.log.info "Test #{test_step_idx} has Passed ".green
     elsif pass_fail == false
-      $currentTestFail = true
+      @current_test_fail = true
       metrics.stepFailures += 1
       MyLog.log.info "Test #{test_step_idx} has FAILED ".red
       sc_file_name = Screenshot.save_screenshot(test_step_idx)
@@ -64,7 +64,7 @@ module Report
       $failtestStep_xml[test_file_name] ||= []
       $failtestStep_xml[test_file_name][test_step_idx] = failstep
     else
-      $currentTestFail = false
+      @current_test_fail = false
       metrics.stepSkipped += 1
       MyLog.log.info "Test #{test_step_idx} no checks performed ".blue
       skipstep = {
@@ -96,7 +96,7 @@ module Report
   # If a certain number of consecutive tests fail then throw an exception
   def self.check_failure_threshold(test_file_name)
     consecutive_fail_threshold = 5
-    if $currentTestFail
+    if @current_test_fail
       @consecutive_test_fail += 1
     else
       @consecutive_test_fail = 0

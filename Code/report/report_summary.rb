@@ -24,8 +24,7 @@ module ReportSummary
   end
 
   # output the overall test results summary
-  def self.overall_test_summary(ts_start_time, ts_end_time, total_passes,
-                                total_failures, total_skipped)
+  def self.overall_test_summary(ts_start_time, ts_end_time, total_metrics)
     # output to the console
 
     MyLog.log.info 'Finished processing all test files ' \
@@ -44,11 +43,11 @@ module ReportSummary
     MyLog.log.info "Total Tests started at: #{ts_start_time}"
     MyLog.log.info "Total Tests finished at: #{ts_end_time}"
     MyLog.log.info "Total Tests duration: #{duration}"
-    MyLog.log.info "Total Tests Passed: #{total_passes}".green
-    MyLog.log.info "Total Tests Failed: #{total_failures}".red
-    MyLog.log.info "Total Tests Skipped: #{total_skipped}".blue
-    total_tests = [total_passes, total_failures,
-                   total_skipped].sum
+    MyLog.log.info "Total Tests Passed: #{total_metrics[0]}".green
+    MyLog.log.info "Total Tests Failed: #{total_metrics[1]}".red
+    MyLog.log.info "Total Tests Skipped: #{total_metrics[2]}".blue
+    total_tests = [total_metrics[0], total_metrics[1],
+                   total_metrics[2]].sum
     MyLog.log.info "Total Tests: #{total_tests}\n"
   end
 end

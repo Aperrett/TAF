@@ -18,15 +18,13 @@ module Main
 
   # process the test files to execute the tests
   total_passes, total_failures, total_skipped = TestEngine.process_testfiles
-
+  total_metrics = [total_passes, total_failures, total_skipped]
   # get the overall test suite end time
   ts_end_time = Report.current_time
 
   # output the overall test summary
-  ReportSummary.overall_test_summary(ts_start_time, ts_end_time, total_passes,
-                                     total_failures, total_skipped)
-  JunitReport.test_summary_junit(ts_start_time, ts_end_time, total_passes,
-                                 total_failures, total_skipped)
+  ReportSummary.overall_test_summary(ts_start_time, ts_end_time, total_metrics)
+  JunitReport.test_summary_junit(ts_start_time, ts_end_time, total_metrics)
 
   # Exit status code.
   Process.exit(total_failures.zero? ? 0 : 1)

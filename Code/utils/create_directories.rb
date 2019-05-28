@@ -21,28 +21,27 @@ module CreateDirectories
     # create top-level directory if it doesn't already exist:
     # Results/Project_id
     project_id = JsonParser.project_id.delete(' ')
-    $project_iddir = File.join('Results', project_id)
+    project_dir = File.join('Results', project_id)
 
-    FileUtils.mkdir_p($project_iddir)
+    FileUtils.mkdir_p(project_dir)
 
     # Generate UUID
-    $run_uuid = SecureRandom.uuid
+    @run_uuid = SecureRandom.uuid
   end
 
   def self.construct_testspecdirs
     # create directories for each test spec for screenshots:
     # Results/Project_id/Run_ID_UUID
-    screenshot_dir = File.join($project_iddir, "Run_ID_#{$run_uuid}")
+    project_id = JsonParser.project_id.delete(' ')
+    screenshot_dir = File.join('Results', project_id, "Run_ID_#{@run_uuid}")
 
     abs_path_screenshot_dir = File.absolute_path(screenshot_dir)
-    # abs_path_run_no_dir = File.absolute_path(runNoDir)
     FileUtils.mkdir_p(abs_path_screenshot_dir)
     # if any issues then set error message and re-raise the exception
   rescue StandardError => e
     # construct the error message from custom text and the actual system error
     # message (converted to a string)
-    error_to_display = 'Error creating the test directory structure or' \
-      ' opening the test results file : ' + e.to_s
+    error_to_display = 'Error creating directory:' + e.to_s
     raise error_to_display
   else
     # if no exception then return the screenshot file directory path

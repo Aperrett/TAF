@@ -29,17 +29,16 @@ module JunitReport
     }
   end
 
-  def self.test_summary_junit(ts_start_time, ts_end_time, total_passes,
-                              total_failures, total_skipped)
+  def self.test_summary_junit(ts_start_time, ts_end_time, total_metrics)
     # output to XML file format for Junit for CI.
     builder = Nokogiri::XML::Builder.new(encoding: 'UTF-8') do |xml|
       testsuite_attrs = {
         'classname' => CMDLine.tests_folder.to_s,
         'name' => CMDLine.tests_folder.to_s,
-        'tests' => total_passes.to_s,
-        'failures' => total_failures.to_s,
+        'tests' => total_metrics[0].to_s,
+        'failures' => total_metrics[1].to_s,
         'timestamp' => ts_start_time.to_s,
-        'skipped' => total_skipped.to_s,
+        'skipped' => total_metrics[2].to_s,
         'time' => TimeDifference.between(ts_end_time, ts_start_time)
                                 .in_seconds
       }
@@ -64,7 +63,9 @@ module JunitReport
 
     # the test suite summary is a XML report generated will be called
     # 'report_uuid.xml'
-    ts_xml_file = "#{$project_iddir}/report_#{SecureRandom.uuid}.xml"
+    project_id = JsonParser.project_id.delete(' ')
+    xml_dir = File.join('Results', project_id)
+    ts_xml_file = "#{xml_dir}/report_#{SecureRandom.uuid}.xml"
 
     ts_summary_file_xml = File.open(ts_xml_file, 'w')
     ts_summary_file_xml.write builder.to_xml
