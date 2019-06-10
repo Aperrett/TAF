@@ -41,7 +41,7 @@ Run the following script:
 
 <h3>To build the TAF Ruby Gem</h3>
 Run the following script: 
-./taf.sh build_taf_gem {internal} or {external} {version} (i.e. 0.1.2)
+./taf.sh build_taf_gem {internal} or {external}
 
 <h2>TAF Runner - Docker</h2>
 <h3>To run the TAF in Docker Container</h3>
@@ -65,6 +65,9 @@ run bundle install - to install the required gems including the TAF Gem
 
 <h3>To run a Test Suite using the TAF Gem:</h3>
 taf --tests {test folder name} --browser {browser}
+
+<h3>To run a Test Suite from the cloned repository:</h3>
+ruby -Ilib bin/taf -t {test folder name} -b {browser}
 
 <h2>Contributing</h2>
 
