@@ -23,19 +23,14 @@ check_ruby_version() {
 
 build_taf_gem() {
   releaseflag="$1"
-  versionflag="$2"
-
-  if [ -z "$versionflag" ]; then
-    echo 'No version flag set.'
-    exit 1
-  fi
+  versionflag=$(ruby -Ilib -r 'taf/version' -e 'puts Taf::VERSION')
 
   echo "Building Ruby Gem TAF for: $releaseflag use, with version: $versionflag"
 
   case "$releaseflag" in
     external|internal)
         docker build -f Dockerfile.build -t "taf:$releaseflag-latest" \
-          --build-arg VERSION="$versionflag" --target "$releaseflag" .
+          --target "$releaseflag" .
       ;;
     *)
       echo 'No valid release flag set.'
@@ -58,9 +53,12 @@ delete_results() {
 
 delete_taf_image() {
   echo "Checking if TAF Container exists"
-  if [ -n "$(docker images -q taf 2>/dev/null)" ]; then
+
+  image=$(docker images -q taf 2>/dev/null)
+
+  if [ -n "$image" ]; then
     echo "TAF Container exists"
-    docker rmi taf
+    docker rmi -f "$image"
     echo "Removed TAF Container"
   else
     echo "No TAF container"
@@ -101,21 +99,20 @@ help () {
   echo "usage: taf <command>"
   echo ""
   echo "Build Commands:"
-  echo "  build_taf_image                   - Builds Latest TAF Docker Image."
-  echo "  build_taf_gem <release> <version> - Builds Latest TAF Ruby Gem."
-  echo "                                    - <release> internal use or"
-  echo "                                                or external use."
-  echo "                                    - <version> e.g. 0.0.1."
+  echo "  build_taf_image         - Builds Latest TAF Docker Image."
+  echo "  build_taf_gem <release> - Builds Latest TAF Ruby Gem."
+  echo "                          - <release> internal use or"
+  echo "                                      or external use."
   echo ""
   echo "Delete Commands:"
-  echo "  delete_results                    - Delete all the previous test results."
-  echo "  delete_taf_image                  - Deletes the TAF Docker Image."
+  echo "  delete_results          - Delete all the previous test results."
+  echo "  delete_taf_image        - Deletes the TAF Docker Image."
   echo ""
   echo "Misc Commands:"
-  echo "  help                              - Show this message."
-  echo "  lint                              - Run rubocop against taf code."
-  echo "  test                              - Run tests against taf code."
-  echo "  security_audit                    - Run Security Audit of Ruby Gems used for the TAF."
+  echo "  help                    - Show this message."
+  echo "  lint                    - Run rubocop against taf code."
+  echo "  test                    - Run tests against taf code."
+  echo "  security_audit          - Run Security Audit of Ruby Gems used for the TAF."
 }
 
 main () {
@@ -126,7 +123,7 @@ main () {
       build_taf_image
       ;;
     build_taf_gem)
-      build_taf_gem "$2" "$3"
+      build_taf_gem "$2"
       ;;
     security_audit)
       security_audit

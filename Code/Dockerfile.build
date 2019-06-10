@@ -4,14 +4,6 @@ WORKDIR /taf
 COPY taf.gemspec           .
 COPY bin                   bin
 COPY lib                   lib
-COPY functions             lib/functions
-COPY parser                lib/parser
-COPY report                lib/report
-COPY utils                 lib/utils
-COPY main.rb taf_config.rb lib/
-
-ARG VERSION
-RUN sed -i "s/0.0.0/$VERSION/g" lib/version.rb
 
 FROM builder AS internal
 
@@ -21,11 +13,11 @@ RUN gem build -o taf.gem taf.gemspec
 FROM builder AS external
 
 RUN sed -i 's/- UKCloud //g' \
-  lib/functions/handlers/login.rb \
-  lib/functions/handlers/base_handler.rb
+  lib/taf/test_steps/handlers/base/login.rb \
+  lib/taf/test_steps/handlers/base.rb
 
 RUN sed -i 's/- SINT /blah/g' \
-  lib/functions/handlers/login.rb
+  lib/taf/test_steps/handlers/base/login.rb
 
 RUN sed -i 's/releaseflag/external/g' taf.gemspec
 RUN gem build -o taf.gem taf.gemspec

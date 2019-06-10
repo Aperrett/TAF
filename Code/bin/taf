@@ -1,5 +1,26 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'version.rb'
-require 'main.rb'
+require 'taf'
+
+# parses the cmd line imput into the taf
+Taf::CMDLine.cmdline_input
+
+# get the overall test suite end time
+ts_start_time = Taf::Report.current_time
+
+# process the test files to execute the tests
+total_passes, total_failures, total_skipped =
+  Taf::TestEngine.process_testfiles
+total_metrics = [total_passes, total_failures, total_skipped]
+# get the overall test suite end time
+ts_end_time = Taf::Report.current_time
+
+# output the overall test summary
+Taf::ReportSummary.overall_test_summary(ts_start_time, ts_end_time,
+                                        total_metrics)
+Taf::JUnitReport.test_summary_junit(ts_start_time, ts_end_time,
+                                    total_metrics)
+
+# Exit status code.
+Process.exit(total_failures.zero? ? 0 : 1)

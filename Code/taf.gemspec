@@ -3,11 +3,11 @@
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
-require './lib/version.rb'
+require 'taf/version'
 
 Gem::Specification.new do |taf|
   taf.name        = 'taf'
-  taf.version     = Taf::Version::STRING
+  taf.version     = Taf::VERSION
   taf.summary     = 'TAF to allow simple web automation.'
   taf.description = 'Test Automation Framework (TAF) to allow simple test' \
                       ' web automation - releaseflag use'

@@ -20,12 +20,11 @@ RUN wget --no-verbose --no-check-certificate -O geckodriver.tar.gz https://githu
   && tar -zxf geckodriver.tar.gz \
   && rm geckodriver.tar.gz \
   && mv geckodriver /usr/bin/geckodriver \
-  && chmod 755 /usr/bin/geckodriver  
-    
+  && chmod 755 /usr/bin/geckodriver
+
 WORKDIR /app
 COPY Gemfile Gemfile.lock /app/
 RUN bundle install
 COPY . /app/
 
-# ENTRYPOINT ["/usr/bin/dumb-init", "/app/docker-entrypoint.sh"]
 ENTRYPOINT ["/app/docker-entrypoint.sh"]
