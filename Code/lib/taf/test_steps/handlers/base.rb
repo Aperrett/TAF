@@ -25,8 +25,7 @@ module Taf
           if Taf::Browser.b.title.eql?(b_title)
             Taf::Browser.b.text_field(id: user_elm).wait_until(&:exists?)
                         .set user
-            Taf::Browser.b.text_field(id: pass_elm).wait_until(&:exists?)
-                        .set pass
+            Taf::Browser.b.text_field(id: pass_elm).set pass
             button = 'Sign in' || 'Log in'
             Taf::Browser.b.button(value: button).wait_until(&:exists?).click
             sleep 1
