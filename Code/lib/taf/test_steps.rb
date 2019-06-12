@@ -30,7 +30,8 @@ module Taf
         Taf::Report.check_failure_threshold(test_file_name)
         return true
       else
-        raise Taf::UnknownTestStep, "Unable to match function: #{step_function}"
+        Taf::MyLog.log.warn "\nUnable to match function: #{step_function}"
+        raise Taf::UnknownTestStep, "Unknown test step: #{step_function}"
       end
     end
   end
