@@ -7,10 +7,10 @@ module Taf
       class CheckBoxdata < Base
         register :check_box_data
 
-        def perform
-          elms = %i[textarea text_field iframe]
+        def check
+          @elms = %i[textarea text_field iframe]
 
-          found_box = elms.map do |elm|
+          found_box = @elms.map do |elm|
             Taf::Browser.b.send(elm, "#{@locate}": @value).exists?
           end.compact
 
@@ -19,7 +19,12 @@ module Taf
           index = found_box.index(true)
           return unless index
 
-          ele = Taf::Browser.b.send(elms[index], "#{@locate}": @value)
+          index
+        end
+
+        def perform
+          index = check
+          ele = Taf::Browser.b.send(@elms[index], "#{@locate}": @value)
 
           ele.wait_until(&:exists?)
           (ele.value == @value2)
