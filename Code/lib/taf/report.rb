@@ -20,8 +20,8 @@ module Taf
       Taf::MyLog.log.info "Test step: #{test_step_idx} : #{test_desc}"
 
       step = { 'id' => test_step_idx,
-               'classname' => "SuiteID: #{Taf::JSONParser.test_id}" \
-               " Test Step: #{test_step_idx} #{test_desc}",
+               'classname' => "ID: #{Taf::JSONParser.test_id}" \
+               " Step: #{test_step_idx} #{test_desc}",
                'name' => test_desc,
                'file' => test_file_name }
 
@@ -47,8 +47,8 @@ module Taf
         Taf::MyLog.log.warn "Test #{test_step_idx} has FAILED ".red
         sc_file_name = Taf::Screenshot.save_screenshot(test_step_idx)
         failstep = {
-          'message' => "SuiteID: #{Taf::JSONParser.test_id}" \
-          " Test Step: #{test_step_idx} Test has" \
+          'message' => "ID: #{Taf::JSONParser.test_id}" \
+          " Step: #{test_step_idx} Test has" \
            " FAILED - Check logs, see Screenshot: #{sc_file_name}",
           'type' => 'FAILURE',
           'file' => test_file_name
@@ -66,9 +66,8 @@ module Taf
         metrics.stepSkipped += 1
         Taf::MyLog.log.info "Test #{test_step_idx} no checks performed ".blue
         skipstep = {
-          'message' => "SuiteID: #{Taf::JSONParser.test_id}" \
-          " Test Step: #{test_step_idx} No" \
-            ' checks performed - Check logs',
+          'message' => "ID: #{Taf::JSONParser.test_id}" \
+          " Step: #{test_step_idx} No checks performed - Check logs",
           'type' => 'SKIPPED',
           'file' => test_file_name
         }
