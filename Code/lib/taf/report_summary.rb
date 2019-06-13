@@ -42,7 +42,7 @@ module Taf
     def self.overall_test_summary(total_time, total_metrics)
       print_test_summary
 
-      Taf::MyLog.log.info "Toatal Duration: #{total_time}"
+      Taf::MyLog.log.info "Total Duration: #{total_time}"
       Taf::MyLog.log.info "Total Tests Passed: #{total_metrics[0]}".green
       Taf::MyLog.log.info "Total Tests Failed: #{total_metrics[1]}".red
       Taf::MyLog.log.info "Total Tests Skipped: #{total_metrics[2]}".blue
