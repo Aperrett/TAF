@@ -35,9 +35,6 @@ module Taf
         # create project folders - these only need creating once per test suite
         Taf::CreateDirectories.construct_projectdirs
 
-        # get the test case start time
-        tc_start = Taf::Report.current_time
-
         Taf::Browser.open_browser
 
         begin
@@ -55,16 +52,9 @@ module Taf
           Taf::MyLog.log.warn e
         end
 
-        # get the test case end time
-        tc_end = Taf::Report.current_time
-
-        # output the test results summary for the current test case,
-        # pass in the test file number to save the summary against it's
-        # testfile
+        # output the test results summary to console
         Taf::ReportSummary.test_step_summary(test_file_name, test_file_idx,
                                              metrics)
-        Taf::JUnitReport.test_step_summary_xml(test_file_name, test_file_idx,
-                                               tc_start, tc_end, metrics)
 
         # close the browser if created
         Taf::Browser.b.quit

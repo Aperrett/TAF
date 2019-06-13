@@ -16,11 +16,10 @@ total_metrics = [total_passes, total_failures, total_skipped]
 # get the overall test suite end time
 ts_end_time = Taf::Report.current_time
 
+total_time = TimeDifference.between(ts_end_time, ts_start_time).humanize || 0
 # output the overall test summary
-Taf::ReportSummary.overall_test_summary(ts_start_time, ts_end_time,
-                                        total_metrics)
-Taf::JUnitReport.test_summary_junit(ts_start_time, ts_end_time,
-                                    total_metrics)
+Taf::ReportSummary.overall_test_summary(total_time, total_metrics)
+Taf::TapReport.output
 
 # Exit status code.
 Process.exit(total_failures.zero? ? 0 : 1)

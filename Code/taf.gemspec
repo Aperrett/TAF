@@ -25,7 +25,6 @@ Gem::Specification.new do |taf|
   taf.add_runtime_dependency 'json', '~> 2.2'
   taf.add_runtime_dependency 'logger', '~> 1.2'
   taf.add_runtime_dependency 'net-ping', '~> 2.0'
-  taf.add_runtime_dependency 'nokogiri', '~> 1.8'
   taf.add_runtime_dependency 'rubygems-update', '~> 2.7'
   taf.add_runtime_dependency 'selenium-webdriver', '~> 3.14'
   taf.add_runtime_dependency 'time_difference', '~> 0.7'

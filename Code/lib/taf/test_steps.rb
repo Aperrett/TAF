@@ -18,7 +18,7 @@ module Taf
     def self.process_test_steps(test_file_name, test_step_idx, step_attributes,
                                 metrics)
       # print the test step information
-      Taf::Report.print_test_step_header(test_file_name, test_step_idx,
+      Taf::Report.print_test_step_header(test_step_idx,
                                          step_attributes[:testdesc])
       runtest = step_attributes[:skipTestCase]
       step_function = step_attributes[:testFunction]
@@ -26,7 +26,13 @@ module Taf
 
       if handler.respond_to?(:perform)
         func = handler.perform(step_attributes) if runtest == false
-        Taf::Report.test_pass_fail(func, test_file_name, test_step_idx, metrics)
+        Taf::Report.test_pass_fail(
+          func,
+          test_file_name,
+          test_step_idx,
+          step_attributes[:testdesc],
+          metrics
+        )
         Taf::Report.check_failure_threshold(test_file_name)
         return true
       else

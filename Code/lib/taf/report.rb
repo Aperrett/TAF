@@ -11,77 +11,50 @@ module Taf
   module Report
     # get the current time in the format Day - Month - Date - Time (HH:MM:SS)
     def self.current_time
-      Time.new.strftime('%a %b %d %H:%M:%S %Z')
+      require 'time'
+      # Time.new.strftime('%a %b %d %H:%M:%S %Z')
+      Time.new.xmlschema
     end
 
     # print the test Step info to the test results file
-    def self.print_test_step_header(test_file_name, test_step_idx, test_desc)
+    def self.print_test_step_header(test_step_idx, test_desc)
       @test_start_time = current_time
       Taf::MyLog.log.info "Test step: #{test_step_idx} : #{test_desc}"
-
-      step = { 'id' => test_step_idx,
-               'classname' => "ID: #{Taf::JSONParser.test_id}" \
-               " Step: #{test_step_idx} #{test_desc}",
-               'name' => test_desc,
-               'file' => test_file_name }
-
-      # output to console to show test step
-      # puts step
-
-      return unless test_file_name
-
-      $testStep_xml ||= {}
-      $testStep_xml[test_file_name] ||= {}
-      $testStep_xml[test_file_name][test_step_idx] = step
     end
 
     # print the Pass / Fail status of a test to the test results file
-    def self.test_pass_fail(pass_fail, test_file_name, test_step_idx, metrics)
-      if pass_fail == true
+    def self.test_pass_fail(
+      pass_fail,
+      test_file_name,
+      test_step_idx,
+      test_step_description,
+      metrics
+    )
+      if pass_fail
+        Taf::MyLog.log.info "Test #{test_step_idx} has Passed ".green
         @current_test_fail = false
         metrics.stepPasses += 1
-        Taf::MyLog.log.info "Test #{test_step_idx} has Passed ".green
+        Taf::TapReport.success(
+          test_file_name, test_step_idx, test_step_description
+        )
       elsif pass_fail == false
+        Taf::MyLog.log.warn "Test #{test_step_idx} has FAILED ".red
+        Taf::Screenshot.save_screenshot(test_step_idx)
         @current_test_fail = true
         metrics.stepFailures += 1
-        Taf::MyLog.log.warn "Test #{test_step_idx} has FAILED ".red
-        sc_file_name = Taf::Screenshot.save_screenshot(test_step_idx)
-        failstep = {
-          'message' => "ID: #{Taf::JSONParser.test_id}" \
-          " Step: #{test_step_idx} Test has" \
-           " FAILED - Check logs, see Screenshot: #{sc_file_name}",
-          'type' => 'FAILURE',
-          'file' => test_file_name
-        }
-        # output to console to show test step failure
-        # puts failstep
-
-        return unless test_file_name
-
-        $failtestStep_xml ||= {}
-        $failtestStep_xml[test_file_name] ||= []
-        $failtestStep_xml[test_file_name][test_step_idx] = failstep
+        Taf::TapReport.failure(
+          test_file_name, test_step_idx, test_step_description
+        )
       else
+        Taf::MyLog.log.info "Test #{test_step_idx} no checks performed ".blue
         @current_test_fail = false
         metrics.stepSkipped += 1
-        Taf::MyLog.log.info "Test #{test_step_idx} no checks performed ".blue
-        skipstep = {
-          'message' => "ID: #{Taf::JSONParser.test_id}" \
-          " Step: #{test_step_idx} No checks performed - Check logs",
-          'type' => 'SKIPPED',
-          'file' => test_file_name
-        }
-        # output to console to show test step failure
-        # puts skipstep
-
-        return unless test_file_name
-
-        $skiptestStep_xml ||= {}
-        $skiptestStep_xml[test_file_name] ||= []
-        $skiptestStep_xml[test_file_name][test_step_idx] = skipstep
+        Taf::TapReport.skip(
+          test_file_name, test_step_idx, test_step_description
+        )
       end
-      test_end_time = current_time
 
+      test_end_time = current_time
       test_duration = TimeDifference.between(
         test_end_time, @test_start_time
       ).humanize || 0
@@ -91,6 +64,7 @@ module Taf
     # check if the test failure threshold has been reached for total failures
     # or consecutive failures.
     # If a certain number of consecutive tests fail then throw an exception
+
     def self.check_failure_threshold(test_file_name)
       consecutive_fail_threshold = 3
       if @current_test_fail
