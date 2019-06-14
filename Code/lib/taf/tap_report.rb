@@ -42,23 +42,27 @@ module Taf
       total_steps = 0
       successes = 0
       failures = 0
+      skips = 0
       instance.tests.each do |filename, steps|
         file.write("# #{filename}\n")
         steps.each do |step|
           total_steps += 1
           if step.is_a?(Taf::TestSteps::SkipStep)
-            outstr = "ok #{total_steps} #{step.description} # SKIP"
+            outstr = "ok #{total_steps} #{step.description} # SKIP"\
+                      " - Step #{step.index} Test File: #{filename}"
+            skips += 1
           else
             if step.is_a?(Taf::TestSteps::SuccessStep)
-              outstr = 'ok'
+              outstr = 'ok '
               successes += 1
             elsif step.is_a?(Taf::TestSteps::FailureStep)
-              outstr = 'not ok'
+              outstr = 'not ok '
               failures += 1
             else
               outstr = '# test error'
             end
-            outstr += " #{total_steps} #{step.description} - Step #{step.index}"
+            outstr += "#{total_steps} #{step.description} - Step #{step.index}"\
+                      " Test File: #{filename}"
           end
 
           file.write(outstr + "\n")
@@ -68,6 +72,7 @@ module Taf
       file.write("# tests #{total_steps}\n")
       file.write("# pass #{successes}\n")
       file.write("# fail #{failures}\n")
+      file.write("# skip #{skips}\n")
       file.close
     end
 
