@@ -18,8 +18,34 @@ module Taf
 
     # print the test Step info to the test results file
     def self.print_test_step_header(test_step_idx, test_desc)
-      @test_start_time = current_time
+      @start_time = current_time
       Taf::MyLog.log.info "Test step: #{test_step_idx} : #{test_desc}"
+    end
+
+    def self.pass_func(test_file_name, test_step_idx, test_desc, metrics)
+      Taf::MyLog.log.info "Test #{test_step_idx} has Passed ".green
+      @current_test_fail = false
+      metrics.stepPasses += 1
+      Taf::TapReport.success(test_file_name, test_step_idx, test_desc)
+    end
+
+    def self.fail_func(test_file_name, test_step_idx, test_desc, metrics)
+      Taf::MyLog.log.warn "Test #{test_step_idx} has FAILED ".red
+      Taf::Screenshot.save_screenshot(test_step_idx)
+      @current_test_fail = true
+      metrics.stepFailures += 1
+      Taf::TapReport.failure(
+        test_file_name, test_step_idx, test_desc
+      )
+    end
+
+    def self.skip_func(test_file_name, test_step_idx, test_desc, metrics)
+      Taf::MyLog.log.info "Test #{test_step_idx} no checks performed ".blue
+      @current_test_fail = false
+      metrics.stepSkipped += 1
+      Taf::TapReport.skip(
+        test_file_name, test_step_idx, test_desc
+      )
     end
 
     # print the Pass / Fail status of a test to the test results file
@@ -27,38 +53,20 @@ module Taf
       pass_fail,
       test_file_name,
       test_step_idx,
-      test_step_description,
+      test_desc,
       metrics
     )
       if pass_fail
-        Taf::MyLog.log.info "Test #{test_step_idx} has Passed ".green
-        @current_test_fail = false
-        metrics.stepPasses += 1
-        Taf::TapReport.success(
-          test_file_name, test_step_idx, test_step_description
-        )
+        pass_func(test_file_name, test_step_idx, test_desc, metrics)
       elsif pass_fail == false
-        Taf::MyLog.log.warn "Test #{test_step_idx} has FAILED ".red
-        Taf::Screenshot.save_screenshot(test_step_idx)
-        @current_test_fail = true
-        metrics.stepFailures += 1
-        Taf::TapReport.failure(
-          test_file_name, test_step_idx, test_step_description
-        )
+        fail_func(test_file_name, test_step_idx, test_desc, metrics)
       else
-        Taf::MyLog.log.info "Test #{test_step_idx} no checks performed ".blue
-        @current_test_fail = false
-        metrics.stepSkipped += 1
-        Taf::TapReport.skip(
-          test_file_name, test_step_idx, test_step_description
-        )
+        skip_func(test_file_name, test_step_idx, test_desc, metrics)
       end
 
-      test_end_time = current_time
-      test_duration = TimeDifference.between(
-        test_end_time, @test_start_time
-      ).humanize || 0
-      Taf::MyLog.log.info "Test step duration: #{test_duration} \n"
+      end_time = current_time
+      duration = TimeDifference.between(end_time, @start_time).humanize || 0
+      Taf::MyLog.log.info "Test step duration: #{duration} \n"
     end
 
     # check if the test failure threshold has been reached for total failures
