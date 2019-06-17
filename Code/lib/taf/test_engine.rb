@@ -9,6 +9,34 @@
 module Taf
   # test_engine.rb - controls the iteration through the test suite and specs
   module TestEngine
+    def self.get_test_data(test_file_name)
+      # read in the test data
+      tests = Taf::Parser.read_test_data(test_file_name)
+      tests
+    # if unable to read the test data, show the error and move onto the
+    # next file (if there is one)
+    rescue StandardError => e
+      Taf::MyLog.log.warn 'Terminating the current test spec: ' \
+                   "#{test_file_name} #{e}"
+      Taf::MyLog.log.info
+      '...continuing with the next test file (if there is one)'
+    end
+
+    def self.get_step_data(test_file_name, tests, metrics)
+      tests['steps'].each_with_index do |test_step, test_step_idx|
+        test_step_idx += 1
+
+        parsed_steps = Taf::Parser.parse_test_step_data(test_step)
+
+        # process the test step data
+        Taf::TestSteps.process_test_steps(test_file_name, test_step_idx,
+                                          parsed_steps, metrics)
+      end
+    rescue Taf::TafError => e
+      warn e
+      Taf::MyLog.log.warn e
+    end
+
     # process the test files to execute the tests
     def self.process_testfiles
       total_passes = 0
@@ -20,37 +48,13 @@ module Taf
         metrics = Struct.new(:stepPasses, :stepFailures, :stepSkipped)
                         .new(0, 0, 0)
 
-        begin
-          # read in the test data
-          tests = Taf::Parser.read_test_data(test_file_name)
-          # if unable to read the test data, show the error and move onto the
-          # next file (if there is one)
-        rescue StandardError => e
-          Taf::MyLog.log.warn 'Terminating the current test spec: ' \
-                       "#{test_file_name} #{e}"
-          Taf::MyLog.log.info
-          '...continuing with the next test file (if there is one)'
-        end
+        tests = get_test_data(test_file_name)
 
         # create project folders - these only need creating once per test suite
         Taf::CreateDirectories.construct_projectdirs
 
         Taf::Browser.open_browser
-
-        begin
-          tests['steps'].each_with_index do |test_step, test_step_idx|
-            test_step_idx += 1
-
-            parsed_steps = Taf::Parser.parse_test_step_data(test_step)
-
-            # process the test step data
-            Taf::TestSteps.process_test_steps(test_file_name, test_step_idx,
-                                              parsed_steps, metrics)
-          end
-        rescue Taf::TafError => e
-          warn e
-          Taf::MyLog.log.warn e
-        end
+        get_step_data(test_file_name, tests, metrics)
 
         # output the test results summary to console
         Taf::ReportSummary.test_step_summary(test_file_name, test_file_idx,
