@@ -9,14 +9,20 @@
 module Taf
   # browser_setup.rb - a browser functions
   module Browser
+    # Suppoerted Browser names
+    @chrome_name = 'chrome'
+    @chrome_headless_name = 'chrome-headless'
+    @firefox_name = 'firefox'
+    @firefox_headless_name = 'firefox-headless'
+
     # open_browser function
     def self.open_browser
       browser = Taf::CMDLine.browser_type.downcase
       case browser
-      when 'chrome' then chrome
-      when 'chrome-headless' then chrome_headless
-      when 'firefox' then firefox
-      when 'firefox-headless' then firefox_headless
+      when @chrome_name then chrome
+      when @chrome_headless_name then chrome_headless
+      when @firefox_name then firefox
+      when @firefox_headless_name then firefox_headless
       else
         raise Taf::BrowserFailedOpen,
               "unable to open selected browser: #{browser}"
@@ -77,27 +83,27 @@ module Taf
     def self.browser_version
       browser_name = Taf::CMDLine.browser_type.downcase
       case browser_name
-      when 'chrome', 'chrome-headless'
+      when @chrome_name, @chrome_headless_name
         @browser.driver.capabilities[:version]
-      when 'firefox', 'firefox-headless'
+      when @firefox_name, @firefox_headless_name
         @browser.execute_script('return navigator.userAgent;').split('/')[-1]
+      else
+        'No Browser version'
       end
-    rescue StandardError
-      'No Browser version'
     end
 
     # Check platform
     def self.browser_platform
       browser_name = Taf::CMDLine.browser_type.downcase
       case browser_name
-      when 'chrome', 'chrome-headless'
+      when @chrome_name, @chrome_headless_name
         @browser.execute_script('return navigator.userAgent;')
                 .split(';')[1].split(')')[0]
-      when 'firefox', 'firefox-headless'
+      when @firefox_name, @firefox_headless_name
         @browser.execute_script('return navigator.userAgent;').split(';')[1]
+      else
+        'No Platform found'
       end
-    rescue StandardError
-      'No Platform found'
     end
   end
 end

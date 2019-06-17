@@ -19,10 +19,10 @@ module Taf
 
         def login_user(user)
           case @value.downcase
-          when 'portal_login'
-            portal_login(user)
-          when 'sso_login'
-            sso_login(user)
+          when 'portal_login' then portal_login(user)
+          when 'sso_login' then sso_login(user)
+          else
+            Taf::MyLog.log.error 'Not a valid Login'
           end
         end
 
@@ -50,6 +50,7 @@ module Taf
           user_elm = 'username'
           pass_elm = 'password'
 
+          Taf::Browser.b.goto(url)
           login_process(b_title, user_elm, pass_elm, user, pass)
           login_check(b_title_sucess, user)
         end
