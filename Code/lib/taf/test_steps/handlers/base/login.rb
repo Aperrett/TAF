@@ -12,9 +12,6 @@ module Taf
           user = ENV[user.to_s] if ENV[user.to_s]
 
           login_user(user)
-        rescue StandardError
-          Taf::MyLog.log.error "unable to find login: #{@value}"
-          raise Taf::LoginTypeFailed
         end
 
         def login_user(user)
@@ -22,7 +19,8 @@ module Taf
           when 'portal_login' then portal_login(user)
           when 'sso_login' then sso_login(user)
           else
-            Taf::MyLog.log.error 'Not a valid Login'
+            Taf::MyLog.log.error "unable to find login: #{@value}"
+            raise Taf::LoginTypeFailed
           end
         end
 
