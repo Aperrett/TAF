@@ -27,12 +27,18 @@ module Taf
           ele = Taf::Browser.b.send(@elms[index], "#{@locate}": @value)
 
           ele.wait_until(&:exists?)
-          (ele.value == @value2)
-          Taf::MyLog.log.info("Textbox: #{@value} has correct value: #{value2}")
-          true
-        rescue StandardError
-          Taf::MyLog.log.warn("Textbox: #{@value} does not exist")
-          false
+
+          if ele.value == @value2
+            Taf::MyLog.log.info(
+              "Textbox: #{@value} has correct value: #{@value2}"
+            )
+            true
+          else
+            Taf::MyLog.log.warn(
+              "Textbox: got #{ele.value}, expected #{@value2}"
+            )
+            false
+          end
         end
       end
     end

@@ -34,11 +34,11 @@
     var rowID = 0
 
     const locatorOptions = [
-        "action", "class", "css", "href", "id", "index", "method", "name", "src", "text", "title", "value", "xpath"
+        "action", "class", "css", "href", "id", "index", "link_text", "method", "name", "src", "text", "title", "value", "partial_link_text", "xpath"
     ]
 
     const loginOptions = [
-        "portal_login", "sso_login"
+        "portal_login", "admin_portal_login", "sint_login", "sso_login"
     ]
 
     const testFunctions = [{
@@ -144,6 +144,13 @@
             placeholder: 'Browser Title'
         }]
     }, {
+        name: "health_check",
+        display_name: 'Health Check',
+        steps: [{
+            type: 'text',
+            placeholder: 'IP/Url'
+        }]
+    }, {
         name: "ipause",
         display_name: 'Ipause',
         steps: [{
@@ -176,13 +183,6 @@
         steps: [{
             type: 'text',
             placeholder: 'URL'
-        }]
-    }, {
-        name: "ping_test",
-        display_name: 'Ping Test',
-        steps: [{
-            type: 'text',
-            placeholder: 'IP/Url'
         }]
     }, {
         name: "radio_button",
@@ -275,7 +275,7 @@
             "<td><select class='form-control' name='test_function' onchange='displayTestOptions(this)'><option value=''></option>" +
             getTestOptions() +
             "</select>" +
-            "<td></td><td></td><td></td><td></td>" +
+            "<td></td><td></td><td></td><td>" +
             "<td><select class='form-control' name='skip_test_case'><option value='no'>No</option><option value='yes'>Yes</option></select>" +
             "<td><button type='button' class='btn btn-danger' onclick='deleteRow(this)'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Remove </button></td>"
     }
@@ -285,7 +285,7 @@
             "<td><select class='form-control' name='test_function' onchange='displayTestOptions(this)'><option value=''></option>" +
             getTestOptions() +
             "</select>" +
-            "<td></td><td></td><td></td><td></td>" +
+            "<td></td><td></td><td></td><td>" +
             "<td><select class='form-control' name='skip_test_case'>" +
             "<option value='no'" + (step.skipTestCase == 'no' ? ' selected' : '') + ">No</option>" +
             "<option value='yes'" + (step.skipTestCase == 'yes' ? ' selected' : '') + ">Yes</option>" +

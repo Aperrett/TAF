@@ -89,8 +89,7 @@ security_audit() {
 
 test() {
   # Run end-to-end tests.
-  docker-compose -f spec/end_to_end/docker-compose.yml up \
-    --build --exit-code-from test
+  docker-compose -f docker-compose.e2e.yml up --build --exit-code-from test
 }
 
 help () {

@@ -1,0 +1,30 @@
+version: '2.2'
+services:
+  app:
+    image: ruby:2.6.3-slim-stretch
+    init: true
+    command:
+      - ruby
+      - -run
+      - -e
+      - httpd
+      - index.html
+      - -p
+      - '5000'
+    volumes:
+      - ./spec/end_to_end/index.html:/index.html
+
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    depends_on:
+      - app
+    environment:
+      FAKETIME_DONT_FAKE_MONOTONIC: 1
+      FAKETIME: '2018-12-24 20:30:00'
+      TOKEN_SEED: /taf/spec/end_to_end/seed.sdtid
+    tmpfs:
+      - /taf/Results
+    volumes:
+      - ./:/taf

@@ -22,7 +22,7 @@ module Taf
 
     def self.browser(browser)
       @browser_type = browser
-      unless ['chrome', 'chrome-headless', 'firefox', 'firefox-headless']
+      unless %w[chrome chrome-headless firefox firefox-headless]
              .include?(@browser_type)
         Taf::MyLog.log.warn 'A valid Browser has not been supplied as a' \
                   ' command-line parameter as expected'

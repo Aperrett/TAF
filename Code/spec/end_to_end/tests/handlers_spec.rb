@@ -2,7 +2,8 @@
 
 context 'End-to-end tests' do
   subject(:status) do
-    system('taf', '-b', 'firefox-headless', '-t', '/e2e/fixtures/handlers')
+    system('ruby', '-I', 'lib', 'bin/taf', '-b', 'firefox-headless', '-t',
+           'spec/end_to_end/fixtures/handlers')
   end
 
   it 'return a successful exit code' do

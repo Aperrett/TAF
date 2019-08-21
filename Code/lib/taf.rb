@@ -8,18 +8,18 @@ module Taf
   class BrowserFailedOpen < TafError; end
   class LoginTypeFailed < TafError; end
 
-  require 'selenium-webdriver'
-  require 'watir'
-  require 'rubygems'
-  require 'fileutils'
-  require 'logger'
-  require 'net/ping'
-  require 'time_difference'
   require 'colored'
-  require 'optparse'
   require 'fileutils'
-  require 'securerandom'
+  require 'faraday'
   require 'json'
+  require 'logger'
+  require 'open3'
+  require 'optparse'
+  require 'rubygems'
+  require 'securerandom'
+  require 'selenium-webdriver'
+  require 'time_difference'
+  require 'watir'
 
   require 'taf/browser'
   require 'taf/cmd_line'
