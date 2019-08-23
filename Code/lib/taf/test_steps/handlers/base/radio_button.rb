@@ -8,14 +8,11 @@ module Taf
         register :radio_button
 
         def perform
-          Taf::Browser.b.radio("#{@locate}": @value).wait_until(&:exists?)
-          Taf::Browser.b
-                      .radio("#{@locate}": @value, "#{@locate2}": @value2.to_s)
-                      .set
-          Taf::MyLog.log.info("Radio button: #{@value2} has been selected")
+          Taf::Browser.b.radio("#{@locate}": @value).wait_until(&:exists?).set
+          Taf::MyLog.log.info("Radio button: #{@value} has been selected")
           true
         rescue StandardError
-          Taf::MyLog.log.warn("Radio button: #{@value2} does not exist")
+          Taf::MyLog.log.warn("Radio button: #{@value} does not exist")
           false
         end
       end
