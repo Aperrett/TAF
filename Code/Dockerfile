@@ -24,6 +24,7 @@ RUN wget --no-verbose --no-check-certificate -O geckodriver.tar.gz https://githu
 
 WORKDIR /app
 COPY Gemfile Gemfile.lock /app/
+RUN gem install bundler
 RUN bundle install
 COPY . /app/
 
