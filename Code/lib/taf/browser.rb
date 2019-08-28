@@ -9,7 +9,7 @@
 module Taf
   # browser_setup.rb - a browser functions
   module Browser
-    # Suppoerted Browser names
+    # Supported Browser names
     @chrome_name = 'chrome'
     @chrome_headless_name = 'chrome-headless'
     @firefox_name = 'firefox'
@@ -17,61 +17,46 @@ module Taf
 
     # open_browser function
     def self.open_browser
-      browser = Taf::CMDLine.browser_type.downcase
-      case browser
-      when @chrome_name then chrome
-      when @chrome_headless_name then chrome_headless
-      when @firefox_name then firefox
-      when @firefox_headless_name then firefox_headless
+      @browser_name = Taf::CMDLine.browser_type.downcase
+      case @browser_name
+      when @chrome_name, @chrome_headless_name then chrome
+      when @firefox_name, @firefox_headless_name then firefox
       else
         raise Taf::BrowserFailedOpen,
-              "unable to open selected browser: #{browser}"
+              "unable to open selected browser: #{@browser_name}"
       end
     end
 
     # chrome browser details
     def self.chrome
-      @browser = Watir::Browser.new :chrome, switches: %w[
-        --acceptInsecureCerts-true --start-maximized --window-size=1920,1080
-      ]
-    end
-
-    # chrome headless browser details
-    def self.chrome_headless
-      @browser = Watir::Browser.new :chrome, switches: %w[
-        --start-maximized --disable-gpu --headless --acceptInsecureCerts-true
-        --no-sandbox --window-size=1920,1080
-      ]
+      case @browser_name
+      when @chrome_name
+        chrome_values = %w[
+          --acceptInsecureCerts-true --start-maximized --window-size=1920,1080
+        ]
+      when @chrome_headless_name
+        chrome_values = %w[
+          --start-maximized --disable-gpu --headless --acceptInsecureCerts-true
+          --no-sandbox --window-size=1920,1080
+        ]
+      end
+      @browser = Watir::Browser.new :chrome, switches: chrome_values
     end
 
     # firefox browser details
     def self.firefox
       caps = Selenium::WebDriver::Remote::Capabilities.firefox
       caps['acceptInsecureCerts'] = true
-      driver = Selenium::WebDriver.for(:firefox, desired_capabilities: caps)
+      case @browser_name
+      when @firefox_name
+        driver = Selenium::WebDriver.for(:firefox, desired_capabilities: caps)
+      when @firefox_headless_name
+        options = Selenium::WebDriver::Firefox::Options.new(args: ['-headless'])
+        driver = Selenium::WebDriver.for(:firefox, options: options,
+                                                   desired_capabilities: caps)
+      end
       @browser = Watir::Browser.new(driver)
-      browser_full_screen
-    end
-
-    # firefox headless browser details
-    def self.firefox_headless
-      caps = Selenium::WebDriver::Remote::Capabilities.firefox
-      options = Selenium::WebDriver::Firefox::Options.new(args: ['-headless'])
-      caps['acceptInsecureCerts'] = true
-      driver = Selenium::WebDriver.for(:firefox, options: options,
-                                                 desired_capabilities: caps)
-      @browser = Watir::Browser.new(driver)
-      # makes the browser full screen.
-      @browser.driver.manage.window.resize_to(1920, 1200)
-      @browser.driver.manage.window.move_to(0, 0)
-    end
-
-    # makes the browser full screen.
-    def self.browser_full_screen
-      screen_width = @browser.execute_script('return screen.width;')
-      screen_height = @browser.execute_script('return screen.height;')
-      @browser.driver.manage.window.resize_to(screen_width, screen_height)
-      @browser.driver.manage.window.move_to(0, 0)
+      @browser.driver.manage.window.maximize
     end
 
     # define browser value
@@ -81,8 +66,7 @@ module Taf
 
     # Check browser version
     def self.browser_version
-      browser_name = Taf::CMDLine.browser_type.downcase
-      case browser_name
+      case @browser_name
       when @chrome_name, @chrome_headless_name
         @browser.driver.capabilities[:version]
       when @firefox_name, @firefox_headless_name
@@ -94,8 +78,7 @@ module Taf
 
     # Check platform
     def self.browser_platform
-      browser_name = Taf::CMDLine.browser_type.downcase
-      case browser_name
+      case @browser_name
       when @chrome_name, @chrome_headless_name
         @browser.execute_script('return navigator.userAgent;')
                 .split(';')[1].split(')')[0]
