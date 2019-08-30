@@ -38,7 +38,7 @@
     ]
 
     const loginOptions = [
-        "portal_login", "admin_portal_login", "sint_login", "sso_login"
+        "portal_login", "sso_login"
     ]
 
     const testFunctions = [{
@@ -206,9 +206,6 @@
         }, {
             type: 'text',
             placeholder: 'Option value'
-        }, {
-            type: 'dropdown',
-            options: locatorOptions
         }]
     }, {
         name: "send_special_keys",
@@ -269,7 +266,7 @@
             "<td><select class='form-control' name='test_function' onchange='displayTestOptions(this)'><option value=''></option>" +
             getTestOptions() +
             "</select>" +
-            "<td></td><td></td><td></td><td>" +
+            "<td></td><td></td><td>" +
             "<td><select class='form-control' name='skip_test_case'><option value='no'>No</option><option value='yes'>Yes</option></select>" +
             "<td><button type='button' class='btn btn-danger' onclick='deleteRow(this)'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Remove </button></td>"
     }
@@ -279,7 +276,7 @@
             "<td><select class='form-control' name='test_function' onchange='displayTestOptions(this)'><option value=''></option>" +
             getTestOptions() +
             "</select>" +
-            "<td></td><td></td><td></td><td>" +
+            "<td></td><td></td><td>" +
             "<td><select class='form-control' name='skip_test_case'>" +
             "<option value='no'" + (step.skipTestCase == 'no' ? ' selected' : '') + ">No</option>" +
             "<option value='yes'" + (step.skipTestCase == 'yes' ? ' selected' : '') + ">Yes</option>" +
@@ -355,7 +352,7 @@
             const step = {
                 description: getColumnValue(row, 0),
                 function: getColumnValue(row, 1),
-                skipTestCase: getColumnValue(row, 6)
+                skipTestCase: getColumnValue(row, 5)
             }
 
             for (let j = 0; j < 3; j++) {
@@ -466,7 +463,6 @@
                     <th>Test Value 1:</th>
                     <th>Locator 1:</th>
                     <th>Test Value 2:</th>
-                    <th>Locator 2:</th>
                     <th>Skip Test Case:</th>
                     <th></th>
                 </tr>

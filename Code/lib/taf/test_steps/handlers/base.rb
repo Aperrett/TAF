@@ -10,7 +10,6 @@ module Taf
           @value =  step_attributes[:testvalue]
           @value2 = step_attributes[:testvalue2]
           @locate = step_attributes[:locate]
-          @locate2 = step_attributes[:locate2]
         end
 
         def self.register(name)

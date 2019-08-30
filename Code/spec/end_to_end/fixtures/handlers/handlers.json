@@ -31,9 +31,7 @@
             "function": "radio_button",
             "skipTestCase": "no",
             "value0": "radio-2",
-            "value1": "id",
-            "value2": "radio-2",
-            "value3": "id"
+            "value1": "id"
         },
         {
             "description": "Test Select_Dropdown",
@@ -41,8 +39,7 @@
             "skipTestCase": "no",
             "value0": "dropdown",
             "value1": "id",
-            "value2": "Option 2",
-            "value3": "value"
+            "value2": "Option 2"
         },
         {
             "description": "Test Click_Button",

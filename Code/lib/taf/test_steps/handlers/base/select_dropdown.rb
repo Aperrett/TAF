@@ -10,8 +10,7 @@ module Taf
         def perform
           ele = Taf::Browser.b.select_list("#{@locate}": @value)
 
-          ele.wait_until(&:exists?)
-          ele.option("#{@locate2}": @value2.to_s).select
+          ele.wait_until(&:exists?).select @value2.to_s
           Taf::MyLog.log.info("Dropdown item: #{@value2} has been selected")
           true
         rescue StandardError

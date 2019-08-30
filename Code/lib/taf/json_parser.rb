@@ -36,7 +36,6 @@ module Taf
                       testvalue: parse_json['value0'],
                       locate: parse_json['value1'] || 'id',
                       testvalue2: parse_json['value2'],
-                      locate2: parse_json['value3'] || 'id',
                       skipTestCase: parse_json['skipTestCase'] == 'yes' }
 
       parsed_step
