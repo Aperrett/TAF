@@ -7,25 +7,21 @@ module Taf
       class ClickButton < Base
         register :click_button
 
-        def check
-          @elms = %i[button span a div link image h1 h2 h3 h4]
-
-          found_button = @elms.map do |elm|
-            Taf::Browser.b.send(elm, "#{@locate}": @value).exists?
-          end.compact
-
-          raise 'Multiple matches' if found_button.select { |i| i }.empty?
-
-          index = found_button.index(true)
-          return unless index
-
-          index
-        end
-
         def perform
-          index = check
-          Taf::Browser.b.send(@elms[index], "#{@locate}": @value)
-                      .wait_until(&:exists?).click
+          # Optimisation: if we can immediately find the target in the DOM
+          # under a specific tag we should use it.
+          @tag = %i[button span a div link image h1 h2 h3 h4].find do |e|
+            Taf::Browser.b.send(e, "#{@locate}": @value).exists?
+          end
+
+          # Otherwise, fallback to locating across the entire DOM.
+          # This can be necessary for when content rendering is deferred
+          # (e.g., a loader in a SPA) or if the user wants to use CSS or XPath.
+          @tag ||= :element
+
+          Taf::Browser.b.send(@tag, "#{@locate}": @value).wait_until(&:exists?)
+                      .click
+
           Taf::MyLog.log.info("Button: #{@value} has been selected")
           true
         rescue StandardError

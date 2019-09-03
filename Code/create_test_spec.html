@@ -34,7 +34,7 @@
     var rowID = 0
 
     const locatorOptions = [
-        "action", "class", "css", "href", "id", "index", "link_text", "method", "name", "src", "text", "title", "value", "partial_link_text", "xpath"
+        "action", "class", "css", "href", "id", "index", "method", "name", "src", "text", "title", "value", "xpath"
     ]
 
     const loginOptions = [
@@ -135,6 +135,16 @@
         steps: [{
             type: 'text',
             placeholder: 'System Command to run'
+        }]
+    }, {
+        name: "generate_token",
+        display_name: 'Generate RSA Token',
+        steps: [{
+            type: 'text',
+            placeholder: 'Form field to place the token'
+        }, {
+            type: 'dropdown',
+            options: locatorOptions
         }]
     }, {
         name: "handle_browser_window",
@@ -272,7 +282,12 @@
     }
 
     function importRow(step) {
-        return "<td><input class='form-control' type='text' name='test_desc' value='" + step.description + "'/></td>" +
+        const ele = document.createElement('input')
+        ele.setAttribute('name', 'test_desc')
+        ele.setAttribute('class', 'form-control')
+        ele.setAttribute('value', step.description)
+
+        return "<td>" + ele.outerHTML + "</td>" +
             "<td><select class='form-control' name='test_function' onchange='displayTestOptions(this)'><option value=''></option>" +
             getTestOptions() +
             "</select>" +

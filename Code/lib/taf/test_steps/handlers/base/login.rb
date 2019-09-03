@@ -30,27 +30,49 @@ module Taf
           url = ENV['PORTAL_URL']
           pass = ENV['PORTAL_USER_PASS']
           b_title = 'Log in'
-          b_title_sucess = 'Home'
+          b_title_success = 'Home'
+          memorable_word_title = 'Memorable word'
           user_elm = 'user_email'
           pass_elm = 'user_password'
+          max_retry = 2
 
-          Taf::Browser.b.goto(url)
-          login_process(b_title, user_elm, pass_elm, user, pass)
-          mem_word_check(user, b_title_sucess)
+          max_retry.times do
+            Taf::Browser.b.goto(url)
+            url_check(url)
+            login_process(b_title, user_elm, pass_elm, user, pass)
+
+            begin
+              Taf::Browser.b.wait_until(timeout: 30) do |b|
+                b.title == b_title_success || b.title == memorable_word_title
+              end
+            rescue Watir::Wait::TimeoutError
+              Taf::MyLog.log.warn('Retrying login process...')
+              next
+            end
+
+            success = true
+
+            if Taf::Browser.b.title.eql?(memorable_word_title)
+              success = portal_mem_word(user, b_title_success)
+            end
+
+            return success
+          end
+
+          false
         end
 
         def sso_login(user)
           pass = ENV['SSO_USER_PASS']
-          # b_title = 'Log in to rh-sso'
-          # b_title_sucess = 'RHS-SSO Admin Console'
           b_title = ''
-          b_title_sucess = ''
+          b_title_success = ''
           user_elm = 'username'
           pass_elm = 'password'
 
           Taf::Browser.b.goto(url)
+          url_check(url)
           login_process(b_title, user_elm, pass_elm, user, pass)
-          login_check(b_title_sucess, user)
+          login_check(b_title_success, user)
         end
       end
     end
