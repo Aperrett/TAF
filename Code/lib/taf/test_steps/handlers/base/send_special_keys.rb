@@ -8,7 +8,7 @@ module Taf
         register :send_special_keys
 
         def perform
-          Taf::Browser.b.send_keys :"#{@value}"
+          Taf::Browser.b.action.send_keys(:"#{@value}").perform
           sleep 1
           Taf::MyLog.log.info("Browser Sent key: :#{@value} successfully")
           true

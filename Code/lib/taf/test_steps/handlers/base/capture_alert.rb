@@ -8,8 +8,8 @@ module Taf
         register :capture_alert
 
         def perform
-          Taf::Browser.b.div(class: 'alert').exist?
-          alertmsg = Taf::Browser.b.div(class: 'alert').text
+          Taf::Browser.b.find_element(class: 'alert').displayed?
+          alertmsg = Taf::Browser.b.find_element(class: 'alert').text
           Taf::MyLog.log.info("Alert shown: #{alertmsg}")
           true
         rescue StandardError

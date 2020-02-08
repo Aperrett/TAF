@@ -8,9 +8,9 @@ module Taf
         register :select_dropdown
 
         def perform
-          ele = Taf::Browser.b.select_list("#{@locate}": @value)
-
-          ele.wait_until(&:exists?).select @value2.to_s
+          element = Taf::Browser.b.find_element("#{@locate}": @value)
+          select = Selenium::WebDriver::Support::Select.new(element)
+          select.select_by(:text, @value2)
           Taf::MyLog.log.info("Dropdown item: #{@value2} has been selected")
           true
         rescue StandardError

@@ -13,7 +13,7 @@ module Taf
                 else
                   @value
                 end
-          Taf::Browser.b.goto(url)
+          Taf::Browser.b.navigate.to(url)
           true
         end
       end

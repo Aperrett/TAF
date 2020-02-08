@@ -8,7 +8,7 @@ module Taf
         register :check_url
 
         def perform
-          if Taf::Browser.b.url == @value
+          if Taf::Browser.b.current_url == @value
             Taf::MyLog.log.info("URL: #{@value} is correct")
             true
           else

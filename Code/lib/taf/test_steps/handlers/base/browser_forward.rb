@@ -8,7 +8,7 @@ module Taf
         register :browser_forward
 
         def perform
-          Taf::Browser.b.forward
+          Taf::Browser.b.navigate.forward
           Taf::MyLog.log.info('Browser navigated forward')
           true
         rescue StandardError

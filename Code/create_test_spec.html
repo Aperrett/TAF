@@ -34,7 +34,7 @@
     var rowID = 0
 
     const locatorOptions = [
-        "action", "class", "css", "href", "id", "index", "method", "name", "src", "text", "title", "value", "xpath"
+        "class", "class_name", "css", "id", "link", "link_text", "name", "partial_link_text", "tag_name", "xpath"
     ]
 
     const loginOptions = [
@@ -65,29 +65,6 @@
         name: "capture_alert",
         display_name: "Capture Alert",
         steps: []
-    }, {
-        name: "check_box",
-        display_name: 'Check Box',
-        steps: [{
-            type: 'text',
-            placeholder: 'Check Box identifier'
-        }, {
-            type: 'dropdown',
-            options: locatorOptions
-        }]
-    }, {
-        name: "check_box_data",
-        display_name: 'Check Box Data',
-        steps: [{
-            type: 'text',
-            placeholder: 'Check Box Identifier'
-        }, {
-            type: 'dropdown',
-            options: locatorOptions
-        }, {
-            type: 'text',
-            placeholder: 'Check Box Value'
-        }]
     }, {
         name: "check_browser_title",
         display_name: 'Check Browser Title',
@@ -137,16 +114,6 @@
             placeholder: 'System Command to run'
         }]
     }, {
-        name: "generate_token",
-        display_name: 'Generate RSA Token',
-        steps: [{
-            type: 'text',
-            placeholder: 'Form field to place the token'
-        }, {
-            type: 'dropdown',
-            options: locatorOptions
-        }]
-    }, {
         name: "handle_browser_window",
         display_name: 'Handle Browser Window',
         steps: [{
@@ -168,15 +135,8 @@
             placeholder: 'Time'
         }]
     }, {
-        name: "list_all_dropdown_values",
-        display_name: 'List All Dropdown Values',
-        steps: [{
-            type: 'text',
-            placeholder: 'Dropdown Identifier'
-        }, {
-            type: 'dropdown',
-            options: locatorOptions
-        }]
+        name: "leave_iframe",
+        display_name: 'Leave Iframe',
     }, {
         name: "login",
         display_name: 'Login',
@@ -195,11 +155,11 @@
             placeholder: 'URL'
         }]
     }, {
-        name: "radio_button",
-        display_name: 'Radio Button',
+        name: "radio_or_checkbox_button",
+        display_name: 'Radio or Checkbox Button',
         steps: [{
             type: 'text',
-            placeholder: 'Radio Button Identifier'
+            placeholder: 'Radio or checkbox Button Identifier'
         }, {
             type: 'dropdown',
             options: locatorOptions
@@ -223,6 +183,13 @@
         steps: [{
             type: 'text',
             placeholder: 'Special Key'
+        }]
+    }, {
+        name: "switch_to_iframe",
+        display_name: 'Switch To Iframe',
+        steps: [{
+            type: 'text',
+            placeholder: 'Iframe Name or ID'
         }]
     }, {
         name: "write_box_data",

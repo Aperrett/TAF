@@ -27,8 +27,8 @@
             "value0": "Test Page"
         },
         {
-            "description": "Test Radio_Button",
-            "function": "radio_button",
+            "description": "Test radio_or_checkbox_button",
+            "function": "radio_or_checkbox_button",
             "skipTestCase": "no",
             "value0": "radio-2",
             "value1": "id"
@@ -47,21 +47,6 @@
             "skipTestCase": "no",
             "value0": "Click Me!",
             "value1": "value"
-        },
-        {
-            "description": "Test Generate_RSA_Token",
-            "function": "generate_token",
-            "skipTestCase": "no",
-            "value0": "text-2",
-            "value1": "id"
-        },
-        {
-            "description": "Test Generate_RSA_Token Output",
-            "function": "check_box_data",
-            "skipTestCase": "no",
-            "value0": "text-2",
-            "value1": "id",
-            "value2": "30664234"
         }
     ]
 }

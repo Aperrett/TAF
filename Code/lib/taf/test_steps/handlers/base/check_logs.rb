@@ -12,11 +12,11 @@ module Taf
           if result == true
             Taf::MyLog.log.info \
               "Data has matched: #{@value} in LogFile: #{@value2}"
-            return true
+            true
           else
             Taf::MyLog.log.warn \
               "Problem finding: #{@value} in LogFile: #{@value2}"
-            return false
+            false
           end
         end
       end

@@ -8,7 +8,7 @@ module Taf
         register :browser_back
 
         def perform
-          Taf::Browser.b.back
+          Taf::Browser.b.navigate.back
           Taf::MyLog.log.info('Browser navigated back')
           true
         rescue StandardError

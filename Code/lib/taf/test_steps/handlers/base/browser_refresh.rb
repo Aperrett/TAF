@@ -8,7 +8,7 @@ module Taf
         register :browser_refresh
 
         def perform
-          Taf::Browser.b.refresh
+          Taf::Browser.b.navigate.refresh
           Taf::MyLog.log.info('The Browser has been refreshed')
           true
         rescue StandardError

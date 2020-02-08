@@ -8,9 +8,7 @@ module Taf
         register :check_screen_data
 
         def perform
-          Taf::Browser.b.wait_until do
-            Taf::Browser.b.element.text.include? @value
-          end
+          Taf::Browser.b.page_source.include? @value
           Taf::MyLog.log.info("Text found: #{@value}")
           true
         rescue StandardError

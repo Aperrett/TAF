@@ -19,7 +19,6 @@ module Taf
   require 'securerandom'
   require 'selenium-webdriver'
   require 'time_difference'
-  require 'watir'
 
   require 'taf/browser'
   require 'taf/cmd_line'
@@ -42,10 +41,7 @@ module Taf
 
   # Load all handlers.
   Dir[File.expand_path('taf/test_steps/handlers/base/*.rb', __dir__)]
-    .each do |f|
+    .sort.each do |f|
     require f
   end
-
-  # Watir config. set wait:
-  Watir.default_timeout = 60
 end

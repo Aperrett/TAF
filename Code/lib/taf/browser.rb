@@ -31,16 +31,17 @@ module Taf
     def self.chrome
       case @browser_name
       when @chrome_name
-        chrome_values = %w[
-          --acceptInsecureCerts-true --start-maximized --window-size=1920,1080
-        ]
+        options = Selenium::WebDriver::Chrome::Options.new
+        options.add_argument('--ignore-certificate-errors')
+        options.add_argument('--window-size=1920,1080')
       when @chrome_headless_name
-        chrome_values = %w[
-          --start-maximized --disable-gpu --headless --acceptInsecureCerts-true
-          --no-sandbox --window-size=1920,1080
-        ]
+        options = Selenium::WebDriver::Chrome::Options.new
+        options.add_argument('--headless')
+        options.add_argument('--ignore-certificate-errors')
+        options.add_argument('--window-size=1920,1080')
       end
-      @browser = Watir::Browser.new :chrome, switches: chrome_values
+      @browser = Selenium::WebDriver.for :chrome, options: options
+      @browser.manage.timeouts.implicit_wait = 120
     end
 
     # firefox browser details
@@ -49,14 +50,14 @@ module Taf
       caps['acceptInsecureCerts'] = true
       case @browser_name
       when @firefox_name
-        driver = Selenium::WebDriver.for(:firefox, desired_capabilities: caps)
+        @browser = Selenium::WebDriver.for(:firefox, desired_capabilities: caps)
       when @firefox_headless_name
         options = Selenium::WebDriver::Firefox::Options.new(args: ['-headless'])
-        driver = Selenium::WebDriver.for(:firefox, options: options,
-                                                   desired_capabilities: caps)
+        @browser = Selenium::WebDriver.for(:firefox, options: options,
+                                                     desired_capabilities: caps)
       end
-      @browser = Watir::Browser.new(driver)
-      @browser.driver.manage.window.maximize
+      @browser.manage.window.maximize
+      @browser.manage.timeouts.implicit_wait = 120
     end
 
     # define browser value
@@ -68,7 +69,7 @@ module Taf
     def self.browser_version
       case @browser_name
       when @chrome_name, @chrome_headless_name
-        @browser.driver.capabilities[:version]
+        @browser.capabilities[:version]
       when @firefox_name, @firefox_headless_name
         @browser.execute_script('return navigator.userAgent;').split('/')[-1]
       else
@@ -78,12 +79,13 @@ module Taf
 
     # Check platform
     def self.browser_platform
+      ptf = @browser.execute_script('return navigator.userAgent;').split(';')[1]
+
       case @browser_name
       when @chrome_name, @chrome_headless_name
-        @browser.execute_script('return navigator.userAgent;')
-                .split(';')[1].split(')')[0]
+        ptf.split(')')[0]
       when @firefox_name, @firefox_headless_name
-        @browser.execute_script('return navigator.userAgent;').split(';')[1]
+        ptf
       else
         'No Platform found'
       end

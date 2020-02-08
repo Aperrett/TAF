@@ -11,10 +11,10 @@ module Taf
           b_result = system @value
           if b_result == true
             Taf::MyLog.log.info("Cmd has been executed sucessfully #{@value}")
-            return true
+            true
           else
             Taf::MyLog.log.warn("Theres a problem executing command #{@value}")
-            return false
+            false
           end
         end
       end

@@ -18,7 +18,7 @@ module Taf
                         "_Test_step-#{test_step_idx}_Failed_#{time}.png"
 
       # Screenshot capture for websites
-      Taf::Browser.b.screenshot.save sc_file_name
+      Taf::Browser.b.save_screenshot sc_file_name
       Taf::MyLog.log.info("Screenshot saved to: #{sc_file_name} \n")
       sc_file_name
     rescue StandardError => e
