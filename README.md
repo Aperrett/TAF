@@ -82,6 +82,6 @@ https://github.com/Aperrett
 
 <h2>Copyright and License</h2>
 
-Copyright 2017 - 2019 Aperrett
+Copyright 2017 - 2020 Aperrett
 
 Code released under the MIT License.
