@@ -8,7 +8,9 @@ module Taf
         register :check_screen_data
 
         def perform
-          Taf::Browser.b.page_source.include? @value
+          wait = Selenium::WebDriver::Wait.new(timeout: 60)
+          wait.until { Taf::Browser.b.page_source.include? @value }
+          # Taf::Browser.b.page_source.include? @value
           Taf::MyLog.log.info("Text found: #{@value}")
           true
         rescue StandardError

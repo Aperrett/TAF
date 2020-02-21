@@ -7,7 +7,7 @@
 </div>
 This is the Test Automation Framework (TAF)
 
-Created in Ruby and using Watir to allow a user to Automate a website using an Json file type.
+Created in Ruby and using Selenium to allow a user to Automate a website using an Json file type.
 
 Please see the Wiki for more details: https://github.com/Aperrett/TAF/wiki
 

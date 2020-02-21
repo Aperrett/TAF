@@ -52,7 +52,8 @@ module Taf
       when @firefox_name
         @browser = Selenium::WebDriver.for(:firefox, desired_capabilities: caps)
       when @firefox_headless_name
-        options = Selenium::WebDriver::Firefox::Options.new(args: ['-headless'])
+        options = Selenium::WebDriver::Firefox::Options.new
+        options.headless!
         @browser = Selenium::WebDriver.for(:firefox, options: options,
                                                      desired_capabilities: caps)
       end
