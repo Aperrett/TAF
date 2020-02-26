@@ -16,7 +16,14 @@ RUN apt-get update \
 
 RUN add-apt-repository "deb http://deb.debian.org/debian/ unstable main contrib non-free"
 
-COPY Package.txt /etc/apt/preferences.d/99pin-unstable
+RUN echo 'Package: *\n\
+Pin: release a=stable\n\
+Pin-Priority: 900\n\
+\n\
+Package: *\n\
+Pin release a=unstable\n\
+Pin-Priority: 10%\n'\
+> /etc/apt/preferences.d/99pin-unstable
 
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends -t unstable firefox \
